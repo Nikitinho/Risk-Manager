@@ -1,64 +1,55 @@
 package com.nikitinho.riskmanager.controller;
 
-import com.nikitinho.riskmanager.exceptions.NotFoundException;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.nikitinho.riskmanager.domain.Risk;
+import com.nikitinho.riskmanager.domain.Views;
+import com.nikitinho.riskmanager.repo.RiskRepo;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("risk")
 public class RiskController {
-    private int counter = 4;
+    private final RiskRepo riskRepo;
 
-    private List<Map<String, String>> risks = new ArrayList<Map<String, String>>() {{
-       add(new HashMap<String, String>(){{ put("id", "1");  put("text", "First Message"); }});
-       add(new HashMap<String, String>(){{ put("id", "2");  put("text", "Second Message"); }});
-       add(new HashMap<String, String>(){{ put("id", "3");  put("text", "Third Message"); }});
-    }};
+    @Autowired
+    public RiskController(RiskRepo riskRepo) {
+        this.riskRepo = riskRepo;
+    }
 
     @GetMapping
-    public List<Map<String, String>> list() {
-        return risks;
+    @JsonView(Views.IdName.class)
+    public List<Risk> list() {
+        return riskRepo.findAll();
     }
 
     @GetMapping("{id}")
-    public Map<String, String> getOne(@PathVariable String id) {
-        return getRisk(id);
-    }
-
-    private Map<String, String> getRisk(@PathVariable String id) {
-        return risks.stream()
-                .filter(risk -> risk.get("id").equals(id))
-                .findFirst()
-                .orElseThrow(NotFoundException::new);
-    }
-
-    @PostMapping
-    public Map<String, String> create(@RequestBody Map<String, String> risk) {
-        risk.put("id", String.valueOf(counter++));
-
-        risks.add(risk);
-
+    @JsonView(Views.FullRisk.class)
+    public Risk getOne(@PathVariable("id") Risk risk) {
         return risk;
     }
 
+    @PostMapping
+    public Risk create(@RequestBody Risk risk) {
+        risk.setCreationDate(LocalDateTime.now());
+        return riskRepo.save(risk);
+    }
+
     @PutMapping("{id}")
-    public Map<String, String> update(@PathVariable String id, @RequestBody Map<String, String> risk) {
-        Map<String, String> riskFromDb = getRisk(id);
+    public Risk update(@PathVariable("id") Risk riskFromDb,
+                                      @RequestBody Risk risk) {
 
-        riskFromDb.putAll(risk);
-        riskFromDb.put("id", id);
+        BeanUtils.copyProperties(risk, riskFromDb, "id");
 
-        return riskFromDb;
+        return riskRepo.save(riskFromDb);
     }
 
     @DeleteMapping("{id}")
-    public void delete(@PathVariable String id) {
-        Map<String, String> risk = getRisk(id);
-
-        risks.remove(risk);
+    public void delete(@PathVariable("id") Risk risk) {
+        riskRepo.delete(risk);
     }
 }
