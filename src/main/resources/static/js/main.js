@@ -90,13 +90,6 @@ Vue.component('risks-list', {
     '<risk-row v-for="risk in risks" :key="risk.id" :risk="risk" ' +
     ':editMethod="editMethod" :risks="risks"/>' +
     '</div>',
-    created: function () {
-        riskApi.get().then(result =>
-            result.json().then(data =>
-                data.forEach(risk => this.risks.push(risk))
-            )
-        )
-    },
     methods: {
         editMethod: function (risk) {
             this.risk = risk
@@ -106,8 +99,23 @@ Vue.component('risks-list', {
 
 var app = new Vue({
     el: '#app',
-    template: '<risks-list :risks="risks" />',
+    template:
+    '<div>' +
+      '<div v-if="!profile">Необходимо авторизоваться через <a href="/login">Google</a></div>' +
+      '<div v-else>' +
+        '<div>{{profile.name}}&nbsp;<a href="/logout">Выйти</a></div>' +
+        '<risks-list :risks="risks" />' +
+      '</div>' +
+    '</div>',
     data: {
-        risks: []
+        risks: frontendData.risks,
+        profile: frontendData.profile
+    },
+    created: function() {
+        // riskApi.get().then(result =>
+        //     result.json().then(data =>
+        //         data.forEach(risk => this.risks.push(risk))
+        //     )
+        // )
     }
 });
