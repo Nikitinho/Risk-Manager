@@ -22,7 +22,6 @@
 <script>
     import RisksList from 'components/risks/RisksList.vue'
     import {addHandler} from 'util/ws';
-    import {getIndex} from 'util/collections'
     export default {
         components: {
             RisksList
@@ -35,11 +34,25 @@
         },
         created() {
             addHandler(data => {
-                let index = getIndex(this.risks, data.id)
-                if (index > -1) {
-                    this.risks.splice(index, 1, data)
+                if (data.objectType === 'RISK') {
+                    let index = this.risks.findIndex(item => item.id === data.id)
+                    switch (data.eventType) {
+                        case 'CREATE':
+                        case 'UPDATE':
+                            if (index > 1){
+                                this.risks.splice(index, 1, data.body)
+                            } else {
+                                this.risks.push(data.body)
+                            }
+                            break
+                        case 'REMOVE':
+                            this.risks.splice(index, 1)
+                            break
+                        default:
+                            console.error(`Event type ${data.eventType} is unknown`)
+                    }
                 } else {
-                    this.risks.push(data)
+                    console.error(`Object type ${data.objectType} is unknown`)
                 }
             })
         }

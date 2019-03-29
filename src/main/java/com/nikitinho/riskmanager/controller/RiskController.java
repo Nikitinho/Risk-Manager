@@ -3,24 +3,28 @@ package com.nikitinho.riskmanager.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.nikitinho.riskmanager.domain.Risk;
 import com.nikitinho.riskmanager.domain.Views;
+import com.nikitinho.riskmanager.dto.EventType;
+import com.nikitinho.riskmanager.dto.ObjectType;
 import com.nikitinho.riskmanager.repo.RiskRepo;
+import com.nikitinho.riskmanager.util.WsSender;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.function.BiConsumer;
 
 @RestController
 @RequestMapping("risk")
 public class RiskController {
     private final RiskRepo riskRepo;
+    private final BiConsumer<EventType, Risk> wsSender;
 
     @Autowired
-    public RiskController(RiskRepo riskRepo) {
+    public RiskController(RiskRepo riskRepo, WsSender wsSender) {
         this.riskRepo = riskRepo;
+        this.wsSender = wsSender.getSender(ObjectType.RISK, Views.IdName.class);
     }
 
     @GetMapping
@@ -38,7 +42,11 @@ public class RiskController {
     @PostMapping
     public Risk create(@RequestBody Risk risk) {
         risk.setCreationDate(LocalDateTime.now());
-        return riskRepo.save(risk);
+        Risk uploadedRisk = riskRepo.save(risk);
+
+        wsSender.accept(EventType.CREATE, uploadedRisk);
+
+        return uploadedRisk;
     }
 
     @PutMapping("{id}")
@@ -47,17 +55,17 @@ public class RiskController {
 
         BeanUtils.copyProperties(risk, riskFromDb, "id");
 
-        return riskRepo.save(riskFromDb);
+        Risk updatedRisk = riskRepo.save(riskFromDb);
+
+        wsSender.accept(EventType.UPDATE, updatedRisk);
+
+        return updatedRisk;
     }
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable("id") Risk risk) {
         riskRepo.delete(risk);
+        wsSender.accept(EventType.REMOVE, risk);
     }
 
-    @MessageMapping("/changeRisk")
-    @SendTo("/topic/activity")
-    public Risk change(Risk risk) throws Exception {
-        return riskRepo.save(risk);
-    }
 }

@@ -12,6 +12,7 @@
 <script>
     import RiskRow from 'components/risks/RiskRow.vue'
     import RiskForm from 'components/risks/RiskForm.vue'
+    import risksApi from 'api/risks'
     export default {
         props: ['risks'],
         components: {
@@ -33,7 +34,7 @@
                 this.risk = risk
             },
             deleteRisk(risk) {
-                this.$resource('/risk{/id}').remove({id: risk.id}).then(result => {
+                risksApi.remove(risk.id).then(result => {
                     if (result.ok) {
                         this.risks.splice(this.risks.indexOf(risk), 1)
                     }

@@ -10,7 +10,7 @@
 </template>
 
 <script>
-    import { sendRisk } from 'util/ws'
+    import risksApi from 'api/risks'
 
     export default {
         props: ['risks', 'riskAttr'],
@@ -28,29 +28,32 @@
         },
         methods: {
             save() {
-                sendRisk({id: this.id, text: this.text})
-                this.text = ''
-                this.id = ''
-
-                /*const risk = { text: this.text };
+                const risk = {
+                    id: this.id,
+                    text: this.text
+                };
 
                 if (this.id) {
-                    this.$resource('/risk{/id}').update({id: this.id}, risk).then(result =>
+                    risksApi.update(risk).then(result =>
                         result.json().then(data => {
-                            const index = getIndex(this.risks, data.id);
+                            const index = this.risks.findIndex(item => item.id === data.id)
                             this.risks.splice(index, 1, data)
-                            this.text = ''
-                            this.id = ''
                         })
                     )
                 } else {
-                    this.$resource('/risk{/id}').save({}, risk).then(result =>
+                    risksApi.add(risk).then(result =>
                         result.json().then(data => {
-                            this.risks.push(data);
-                            this.text = ''
+                            const index = this.risks.findIndex(item => item.id === data.id)
+                            if (index > -1) {
+                                this.risks.splice(index, 1, data)
+                            } else {
+                                this.risks.push(data);
+                            }
                         })
                     )
-                }*/
+                }
+                this.text = ''
+                this.id = ''
             }
         }
     }
