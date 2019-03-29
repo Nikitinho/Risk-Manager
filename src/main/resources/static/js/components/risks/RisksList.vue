@@ -1,7 +1,7 @@
 <template>
     <v-layout align-space-around justify-start column>
         <risk-form :risks="risks" :riskAttr="risk"/>
-        <risk-row v-for="risk in risks"
+        <risk-row v-for="risk in sortedRisks"
                   :key="risk.id" :risk="risk"
                   :editRisk="editRisk"
                   :deleteRisk="deleteRisk"
@@ -22,6 +22,11 @@
             return {
                 risk: null
             }
+        },
+        computed: {
+          sortedRisks() {
+              return this.risks.sort((a, b) => -(a.id - b.id))
+          }
         },
         methods: {
             editRisk(risk) {
