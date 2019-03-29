@@ -6,14 +6,7 @@
 </template>
 
 <script>
-    function getIndex(list, id) {
-        for (var i = 0; i < list.length; i++) {
-            if (list[i].id === id) {
-                return i;
-            }
-        }
-        return -1;
-    }
+    import { sendRisk } from 'util/ws'
 
     export default {
         props: ['risks', 'riskAttr'],
@@ -31,7 +24,11 @@
         },
         methods: {
             save() {
-                const risk = { text: this.text };
+                sendRisk({id: this.id, text: this.text})
+                this.text = ''
+                this.id = ''
+
+                /*const risk = { text: this.text };
 
                 if (this.id) {
                     this.$resource('/risk{/id}').update({id: this.id}, risk).then(result =>
@@ -49,7 +46,7 @@
                             this.text = ''
                         })
                     )
-                }
+                }*/
             }
         }
     }
