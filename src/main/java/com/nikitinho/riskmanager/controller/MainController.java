@@ -3,6 +3,7 @@ package com.nikitinho.riskmanager.controller;
 import com.nikitinho.riskmanager.domain.User;
 import com.nikitinho.riskmanager.repo.RiskRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,9 @@ import java.util.HashMap;
 @RequestMapping("/")
 public class MainController {
     private final RiskRepo riskRepo;
+
+    @Value("${spring.profiles.active}")
+    private String profile;
 
     @Autowired
     public MainController(RiskRepo riskRepo) {
@@ -29,6 +33,7 @@ public class MainController {
         data.put("risks", riskRepo.findAll());
 
         model.addAttribute("frontendData", data);
+        model.addAttribute("isDevMode", "dev".equals(profile));
 
         return "index";
     }

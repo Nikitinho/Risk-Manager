@@ -1,5 +1,25 @@
 {
   "dependencies": {
+    "vue": "^2.6.10",
     "vue-resource": "^1.5.1"
+  },
+  "name": "Risk-Manager",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Nikitinho/Risk-Manager.git",
+  "author": "Nikitinho <nekitnikitin@yandex.ru>",
+  "license": "MIT",
+  "scripts": {
+    "start": "webpack-dev-server"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.0",
+    "@babel/preset-env": "^7.4.2",
+    "babel-loader": "^8.0.5",
+    "vue-loader": "^15.7.0",
+    "vue-template-compiler": "^2.6.10",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0",
+    "webpack-dev-server": "^3.2.1"
   }
 }
