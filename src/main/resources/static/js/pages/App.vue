@@ -1,12 +1,22 @@
 <template>
-    <div>
-    <div v-if="!profile">Необходимо авторизоваться через
-        <a href="/login">Google</a></div>
-    <div v-else>
-        <div>{{profile.name}}&nbsp;<a href="/logout">Выйти</a></div>
-        <risks-list :risks="risks" />
-        </div>
-    </div>
+    <v-app>
+        <v-toolbar app>
+            <v-toolbar-title>Risk management tool</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <span v-if="profile">{{profile.name}}</span>
+            <v-btn v-if="profile" icon href="/logout">
+                <v-icon>exit_to_app</v-icon>
+            </v-btn>
+        </v-toolbar>
+        <v-content>
+            <v-container v-if="!profile">Необходимо авторизоваться через
+                <a href="/login">Google</a>
+            </v-container>
+            <v-container v-if="profile">
+                <risks-list :risks="risks" />
+            </v-container>
+        </v-content>
+    </v-app>
 </template>
 
 <script>
@@ -37,5 +47,4 @@
 </script>
 
 <style>
-
 </style>

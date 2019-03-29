@@ -1,12 +1,12 @@
 <template>
-    <div>
-    <risk-form :risks="risks" :riskAttr="risk"/>
-    <risk-row v-for="risk in risks"
-              :key="risk.id" :risk="risk"
-              :editRisk="editRisk"
-              :deleteRisk="deleteRisk"
-              :risks="risks"/>
-    </div>
+    <v-layout align-space-around justify-start column>
+        <risk-form :risks="risks" :riskAttr="risk"/>
+        <risk-row v-for="risk in risks"
+                  :key="risk.id" :risk="risk"
+                  :editRisk="editRisk"
+                  :deleteRisk="deleteRisk"
+                  :risks="risks"/>
+    </v-layout>
 </template>
 
 <script>
