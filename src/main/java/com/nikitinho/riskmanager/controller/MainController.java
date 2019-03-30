@@ -41,7 +41,10 @@ public class MainController {
             data.put("profile", user);
             data.put("categories", Stream.of(RiskCategoryType.values()).map(RiskCategoryType::toString).toArray());
             data.put("statuses", Stream.of(RiskStatusType.values()).map(RiskStatusType::toString).toArray());
-            data.put("risks", riskRepo.findAll());
+            // Only load risks where the user is one of responsible people
+            data.put("risks", riskRepo.findAll().stream()
+                    .filter(risk -> risk.getResponsible().stream()
+                            .anyMatch(usr -> usr.getId().equals(user.getId()))).toArray());
             data.put("users", userDetailsRepo.findAll());
         }
 

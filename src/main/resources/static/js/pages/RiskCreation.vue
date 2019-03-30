@@ -5,12 +5,14 @@
             <v-flex xs12>
                 <v-text-field
                         label="Title"
+                        :disabled="readonly"
                         v-model="text">
                 </v-text-field>
             </v-flex>
             <v-flex xs12>
                 <v-textarea
                         label="Description"
+                        :disabled="readonly"
                         v-model="description">
                 </v-textarea>
             </v-flex>
@@ -18,6 +20,7 @@
                 <p class="text-xs-left">Risk Category</p>
                 <v-overflow-btn
                         :items="riskCategories"
+                        :disabled="readonly"
                         label="Risk Category"
                         v-model="category">
                 </v-overflow-btn>
@@ -25,12 +28,14 @@
             <v-flex xs12>
                 <v-textarea
                         label="Causes of"
+                        :disabled="readonly"
                         v-model="causes">
                 </v-textarea>
             </v-flex>
             <v-flex xs12>
                 <v-textarea
                         label="Description of the consequences"
+                        :disabled="readonly"
                         v-model="consequences">
                 </v-textarea>
             </v-flex>
@@ -39,6 +44,7 @@
                 <v-select
                         v-model="responsible"
                         :items="responsibleUsers"
+                        :disabled="readonly"
                         label="Responsible people"
                         multiple
                 ></v-select>
@@ -47,6 +53,7 @@
                 <p class="text-xs-left">Risk Status</p>
                 <v-overflow-btn
                         :items="riskStatuses"
+                        :disabled="readonly"
                         label="Risk Status"
                         v-model="status">
                 </v-overflow-btn>
@@ -67,7 +74,7 @@
 
     export default {
         name: 'RiskCreation',
-        props: ['riskId'],
+        props: ['riskId', 'readonly'],
         data() {
             return {
                 text: '',
@@ -97,7 +104,7 @@
                 const risk = this.getRiskById(this.riskId)
                 this.text = risk.text
                 this.description = risk.description
-                this.category = this.getCategoryName(risk.category)
+                this.category = risk.category
                 this.causes = risk.causes
                 this.consequences = risk.consequences
                 this.responsible = this.getResponsibleNames(risk.responsible)
@@ -124,13 +131,8 @@
                 )
                 return users
             },
-            getCategoryName(category) {
-                console.log(category)
-                return category
-            },
             save() {
                 const risk = {
-                    id: this.id,
                     text: this.text,
                     description: this.description,
                     category: this.category,
@@ -139,22 +141,15 @@
                     responsible: this.responsible.map(x => this.getUserByEmail(x)),
                     status: this.status
                 };
-
-                if (this.isNewRisk)
+                if (this.isNewRisk) {
+                    risk["id"] = this.id
                     this.addRiskAction(risk)
-                else
+                } else {
+                    risk["id"] = this.riskId
                     this.updateRiskAction(risk)
+                }
 
                 this.$router.push('/')
-
-                this.text = ''
-                this.id = ''
-                this.description = ''
-                this.category = null
-                this.causes = ''
-                this.consequences = ''
-                this.responsible = []
-                this.status = null
             }
         }
     }
