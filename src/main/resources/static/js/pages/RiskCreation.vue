@@ -87,7 +87,7 @@
             }
         },
         computed: {
-            ...mapGetters(['riskCategories', 'riskStatuses', 'activeUsers', 'getUserByEmail', 'getRiskById']),
+            ...mapGetters(['riskCategories', 'riskStatuses', 'activeUsers', 'getUserByEmail', 'getRiskById', 'getProfile']),
             isNewRisk() {
                 return !this.riskId
             },
@@ -109,6 +109,8 @@
                 this.consequences = risk.consequences
                 this.responsible = this.getResponsibleNames(risk.responsible)
                 this.status = risk.status
+            } else {
+                this.responsible.push(this.getProfile.email)
             }
         },
         watch: {

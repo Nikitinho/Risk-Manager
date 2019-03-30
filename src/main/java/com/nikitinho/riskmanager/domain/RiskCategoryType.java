@@ -1,9 +1,13 @@
 package com.nikitinho.riskmanager.domain;
 
 public enum RiskCategoryType {
-    FIRST("first"),
-    SECOND("second"),
-    THIRD("third");
+    INTEGRATION("Риск интеграции"),
+    FINANCIAL("Финансовые риски"),
+    TEMPORARY("Временные риски"),
+    PERSONNEL("Риски персонала"),
+    COMMUNICATION("Коммуникационные риски"),
+    VENDOR("Риски поставщиков"),
+    LACK_OF_QUALITY("Риски несоответствия качеству");
 
     private String name;
 

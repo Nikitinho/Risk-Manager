@@ -17,7 +17,7 @@
                     access_time
                 </v-icon>
             </span>
-            <span class="headline font-weight-bold">{{ risk.text }}</span>
+            <span class="headline font-weight-bold" >{{ risk.text }}</span>
         </v-card-title>
         <v-card-text class="title font-weight-light">
             {{ risk.description }}

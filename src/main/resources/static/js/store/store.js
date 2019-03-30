@@ -22,7 +22,8 @@ export default new Vuex.Store({
         },
         getRiskById: state => id => {
             return state.risks.find(risk => risk.id === id)
-        }
+        },
+        getProfile: state => state.profile
     },
     mutations: {
         addRiskMutation(state, risk) {
