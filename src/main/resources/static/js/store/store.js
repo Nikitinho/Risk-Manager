@@ -7,10 +7,12 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         risks: frontendData.risks,
-        profile: frontendData.profile
+        profile: frontendData.profile,
+        categories: frontendData.categories
     },
     getters: {
-        sortedRisks: state => (state.risks || []).sort((a, b) => -(a.id - b.id))
+        sortedRisks: state => (state.risks || []).sort((a, b) => -(a.id - b.id)),
+        riskCategories: state => state.categories
     },
     mutations: {
         addRiskMutation(state, risk) {

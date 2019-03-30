@@ -25,7 +25,20 @@ public class Risk {
     @JsonView(Views.FullRisk.class)
     private LocalDateTime creationDate;
 
+    @JsonView(Views.FullRisk.class)
     private String description;
+
+    @JsonView(Views.FullRisk.class)
+    private String causes;
+
+    @JsonView(Views.FullRisk.class)
+    private String consequences;
+
+    @JsonView(Views.FullRisk.class)
+    private String responsible;
+
+    @JsonView(Views.FullRisk.class)
+    private RiskCategoryType category;
 
     public Long getId() {
         return id;
@@ -51,7 +64,43 @@ public class Risk {
         this.text = text;
     }
 
-    public String getDescription() { return description; }
+    public String getDescription() {
+        return description;
+    }
 
-    public void setDescription(String description) { this.description = description; }
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getCauses() {
+        return causes;
+    }
+
+    public void setCauses(String causes) {
+        this.causes = causes;
+    }
+
+    public String getConsequences() {
+        return consequences;
+    }
+
+    public void setConsequences(String consequences) {
+        this.consequences = consequences;
+    }
+
+    public String getResponsible() {
+        return responsible;
+    }
+
+    public void setResponsible(String responsible) {
+        this.responsible = responsible;
+    }
+
+    public RiskCategoryType getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = RiskCategoryType.fromString(category);
+    }
 }

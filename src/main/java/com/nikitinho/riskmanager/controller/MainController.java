@@ -1,5 +1,6 @@
 package com.nikitinho.riskmanager.controller;
 
+import com.nikitinho.riskmanager.domain.RiskCategoryType;
 import com.nikitinho.riskmanager.domain.User;
 import com.nikitinho.riskmanager.repo.RiskRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.stream.Stream;
 
 @Controller
 @RequestMapping("/")
@@ -31,6 +34,7 @@ public class MainController {
 
         if (user != null) {
             data.put("profile", user);
+            data.put("categories", Stream.of(RiskCategoryType.values()).map(RiskCategoryType::toString).toArray());
             data.put("risks", riskRepo.findAll());
         }
 

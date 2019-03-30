@@ -1,5 +1,6 @@
 <template>
     <v-container grid-list-md text-xs-center>
+        <v-card class="py-2 px-2">
         <v-layout row wrap>
             <v-flex xs12>
                 <v-text-field
@@ -12,6 +13,14 @@
                         label="Description"
                         v-model="description">
                 </v-textarea>
+            </v-flex>
+            <v-flex xs12>
+                <p class="text-xs-left">Risk Category</p>
+                <v-overflow-btn
+                        :items="riskCategories"
+                        label="Risk Category"
+                        v-model="category">
+                </v-overflow-btn>
             </v-flex>
             <v-flex xs12>
                 <v-textarea
@@ -37,11 +46,13 @@
                 </v-btn>
             </v-flex>
         </v-layout>
+        </v-card>
     </v-container>
 </template>
 
 <script>
     import { mapActions } from 'vuex'
+    import { mapGetters } from 'vuex'
 
     export default {
         name: 'RiskCreation',
@@ -49,15 +60,18 @@
             return {
                 text: '',
                 description: '',
+                category: '',
                 causes: '',
                 consequences: '',
                 responsible: ''
             }
         },
+        computed: mapGetters(['riskCategories']),
         watch: {
             riskAttr (newVal, oldVal) {
                 this.text = newVal.text
                 this.description = newVal.description
+                this.category = null
                 this.causes = newVal.causes
                 this.consequences = newVal.consequences
                 this.responsible = newVal.responsible
@@ -69,27 +83,24 @@
                 const risk = {
                     id: this.id,
                     text: this.text,
-                    description: this.description
-//                    causes: this.causes,
-//                    consequences: this.consequences,
-//                    responsible: this.responsible
+                    description: this.description,
+                    category: this.category,
+                    causes: this.causes,
+                    consequences: this.consequences,
+                    responsible: this.responsible
                 };
 
                 this.addRiskAction(risk)
 
                 this.text = ''
                 this.id = ''
-                this.creationDate = null
                 this.description = ''
+                this.category = null
                 this.causes = ''
                 this.consequences = ''
                 this.responsible = ''
             }
         }
-        /*long valueFromClient = ...
-            Date date = new Date(valueFromClient);
-            String formatted = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
-            */
     }
 </script>
 
