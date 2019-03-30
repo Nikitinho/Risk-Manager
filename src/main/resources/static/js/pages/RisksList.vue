@@ -1,9 +1,11 @@
 <template>
-    <v-layout align-space-around justify-start column>
-        <risk-form :riskAttr="risk"/>
-        <risk-row v-for="risk in sortedRisks"
-                  :key="risk.id" :risk="risk"/>
-    </v-layout>
+    <v-container>
+        <v-layout align-space-around justify-start column>
+            <risk-form :riskAttr="risk"/>
+            <risk-row v-for="risk in sortedRisks"
+                      :key="risk.id" :risk="risk"/>
+        </v-layout>
+    </v-container>
 </template>
 
 <script>

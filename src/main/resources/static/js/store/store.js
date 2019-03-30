@@ -10,7 +10,7 @@ export default new Vuex.Store({
         profile: frontendData.profile
     },
     getters: {
-        sortedRisks: state => state.risks.sort((a, b) => -(a.id - b.id))
+        sortedRisks: state => (state.risks || []).sort((a, b) => -(a.id - b.id))
     },
     mutations: {
         addRiskMutation(state, risk) {

@@ -2,33 +2,42 @@
     <v-app>
         <v-toolbar app>
             <v-toolbar-title>Risk management tool</v-toolbar-title>
+            <v-btn v-if="profile" flat
+                   :disabled="$route.path === '/'"
+                   @click="showRisks">
+                Home
+            </v-btn>
             <v-spacer></v-spacer>
-            <span v-if="profile">{{profile.name}}</span>
+            <v-btn v-if="profile"
+                   :disabled="$route.path === '/profile'"
+                   @click="showProfile">
+                {{profile.name}}
+            </v-btn>
             <v-btn v-if="profile" icon href="/logout">
                 <v-icon>exit_to_app</v-icon>
             </v-btn>
         </v-toolbar>
         <v-content>
-            <v-container v-if="!profile">Необходимо авторизоваться через
-                <a href="/login">Google</a>
-            </v-container>
-            <v-container v-if="profile">
-                <risks-list/>
-            </v-container>
+            <router-view></router-view>
         </v-content>
     </v-app>
 </template>
 
 <script>
     import { mapState, mapMutations } from 'vuex'
-    import RisksList from 'components/risks/RisksList.vue'
     import {addHandler} from 'util/ws';
     export default {
-        components: {
-            RisksList
-        },
         computed: mapState(['profile']),
-        methods: mapMutations(['addRiskMutation', 'updateRiskMutation', 'removeRiskMutation']),
+        methods: {
+            ...mapMutations(['addRiskMutation', 'updateRiskMutation', 'removeRiskMutation']),
+            showRisks() {
+                this.$router.push('/')
+            },
+            showProfile() {
+                this.$router.push('/profile')
+            }
+        }
+        ,
         created() {
             addHandler(data => {
                 if (data.objectType === 'RISK') {
@@ -49,6 +58,11 @@
                     console.error(`Object type ${data.objectType} is unknown`)
                 }
             })
+        },
+        beforeMount() {
+            if (!this.profile) {
+                this.$router.replace('/auth')
+            }
         }
     }
 </script>
