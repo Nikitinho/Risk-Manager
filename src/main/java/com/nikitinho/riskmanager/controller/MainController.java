@@ -1,6 +1,7 @@
 package com.nikitinho.riskmanager.controller;
 
 import com.nikitinho.riskmanager.domain.RiskCategoryType;
+import com.nikitinho.riskmanager.domain.RiskStatusType;
 import com.nikitinho.riskmanager.domain.User;
 import com.nikitinho.riskmanager.repo.RiskRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ public class MainController {
         if (user != null) {
             data.put("profile", user);
             data.put("categories", Stream.of(RiskCategoryType.values()).map(RiskCategoryType::toString).toArray());
+            data.put("statuses", Stream.of(RiskStatusType.values()).map(RiskStatusType::toString).toArray());
             data.put("risks", riskRepo.findAll());
         }
 

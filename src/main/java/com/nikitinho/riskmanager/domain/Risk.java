@@ -40,6 +40,9 @@ public class Risk {
     @JsonView(Views.FullRisk.class)
     private RiskCategoryType category;
 
+    @JsonView(Views.FullRisk.class)
+    private RiskStatusType status;
+
     public Long getId() {
         return id;
     }
@@ -102,5 +105,13 @@ public class Risk {
 
     public void setCategory(String category) {
         this.category = RiskCategoryType.fromString(category);
+    }
+
+    public RiskStatusType getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = RiskStatusType.fromString(status);
     }
 }

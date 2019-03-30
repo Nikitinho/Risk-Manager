@@ -8,11 +8,13 @@ export default new Vuex.Store({
     state: {
         risks: frontendData.risks,
         profile: frontendData.profile,
-        categories: frontendData.categories
+        categories: frontendData.categories,
+        statuses: frontendData.statuses
     },
     getters: {
         sortedRisks: state => (state.risks || []).sort((a, b) => -(a.id - b.id)),
-        riskCategories: state => state.categories
+        riskCategories: state => state.categories,
+        riskStatuses: state => state.statuses
     },
     mutations: {
         addRiskMutation(state, risk) {

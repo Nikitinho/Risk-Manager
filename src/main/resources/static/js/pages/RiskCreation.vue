@@ -41,6 +41,14 @@
                 </v-text-field>
             </v-flex>
             <v-flex xs12>
+                <p class="text-xs-left">Risk Status</p>
+                <v-overflow-btn
+                        :items="riskStatuses"
+                        label="Risk Status"
+                        v-model="status">
+                </v-overflow-btn>
+            </v-flex>
+            <v-flex xs12>
                 <v-btn @click="save">
                     Save
                 </v-btn>
@@ -60,21 +68,23 @@
             return {
                 text: '',
                 description: '',
-                category: '',
+                category: null,
                 causes: '',
                 consequences: '',
-                responsible: ''
+                responsible: '',
+                status: null
             }
         },
-        computed: mapGetters(['riskCategories']),
+        computed: mapGetters(['riskCategories', 'riskStatuses']),
         watch: {
             riskAttr (newVal, oldVal) {
                 this.text = newVal.text
                 this.description = newVal.description
-                this.category = null
+                this.category = newVal.category
                 this.causes = newVal.causes
                 this.consequences = newVal.consequences
                 this.responsible = newVal.responsible
+                this.status = newVal.status
             }
         },
         methods: {
@@ -87,7 +97,8 @@
                     category: this.category,
                     causes: this.causes,
                     consequences: this.consequences,
-                    responsible: this.responsible
+                    responsible: this.responsible,
+                    status: this.status
                 };
 
                 this.addRiskAction(risk)
@@ -99,6 +110,7 @@
                 this.causes = ''
                 this.consequences = ''
                 this.responsible = ''
+                this.status = null
             }
         }
     }
