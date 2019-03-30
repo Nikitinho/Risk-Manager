@@ -35,14 +35,16 @@
 </template>
 
 <script>
+    import {mapActions} from 'vuex'
     export default {
-        props: ['risk', 'editRisk', 'deleteRisk', 'risks'],
+        props: ['risk', 'editRisk'],
         methods: {
+            ...mapActions(['removeRiskAction']),
             edit () {
                 this.editRisk(this.risk)
             },
             del () {
-                this.deleteRisk(this.risk)
+                this.removeRiskAction(this.risk)
             }
         }
     }

@@ -13,40 +13,34 @@
                 <a href="/login">Google</a>
             </v-container>
             <v-container v-if="profile">
-                <risks-list :risks="risks" />
+                <risks-list/>
             </v-container>
         </v-content>
     </v-app>
 </template>
 
 <script>
+    import { mapState, mapMutations } from 'vuex'
     import RisksList from 'components/risks/RisksList.vue'
     import {addHandler} from 'util/ws';
     export default {
         components: {
             RisksList
         },
-        data() {
-            return {
-                risks: frontendData.risks,
-                profile: frontendData.profile
-            }
-        },
+        computed: mapState(['profile']),
+        methods: mapMutations(['addRiskMutation', 'updateRiskMutation', 'removeRiskMutation']),
         created() {
             addHandler(data => {
                 if (data.objectType === 'RISK') {
-                    let index = this.risks.findIndex(item => item.id === data.id)
                     switch (data.eventType) {
                         case 'CREATE':
+                            this.addRiskMutation(data.body)
+                            break
                         case 'UPDATE':
-                            if (index > 1){
-                                this.risks.splice(index, 1, data.body)
-                            } else {
-                                this.risks.push(data.body)
-                            }
+                            this.updateRiskMutation(data.body)
                             break
                         case 'REMOVE':
-                            this.risks.splice(index, 1)
+                            this.removeRiskMutation(data.body)
                             break
                         default:
                             console.error(`Event type ${data.eventType} is unknown`)

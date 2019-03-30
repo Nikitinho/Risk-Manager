@@ -10,10 +10,10 @@
 </template>
 
 <script>
-    import risksApi from 'api/risks'
+    import { mapActions } from 'vuex'
 
     export default {
-        props: ['risks', 'riskAttr'],
+        props: ['riskAttr'],
         data() {
             return {
                 text: '',
@@ -27,6 +27,7 @@
             }
         },
         methods: {
+            ...mapActions(['addRiskAction', 'updateRiskAction']),
             save() {
                 const risk = {
                     id: this.id,
@@ -34,23 +35,9 @@
                 };
 
                 if (this.id) {
-                    risksApi.update(risk).then(result =>
-                        result.json().then(data => {
-                            const index = this.risks.findIndex(item => item.id === data.id)
-                            this.risks.splice(index, 1, data)
-                        })
-                    )
+                    this.updateRiskAction(risk)
                 } else {
-                    risksApi.add(risk).then(result =>
-                        result.json().then(data => {
-                            const index = this.risks.findIndex(item => item.id === data.id)
-                            if (index > -1) {
-                                this.risks.splice(index, 1, data)
-                            } else {
-                                this.risks.push(data);
-                            }
-                        })
-                    )
+                    this.addRiskAction(risk)
                 }
                 this.text = ''
                 this.id = ''
