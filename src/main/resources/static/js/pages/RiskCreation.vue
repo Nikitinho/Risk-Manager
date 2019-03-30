@@ -35,10 +35,13 @@
                 </v-textarea>
             </v-flex>
             <v-flex xs12>
-                <v-text-field
+                <p class="text-xs-left">Responsible people</p>
+                <v-select
+                        v-model="responsible"
+                        :items="responsibleUsers"
                         label="Responsible people"
-                        v-model="responsible">
-                </v-text-field>
+                        multiple
+                ></v-select>
             </v-flex>
             <v-flex xs12>
                 <p class="text-xs-left">Risk Status</p>
@@ -71,11 +74,25 @@
                 category: null,
                 causes: '',
                 consequences: '',
-                responsible: '',
+                responsible: [],
                 status: null
             }
         },
-        computed: mapGetters(['riskCategories', 'riskStatuses']),
+        computed: {
+            ...mapGetters(['riskCategories', 'riskStatuses', 'activeUsers', 'getUserByEmail']),
+            responsibleUsers() {
+                let users = []
+                Array.from(this.activeUsers).forEach(user =>
+                    users.push(user.email)
+                )
+                return users
+            }
+        },
+//        mounted () {
+//          Array.from(this.activeUsers).forEach(user =>
+//              this.responsible.push(`${user.name} - ${user.email}`)
+//          )
+//        },
         watch: {
             riskAttr (newVal, oldVal) {
                 this.text = newVal.text
@@ -97,11 +114,13 @@
                     category: this.category,
                     causes: this.causes,
                     consequences: this.consequences,
-                    responsible: this.responsible,
+                    responsible: this.responsible.map(x => this.getUserByEmail(x)),
                     status: this.status
                 };
 
                 this.addRiskAction(risk)
+
+                this.$router.push('/')
 
                 this.text = ''
                 this.id = ''
@@ -109,7 +128,7 @@
                 this.category = null
                 this.causes = ''
                 this.consequences = ''
-                this.responsible = ''
+                this.responsible = []
                 this.status = null
             }
         }

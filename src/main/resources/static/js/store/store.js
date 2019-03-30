@@ -9,12 +9,17 @@ export default new Vuex.Store({
         risks: frontendData.risks,
         profile: frontendData.profile,
         categories: frontendData.categories,
-        statuses: frontendData.statuses
+        statuses: frontendData.statuses,
+        users: frontendData.users
     },
     getters: {
         sortedRisks: state => (state.risks || []).sort((a, b) => -(a.id - b.id)),
         riskCategories: state => state.categories,
-        riskStatuses: state => state.statuses
+        riskStatuses: state => state.statuses,
+        activeUsers: state => state.users,
+        getUserByEmail: state => name => {
+            return state.users.find(user => user.email === name);
+        }
     },
     mutations: {
         addRiskMutation(state, risk) {

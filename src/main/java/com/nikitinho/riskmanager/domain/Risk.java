@@ -4,9 +4,12 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table
@@ -35,7 +38,11 @@ public class Risk {
     private String consequences;
 
     @JsonView(Views.FullRisk.class)
-    private String responsible;
+    @ManyToMany
+    @JoinTable(name = "risk_user",
+            joinColumns = {@JoinColumn(name = "risk_id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id")})
+    private List<User> responsible;
 
     @JsonView(Views.FullRisk.class)
     private RiskCategoryType category;
@@ -91,14 +98,6 @@ public class Risk {
         this.consequences = consequences;
     }
 
-    public String getResponsible() {
-        return responsible;
-    }
-
-    public void setResponsible(String responsible) {
-        this.responsible = responsible;
-    }
-
     public RiskCategoryType getCategory() {
         return category;
     }
@@ -113,5 +112,13 @@ public class Risk {
 
     public void setStatus(String status) {
         this.status = RiskStatusType.fromString(status);
+    }
+
+    public List<User> getResponsible() {
+        return responsible;
+    }
+
+    public void setResponsible(List<User> responsible) {
+        this.responsible = responsible;
     }
 }
