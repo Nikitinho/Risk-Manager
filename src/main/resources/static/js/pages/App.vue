@@ -2,18 +2,18 @@
     <v-app>
         <v-toolbar app>
             <v-toolbar-title>Risk management tool</v-toolbar-title>
-            <v-btn v-if="profile" flat
+            <v-btn v-if="profile" flat round
                    :disabled="$route.path === '/'"
                    @click="showRisks">
                 Home
             </v-btn>
-            <v-btn v-if="profile" flat
+            <v-btn v-if="profile" flat round
                    :disabled="$route.path === '/newRisk'"
                    @click="createRisk">
                 New
             </v-btn>
             <v-spacer></v-spacer>
-            <v-btn v-if="profile"
+            <v-btn v-if="profile" round
                    :disabled="$route.path === '/profile'"
                    @click="showProfile">
                 {{profile.name}}
