@@ -19,6 +19,9 @@ export default new Vuex.Store({
         activeUsers: state => state.users,
         getUserByEmail: state => name => {
             return state.users.find(user => user.email === name);
+        },
+        getRiskById: state => id => {
+            return state.risks.find(risk => risk.id === id)
         }
     },
     mutations: {

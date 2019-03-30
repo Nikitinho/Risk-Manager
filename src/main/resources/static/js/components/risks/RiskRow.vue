@@ -9,6 +9,7 @@
         <v-card-text class="title font-weight-light">
             {{ risk.description }}
         </v-card-text>
+        <v-divider></v-divider>
         <v-card-actions>
             <v-list-tile class="grow">
                 <span v-for="user in risk.responsible">
@@ -36,9 +37,9 @@
     export default {
         props: ['risk'],
         methods: {
-            ...mapActions(['removeRiskAction', 'updateRiskAction']),
+            ...mapActions(['removeRiskAction']),
             edit () {
-                this.updateRiskAction(this.risk)
+                this.$router.push({ name: 'RiskCreation', params: { riskId: this.risk.id } })
             },
             del () {
                 this.removeRiskAction(this.risk)

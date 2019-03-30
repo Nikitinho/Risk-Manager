@@ -11,7 +11,8 @@ const routes = [
     { path: '/', component: RisksList },
     { path: '/auth', component: Auth },
     { path: '/profile', component: Profile },
-    { path: '/newRisk', component: RiskCreation },
+    // { path: '/newRisk', component: RiskCreation },
+    { path: '/newRisk/:riskId', name: 'RiskCreation', component: RiskCreation, props: true },
     { path: '*', component: RisksList }
 ]
 

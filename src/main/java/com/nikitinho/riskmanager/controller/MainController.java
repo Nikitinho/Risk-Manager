@@ -43,7 +43,6 @@ public class MainController {
             data.put("statuses", Stream.of(RiskStatusType.values()).map(RiskStatusType::toString).toArray());
             data.put("risks", riskRepo.findAll());
             data.put("users", userDetailsRepo.findAll());
-//            data.put("users", userDetailsRepo.findAll().stream().map(User::getEmail).toArray());
         }
 
         model.addAttribute("frontendData", data);

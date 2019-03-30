@@ -67,6 +67,7 @@
 
     export default {
         name: 'RiskCreation',
+        props: ['riskId'],
         data() {
             return {
                 text: '',
@@ -79,7 +80,10 @@
             }
         },
         computed: {
-            ...mapGetters(['riskCategories', 'riskStatuses', 'activeUsers', 'getUserByEmail']),
+            ...mapGetters(['riskCategories', 'riskStatuses', 'activeUsers', 'getUserByEmail', 'getRiskById']),
+            isNewRisk() {
+                return !this.riskId
+            },
             responsibleUsers() {
                 let users = []
                 Array.from(this.activeUsers).forEach(user =>
@@ -88,11 +92,18 @@
                 return users
             }
         },
-//        mounted () {
-//          Array.from(this.activeUsers).forEach(user =>
-//              this.responsible.push(`${user.name} - ${user.email}`)
-//          )
-//        },
+        mounted () {
+            if (!this.isNewRisk) {
+                const risk = this.getRiskById(this.riskId)
+                this.text = risk.text
+                this.description = risk.description
+                this.category = this.getCategoryName(risk.category)
+                this.causes = risk.causes
+                this.consequences = risk.consequences
+                this.responsible = this.getResponsibleNames(risk.responsible)
+                this.status = risk.status
+            }
+        },
         watch: {
             riskAttr (newVal, oldVal) {
                 this.text = newVal.text
@@ -105,7 +116,18 @@
             }
         },
         methods: {
-            ...mapActions(['addRiskAction']),
+            ...mapActions(['addRiskAction', 'updateRiskAction']),
+            getResponsibleNames(people) {
+                let users = []
+                Array.from(people).forEach(user =>
+                    users.push(user.email)
+                )
+                return users
+            },
+            getCategoryName(category) {
+                console.log(category)
+                return category
+            },
             save() {
                 const risk = {
                     id: this.id,
@@ -118,7 +140,10 @@
                     status: this.status
                 };
 
-                this.addRiskAction(risk)
+                if (this.isNewRisk)
+                    this.addRiskAction(risk)
+                else
+                    this.updateRiskAction(risk)
 
                 this.$router.push('/')
 
