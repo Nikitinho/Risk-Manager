@@ -1,5 +1,5 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-    <v-card class="my-2" @click.native="openView()">
+    <v-card class="my-2">
         <v-card-title>
             <span v-if="risk.status === 'CLOSED'">
             <!--<v-icon large color="red" left>-->
@@ -17,7 +17,11 @@
                     access_time
                 </v-icon>
             </span>
-            <span class="headline font-weight-bold" >{{ risk.text }}</span>
+            <span class="headline font-weight-bold">
+                <router-link :to="{ name: 'RiskCreation', params: { riskId: this.risk.id, readonly: true } }">
+                    {{ risk.text }}
+                </router-link>
+            </span>
         </v-card-title>
         <v-card-text class="title font-weight-light">
             {{ risk.description }}
@@ -62,9 +66,6 @@
             },
             del () {
                 this.removeRiskAction(this.risk)
-            },
-            openView () {
-                this.$router.push({ name: 'RiskCreation', params: { riskId: this.risk.id, readonly: true } })
             }
         }
     }
