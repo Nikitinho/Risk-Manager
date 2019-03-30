@@ -7,6 +7,11 @@
                    @click="showRisks">
                 Home
             </v-btn>
+            <v-btn v-if="profile" flat
+                   :disabled="$route.path === '/newRisk'"
+                   @click="createRisk">
+                New
+            </v-btn>
             <v-spacer></v-spacer>
             <v-btn v-if="profile"
                    :disabled="$route.path === '/profile'"
@@ -32,6 +37,9 @@
             ...mapMutations(['addRiskMutation', 'updateRiskMutation', 'removeRiskMutation']),
             showRisks() {
                 this.$router.push('/')
+            },
+            createRisk() {
+                this.$router.push('/newRisk')
             },
             showProfile() {
                 this.$router.push('/profile')

@@ -7,7 +7,7 @@
             <span class="title font-weight-light">{{ risk.text }}</span>
         </v-card-title>
         <v-card-text class="headline font-weight-bold">
-            Risk description
+            {{ risk.description }}
         </v-card-text>
         <v-card-actions>
             <v-list-tile class="grow">

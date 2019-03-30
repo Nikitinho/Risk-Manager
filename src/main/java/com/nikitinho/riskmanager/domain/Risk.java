@@ -25,6 +25,8 @@ public class Risk {
     @JsonView(Views.FullRisk.class)
     private LocalDateTime creationDate;
 
+    private String description;
+
     public Long getId() {
         return id;
     }
@@ -48,4 +50,8 @@ public class Risk {
     public void setText(String text) {
         this.text = text;
     }
+
+    public String getDescription() { return description; }
+
+    public void setDescription(String description) { this.description = description; }
 }
