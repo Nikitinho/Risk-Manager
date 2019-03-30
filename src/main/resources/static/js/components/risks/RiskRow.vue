@@ -37,11 +37,11 @@
 <script>
     import {mapActions} from 'vuex'
     export default {
-        props: ['risk', 'editRisk'],
+        props: ['risk'],
         methods: {
-            ...mapActions(['removeRiskAction']),
+            ...mapActions(['removeRiskAction', 'updateRiskAction']),
             edit () {
-                this.editRisk(this.risk)
+                this.updateRiskAction(this.risk)
             },
             del () {
                 this.removeRiskAction(this.risk)

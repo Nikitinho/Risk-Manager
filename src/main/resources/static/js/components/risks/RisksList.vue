@@ -2,8 +2,7 @@
     <v-layout align-space-around justify-start column>
         <risk-form :riskAttr="risk"/>
         <risk-row v-for="risk in sortedRisks"
-                  :key="risk.id" :risk="risk"
-                  :editRisk="editRisk"/>
+                  :key="risk.id" :risk="risk"/>
     </v-layout>
 </template>
 
@@ -21,12 +20,7 @@
                 risk: null
             }
         },
-        computed: mapGetters(['sortedRisks']),
-        methods: {
-            editRisk(risk) {
-                this.risk = risk
-            }
-        }
+        computed: mapGetters(['sortedRisks'])
     }
 </script>
 
