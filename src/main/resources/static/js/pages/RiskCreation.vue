@@ -4,14 +4,14 @@
             <v-form ref="form"
                     v-model="valid"
                     lazy-validation>
-        <v-layout row wrap>
+        <v-layout row wrap align-center>
             <v-flex xs4>
                 <v-subheader>Risk title</v-subheader>
             </v-flex>
             <v-flex xs8>
-                <v-text-field
+                <td v-if="readonly">{{ text }}</td>
+                <v-text-field v-else
                         placeholder="Title"
-                        :disabled="readonly"
                         v-model="text"
                         :rules="validation.title"
                         required>
@@ -24,9 +24,9 @@
                 <v-subheader>Risk description</v-subheader>
             </v-flex>
             <v-flex xs8>
-                <v-textarea
+                <td v-if="readonly">{{ description }}</td>
+                <v-textarea v-else
                         placeholder="Description"
-                        :disabled="readonly"
                         v-model="description"
                         :rules="validation.description"
                         required>
@@ -39,9 +39,9 @@
                 <v-subheader>Risk category</v-subheader>
             </v-flex>
             <v-flex xs8>
-                <v-select
+                <td v-if="readonly">{{ category }}</td>
+                <v-select v-else
                         :items="riskCategories"
-                        :disabled="readonly"
                         placeholder="Risk Category"
                         v-model="category"
                         :rules="validation.category"
@@ -55,9 +55,9 @@
                 <v-subheader>Risk causes</v-subheader>
             </v-flex>
             <v-flex xs8>
-                <v-textarea
+                <td v-if="readonly">{{ causes }}</td>
+                <v-textarea v-else
                         placeholder="Causes of"
-                        :disabled="readonly"
                         v-model="causes"
                         :rules="validation.causes"
                         required>
@@ -70,9 +70,9 @@
                 <v-subheader>Description of the consequences</v-subheader>
             </v-flex>
             <v-flex xs8>
-                <v-textarea
+                <td v-if="readonly">{{ consequences }}</td>
+                <v-textarea v-else
                         placeholder="Description of the consequences"
-                        :disabled="readonly"
                         v-model="consequences"
                         :rules="validation.consequences"
                         required>
@@ -85,11 +85,11 @@
                 <v-subheader>Responsible people</v-subheader>
             </v-flex>
             <v-flex xs8>
-                <v-select
+                <td v-if="readonly">{{ responsible }}</td>
+                <v-select v-else
                         chips
                         v-model="responsible"
                         :items="responsibleUsers"
-                        :disabled="readonly"
                         placeholder="Responsible people"
                         multiple
                         :rules="validation.responsible"
@@ -103,20 +103,21 @@
                 <v-subheader>Responsible people</v-subheader>
             </v-flex>
             <v-flex xs8>
-                <v-select
+                <td v-if="readonly">{{ status }}</td>
+                <v-select v-else
                         :items="riskStatuses"
-                        :disabled="readonly"
                         placeholder="Risk Status"
                         v-model="status"
                         :rules="validation.status"
                         required>
                     ></v-select>
             </v-flex>
-            <v-flex xs12>
+            <v-flex xs12 v-if="!readonly">
                 <v-divider></v-divider>
             </v-flex>
-            <v-flex xs12>
-                <v-btn @click="save">
+            <v-flex xs12 v-if="!readonly">
+                <v-btn color="success"
+                       @click="save">
                     Save
                 </v-btn>
             </v-flex>
