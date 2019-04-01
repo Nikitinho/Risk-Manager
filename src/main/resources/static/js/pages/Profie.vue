@@ -1,24 +1,31 @@
 <template>
     <v-container text-xs-center>
+        <v-card class="my-2 py-2" max-width="100%">
         <v-layout justify-space-around>
             <v-flex :xs6="!$vuetify.breakpoint.xsOnly">
-                <div class="title mb-3">User profile</div>
                 <v-layout row justify-space-between>
-                    <v-flex class="px-1">
+                    <v-flex class="px-1" align-self-center>
                         <v-img class="img-circle" :src="profile.userpic"></v-img>
                     </v-flex>
-                    <v-flex>
+                    <v-flex align-self-center>
                         <v-layout class="px-1" column>
-                            <v-flex>{{profile.name}}</v-flex>
-                            <v-flex>{{profile.locale}}</v-flex>
-                            <v-flex>{{profile.gender}}</v-flex>
-                            <v-flex>{{profile.email}}</v-flex>
-                            <v-flex>{{profile.lastVisit}}</v-flex>
+                            <v-divider></v-divider>
+                            <v-flex>Name: {{ profile.name || 'Name is not provided' }}</v-flex>
+                            <v-divider></v-divider>
+                            <v-flex>Locale: {{ profile.locale || 'Locale is not provided' }}</v-flex>
+                            <v-divider></v-divider>
+                            <v-flex>Gender: {{ profile.gender || 'Gender is not provided' }}</v-flex>
+                            <v-divider></v-divider>
+                            <v-flex>Email: {{ profile.email || 'Email is not provided' }}</v-flex>
+                            <v-divider></v-divider>
+                            <v-flex>Last seen: {{ profile.lastVisit || 'Last visit is not provided' }}</v-flex>
+                            <v-divider></v-divider>
                         </v-layout>
                     </v-flex>
                 </v-layout>
             </v-flex>
         </v-layout>
+        </v-card>
     </v-container>
 </template>
 
