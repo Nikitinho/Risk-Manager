@@ -1,62 +1,119 @@
 <template>
-    <v-container grid-list-md text-xs-center>
+    <v-container v-if="validation" grid-list-md text-xs-center>
         <v-card class="py-2 px-2">
+            <v-form ref="form"
+                    v-model="valid"
+                    lazy-validation>
         <v-layout row wrap>
-            <v-flex xs12>
+            <v-flex xs4>
+                <v-subheader>Risk title</v-subheader>
+            </v-flex>
+            <v-flex xs8>
                 <v-text-field
-                        label="Title"
+                        placeholder="Title"
                         :disabled="readonly"
-                        v-model="text">
+                        v-model="text"
+                        :rules="validation.title"
+                        required>
                 </v-text-field>
             </v-flex>
             <v-flex xs12>
+                <v-divider></v-divider>
+            </v-flex>
+            <v-flex xs4>
+                <v-subheader>Risk description</v-subheader>
+            </v-flex>
+            <v-flex xs8>
                 <v-textarea
-                        label="Description"
+                        placeholder="Description"
                         :disabled="readonly"
-                        v-model="description">
+                        v-model="description"
+                        :rules="validation.description"
+                        required>
                 </v-textarea>
             </v-flex>
             <v-flex xs12>
-                <p class="text-xs-left">Risk Category</p>
-                <v-overflow-btn
+                <v-divider></v-divider>
+            </v-flex>
+            <v-flex xs4>
+                <v-subheader>Risk category</v-subheader>
+            </v-flex>
+            <v-flex xs8>
+                <v-select
                         :items="riskCategories"
                         :disabled="readonly"
-                        label="Risk Category"
-                        v-model="category">
-                </v-overflow-btn>
-            </v-flex>
-            <v-flex xs12>
-                <v-textarea
-                        label="Causes of"
-                        :disabled="readonly"
-                        v-model="causes">
-                </v-textarea>
-            </v-flex>
-            <v-flex xs12>
-                <v-textarea
-                        label="Description of the consequences"
-                        :disabled="readonly"
-                        v-model="consequences">
-                </v-textarea>
-            </v-flex>
-            <v-flex xs12>
-                <p class="text-xs-left">Responsible people</p>
-                <v-select
-                        v-model="responsible"
-                        :items="responsibleUsers"
-                        :disabled="readonly"
-                        label="Responsible people"
-                        multiple
+                        placeholder="Risk Category"
+                        v-model="category"
+                        :rules="validation.category"
+                        required>
                 ></v-select>
             </v-flex>
             <v-flex xs12>
-                <p class="text-xs-left">Risk Status</p>
-                <v-overflow-btn
+                <v-divider></v-divider>
+            </v-flex>
+            <v-flex xs4>
+                <v-subheader>Risk causes</v-subheader>
+            </v-flex>
+            <v-flex xs8>
+                <v-textarea
+                        placeholder="Causes of"
+                        :disabled="readonly"
+                        v-model="causes"
+                        :rules="validation.causes"
+                        required>
+                </v-textarea>
+            </v-flex>
+            <v-flex xs12>
+                <v-divider></v-divider>
+            </v-flex>
+            <v-flex xs4>
+                <v-subheader>Description of the consequences</v-subheader>
+            </v-flex>
+            <v-flex xs8>
+                <v-textarea
+                        placeholder="Description of the consequences"
+                        :disabled="readonly"
+                        v-model="consequences"
+                        :rules="validation.consequences"
+                        required>
+                </v-textarea>
+            </v-flex>
+            <v-flex xs12>
+                <v-divider></v-divider>
+            </v-flex>
+            <v-flex xs4>
+                <v-subheader>Responsible people</v-subheader>
+            </v-flex>
+            <v-flex xs8>
+                <v-select
+                        chips
+                        v-model="responsible"
+                        :items="responsibleUsers"
+                        :disabled="readonly"
+                        placeholder="Responsible people"
+                        multiple
+                        :rules="validation.responsible"
+                        required
+                ></v-select>
+            </v-flex>
+            <v-flex xs12>
+                <v-divider></v-divider>
+            </v-flex>
+            <v-flex xs4>
+                <v-subheader>Responsible people</v-subheader>
+            </v-flex>
+            <v-flex xs8>
+                <v-select
                         :items="riskStatuses"
                         :disabled="readonly"
-                        label="Risk Status"
-                        v-model="status">
-                </v-overflow-btn>
+                        placeholder="Risk Status"
+                        v-model="status"
+                        :rules="validation.status"
+                        required>
+                    ></v-select>
+            </v-flex>
+            <v-flex xs12>
+                <v-divider></v-divider>
             </v-flex>
             <v-flex xs12>
                 <v-btn @click="save">
@@ -64,6 +121,7 @@
                 </v-btn>
             </v-flex>
         </v-layout>
+            </v-form>
         </v-card>
     </v-container>
 </template>
@@ -71,19 +129,22 @@
 <script>
     import { mapActions } from 'vuex'
     import { mapGetters } from 'vuex'
+    import validation from 'validation/RiskFormValidation'
 
     export default {
         name: 'RiskCreation',
         props: ['riskId', 'readonly'],
         data() {
             return {
+                valid: true,
                 text: '',
                 description: '',
                 category: null,
                 causes: '',
                 consequences: '',
                 responsible: [],
-                status: null
+                status: null,
+                validation: null
             }
         },
         computed: {
@@ -100,6 +161,7 @@
             }
         },
         mounted () {
+            this.validation = validation
             if (!this.isNewRisk) {
                 const risk = this.getRiskById(this.riskId)
                 this.text = risk.text
@@ -134,6 +196,9 @@
                 return users
             },
             save() {
+                if (!this.$refs.form.validate())
+                    return
+
                 const risk = {
                     text: this.text,
                     description: this.description,

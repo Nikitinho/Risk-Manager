@@ -1,7 +1,7 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <v-layout align-space-around justify-start column>
-        <v-toolbar tabs>
-            <v-text-field class="my-2"
+        <v-toolbar class="my-1" tabs>
+            <v-text-field
                     append-icon="mic"
                     flat
                     label="Search"
@@ -14,9 +14,8 @@
                         centered
                         height = "100%"
                         color="transparent">
-                    <v-tab height = "100%">
-                        <v-select
-                                v-model="category"
+                    <v-tab>
+                        <v-select v-model="category"
                                 :items="riskCategoriesItems"
                                 label="Category"
                                 solo
@@ -52,11 +51,9 @@
 <script>
     import { mapGetters } from 'vuex'
     import RiskRow from 'components/risks/RiskRow.vue'
-    import RiskForm from 'components/risks/RiskForm.vue'
     export default {
         components: {
-          RiskRow,
-          RiskForm
+          RiskRow
         },
         data() {
             return {

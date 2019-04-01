@@ -1,11 +1,11 @@
 <template>
-    <v-container>
+    <v-container text-xs-center>
         <v-layout justify-space-around>
             <v-flex :xs6="!$vuetify.breakpoint.xsOnly">
                 <div class="title mb-3">User profile</div>
                 <v-layout row justify-space-between>
                     <v-flex class="px-1">
-                        <v-img :src="profile.userpic"></v-img>
+                        <v-img class="img-circle" :src="profile.userpic"></v-img>
                     </v-flex>
                     <v-flex>
                         <v-layout class="px-1" column>
@@ -34,5 +34,8 @@
     img {
         max-width: 100%;
         height: auto;
+    }
+    .img-circle {
+        border-radius: 50%;
     }
 </style>
