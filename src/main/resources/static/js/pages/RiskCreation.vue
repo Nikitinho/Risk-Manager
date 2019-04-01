@@ -5,6 +5,15 @@
                     v-model="valid"
                     lazy-validation>
         <v-layout row wrap align-center>
+            <v-flex xs12 text-xs-right v-if="readonly">
+                <v-btn color="warning"
+                       @click="() => this.savePDF(this.getRiskById(this.riskId))">
+                    Downolad PDF
+                </v-btn>
+            </v-flex>
+            <v-flex xs12 v-if="readonly">
+                <v-divider></v-divider>
+            </v-flex>
             <v-flex xs4>
                 <v-subheader>Risk title</v-subheader>
             </v-flex>
@@ -100,7 +109,7 @@
                 <v-divider></v-divider>
             </v-flex>
             <v-flex xs4>
-                <v-subheader>Responsible people</v-subheader>
+                <v-subheader>Risk status</v-subheader>
             </v-flex>
             <v-flex xs8>
                 <td v-if="readonly">{{ status }}</td>
@@ -131,10 +140,12 @@
     import { mapActions } from 'vuex'
     import { mapGetters } from 'vuex'
     import validation from 'validation/RiskFormValidation'
+    import printingRiskMixin from 'mixin/PrintingRiskMixin'
 
     export default {
         name: 'RiskCreation',
         props: ['riskId', 'readonly'],
+        mixins: [printingRiskMixin],
         data() {
             return {
                 valid: true,
@@ -197,8 +208,7 @@
                 return users
             },
             save() {
-                if (!this.$refs.form.validate())
-                    return
+                if (!this.$refs.form.validate()) { return }
 
                 const risk = {
                     text: this.text,
