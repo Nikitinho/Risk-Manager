@@ -18,7 +18,7 @@
                             <v-divider></v-divider>
                             <v-flex>Email: {{ profile.email || 'Email is not provided' }}</v-flex>
                             <v-divider></v-divider>
-                            <v-flex>Last seen: {{ profile.lastVisit || 'Last visit is not provided' }}</v-flex>
+                            <v-flex>Last action: {{ profile.lastVisit || 'Last action is not provided' }}</v-flex>
                             <v-divider></v-divider>
                         </v-layout>
                     </v-flex>

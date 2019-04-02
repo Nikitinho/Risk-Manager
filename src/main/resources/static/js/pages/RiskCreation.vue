@@ -10,6 +10,14 @@
                        @click="() => this.savePDF(this.getRiskById(this.riskId))">
                     Downolad PDF
                 </v-btn>
+                <v-btn color="primary"
+                       @click="() => this.edit(this.getRiskById(this.riskId))">
+                    Edit
+                </v-btn>
+                <v-btn color="error"
+                       @click="() => this.del(this.getRiskById(this.riskId))">
+                    Delete
+                </v-btn>
             </v-flex>
             <v-flex xs12 v-if="readonly">
                 <v-divider></v-divider>
@@ -199,13 +207,21 @@
             }
         },
         methods: {
-            ...mapActions(['addRiskAction', 'updateRiskAction']),
+            ...mapActions(['addRiskAction', 'updateRiskAction', 'removeRiskAction']),
             getResponsibleNames(people) {
                 let users = []
                 Array.from(people).forEach(user =>
                     users.push(user.email)
                 )
                 return users
+            },
+            edit (risk) {
+                this.$router.push('/')
+                this.$router.push({ name: 'RiskCreation', params: { riskId: risk.id, readonly: false } })
+            },
+            del (risk) {
+                this.removeRiskAction(risk)
+                this.$router.push('/')
             },
             save() {
                 if (!this.$refs.form.validate()) { return }
