@@ -62,7 +62,7 @@
         methods: {
             ...mapActions(['removeRiskAction']),
             edit () {
-                this.$router.push({ name: 'RiskCreation', params: { riskId: this.risk.id } })
+                this.$router.push({ name: 'RiskCreation', params: { riskId: this.risk.id, readonly: false } })
             },
             del () {
                 this.removeRiskAction(this.risk)
