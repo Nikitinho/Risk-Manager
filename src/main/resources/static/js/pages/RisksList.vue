@@ -64,6 +64,8 @@
 <script>
     import { mapGetters } from 'vuex'
     import RiskRow from 'components/risks/RiskRow.vue'
+    import Risk from 'domain/Risk'
+
     export default {
         components: {
           RiskRow
@@ -97,11 +99,11 @@
                 }
 
                 if (this.status) {
-                    risks = risks.filter(risk => risk.status === this.status)
+                    risks = risks.filter(risk => Risk.convertStatus(risk.status) === this.status)
                 }
 
                 if (this.category) {
-                    risks = risks.filter(risk => risk.category === this.category)
+                    risks = risks.filter(risk => Risk.convertCategory(risk.category) === this.category)
                 }
 
                 return risks

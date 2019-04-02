@@ -39,6 +39,7 @@
                 this.$router.push('/')
             },
             createRisk() {
+                this.$router.go()
                 this.$router.push('/newRisk')
             },
             showProfile() {
