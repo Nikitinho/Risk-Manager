@@ -6,6 +6,7 @@ import com.nikitinho.riskmanager.domain.Views;
 import com.nikitinho.riskmanager.dto.EventType;
 import com.nikitinho.riskmanager.dto.ObjectType;
 import com.nikitinho.riskmanager.repo.RiskRepo;
+import com.nikitinho.riskmanager.service.NotificationService;
 import com.nikitinho.riskmanager.util.WsSender;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +21,13 @@ import java.util.function.BiConsumer;
 public class RiskController {
     private final RiskRepo riskRepo;
     private final BiConsumer<EventType, Risk> wsSender;
+    private final NotificationService notificationService;
 
     @Autowired
-    public RiskController(RiskRepo riskRepo, WsSender wsSender) {
+    public RiskController(RiskRepo riskRepo, WsSender wsSender, NotificationService notificationService) {
         this.riskRepo = riskRepo;
         this.wsSender = wsSender.getSender(ObjectType.RISK, Views.IdName.class);
+        this.notificationService = notificationService;
     }
 
     @GetMapping
@@ -43,6 +46,7 @@ public class RiskController {
     public Risk create(@RequestBody Risk risk) {
         risk.setCreationDate(LocalDateTime.now());
         Risk uploadedRisk = riskRepo.save(risk);
+        notificationService.sendNotification(risk, EventType.CREATE);
 
         wsSender.accept(EventType.CREATE, uploadedRisk);
 
