@@ -18,7 +18,7 @@
                 </v-icon>
             </span>
             <span class="headline font-weight-bold">
-                <router-link :to="{ name: 'RiskCreation', params: { riskId: this.risk.id, readonly: true } }">
+                <router-link :to="{ name: 'RiskView', params: { riskId: this.risk.id } }">
                     {{ risk.text }}
                 </router-link>
             </span>
@@ -62,7 +62,7 @@
         methods: {
             ...mapActions(['removeRiskAction']),
             edit () {
-                this.$router.push({ name: 'RiskCreation', params: { riskId: this.risk.id, readonly: false } })
+                this.$router.push({ name: 'RiskEdition', params: { riskId: this.risk.id } })
             },
             del () {
                 this.removeRiskAction(this.risk)

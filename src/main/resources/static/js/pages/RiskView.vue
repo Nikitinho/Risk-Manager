@@ -1,16 +1,23 @@
 <template>
     <risk-template :risk="risk"
-                   :readonly="false"
-                   :validation="validation"
-                   @validationForm="checkInput($event)">
-        <v-flex xs12 slot="footer-buttons">
-            <v-divider></v-divider>
-        </v-flex>
-        <v-flex xs12 slot="footer-buttons">
-            <v-btn color="success"
-                   @click="save">
-                Save
+                   :readonly="true"
+                   :validation="validation">
+        <v-flex xs12 text-xs-right slot="header-buttons">
+            <v-btn color="warning"
+                   @click="() => this.savePDF(this.risk)">
+                Downolad PDF
             </v-btn>
+            <v-btn color="primary"
+                   @click="() => this.edit(this.risk)">
+                Edit
+            </v-btn>
+            <v-btn color="error"
+                   @click="() => this.del(this.risk)">
+                Delete
+            </v-btn>
+        </v-flex>
+        <v-flex xs12 slot="header-buttons">
+            <v-divider></v-divider>
         </v-flex>
     </risk-template>
 </template>
@@ -20,23 +27,21 @@
     import { mapGetters } from 'vuex'
     import RiskTemplate from 'pages/RiskTemplate.vue'
     import validation from 'validation/RiskFormValidation'
+    import printingRiskMixin from 'mixin/PrintingRiskMixin'
     import Risk from 'domain/Risk'
 
     export default {
-        name: 'RiskCreation',
+        name: 'RiskView',
         props: ['riskId'],
+        mixins: [printingRiskMixin],
         data() {
             return {
-                validator: null,
                 risk: null,
                 validation: null
             }
         },
         computed: {
             ...mapGetters(['riskCategories', 'riskStatuses', 'activeUsers', 'getUserByEmail', 'getRiskById', 'getProfile']),
-            isNewRisk() {
-                return !this.riskId
-            },
             responsibleUsers() {
                 let users = []
                 Array.from(this.activeUsers).forEach(user =>
@@ -46,21 +51,13 @@
             }
         },
         created () {
+            this.readOnly = (this.readonly === 'true' || this.readonly === true)
             this.validation = validation
-            if (!this.isNewRisk) {
-                this.risk = new Risk(this.getRiskById((Number)(this.riskId)))
-                this.risk.responsible = this.getResponsibleNames(this.risk.responsible)
-            } else {
-                this.risk = new Risk()
-                this.risk.responsible = []
-                this.risk.responsible.push(this.getProfile.email)
-            }
+            this.risk = new Risk(this.getRiskById((Number)(this.riskId)))
+            this.risk.responsible = this.getResponsibleNames(this.risk.responsible)
         },
         methods: {
             ...mapActions(['addRiskAction', 'updateRiskAction', 'removeRiskAction']),
-            checkInput(event) {
-                this.validator = event
-            },
             getResponsibleNames(people) {
                 let users = []
                 Array.from(people).forEach(user =>
@@ -68,18 +65,11 @@
                 )
                 return users
             },
-            save() {
-                if (!this.validator.validate()) { return }
-
-                this.risk.responsible = this.risk.responsible.map(x => this.getUserByEmail(x))
-                if (this.isNewRisk) {
-                    this.risk["id"] = this.id
-                    this.addRiskAction(this.risk)
-                } else {
-                    this.risk["id"] = this.riskId
-                    this.updateRiskAction(this.risk)
-                }
-
+            edit (risk) {
+                this.$router.push({ name: 'RiskEdition', params: { riskId: risk.id } })
+            },
+            del (risk) {
+                this.removeRiskAction(risk)
                 this.$router.push({ name: 'RisksList' })
             }
         },

@@ -13,9 +13,10 @@
                 New
             </v-btn>
             <v-spacer></v-spacer>
-            <span>
-                {{ currentPath }}
-            </span>
+            <v-btn v-if="profile && showListOptions" icon
+                   @click="swapListRenderStyle">
+                <v-icon>list</v-icon>
+            </v-btn>
             <v-btn v-if="profile" round
                    :disabled="$route.path === '/profile'"
                    @click="showProfile">
@@ -33,18 +34,15 @@
 
 <script>
     import { mapState, mapMutations } from 'vuex'
-    import {addHandler} from 'util/ws';
+    import { addHandler } from 'util/ws'
     export default {
-        computed: {
-            ...mapState(['profile']),
-            showListOptions() {
-                return this.$router.currentRoute.path === '/'
-            },
-            currentPath () {
-                console.log(this.$router.currentRoute.name)
-                console.log(this.$router.currentRoute.path)
-                return this.$route.name
+        data () {
+            return {
+                showListOptions: true,
             }
+        },
+        computed: {
+            ...mapState(['profile'])
         },
         methods: {
             ...mapMutations(['addRiskMutation', 'updateRiskMutation', 'removeRiskMutation']),
@@ -52,13 +50,19 @@
                 this.$router.push({ name: 'RisksList' })
             },
             createRisk() {
-                this.$router.push({ path: '/newRisk' })
+                this.$router.push({ name: 'RiskCreation' })
             },
             showProfile() {
-                this.$router.push({ path: '/profile' })
+                this.$router.push({ name: 'Profile' })
+            },
+            swapListRenderStyle() {
             }
-        }
-        ,
+        },
+        watch: {
+            $route (val) {
+                this.showListOptions = this.$router.currentRoute.name === "RisksList"
+            }
+        },
         created() {
             addHandler(data => {
                 if (data.objectType === 'RISK') {
@@ -82,7 +86,7 @@
         },
         beforeMount() {
             if (!this.profile) {
-                this.$router.replace('/auth')
+                this.$router.replace({ name: 'GoogleAuth' })
             }
         }
     }
