@@ -8,9 +8,9 @@ import RiskCreation from 'pages/RiskCreation.vue'
 Vue.use(VueRouter)
 
 const routes = [
-    { path: '/', component: RisksList },
-    { path: '/auth', component: Auth },
-    { path: '/profile', component: Profile },
+    { path: '/', name: 'RisksList', component: RisksList },
+    { path: '/auth', name: 'GoogleAuth', component: Auth },
+    { path: '/profile', name: 'Profile', component: Profile },
     { path: '/newRisk', component: RiskCreation },
     { path: '/newRisk/:riskId/:readonly', name: 'RiskCreation', component: RiskCreation, props: true },
     { path: '*', component: RisksList }

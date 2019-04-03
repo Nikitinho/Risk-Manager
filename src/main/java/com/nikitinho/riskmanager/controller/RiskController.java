@@ -47,7 +47,7 @@ public class RiskController {
         risk.setCreationDate(LocalDateTime.now());
         Risk uploadedRisk = riskRepo.save(risk);
 
-//        notificationService.sendNotification(uploadedRisk, EventType.CREATE);
+        notificationService.sendNotification(uploadedRisk, EventType.CREATE);
 
         wsSender.accept(EventType.CREATE, uploadedRisk);
 
@@ -62,7 +62,7 @@ public class RiskController {
 
         Risk updatedRisk = riskRepo.save(riskFromDb);
 
-//        notificationService.sendNotification(updatedRisk, EventType.UPDATE);
+        notificationService.sendNotification(updatedRisk, EventType.UPDATE);
 
         wsSender.accept(EventType.UPDATE, updatedRisk);
 
@@ -72,7 +72,7 @@ public class RiskController {
     @DeleteMapping("{id}")
     public void delete(@PathVariable("id") Risk risk) {
         riskRepo.delete(risk);
-//        notificationService.sendNotification(risk, EventType.REMOVE);
+        notificationService.sendNotification(risk, EventType.REMOVE);
         wsSender.accept(EventType.REMOVE, risk);
     }
 

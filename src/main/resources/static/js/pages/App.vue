@@ -13,6 +13,9 @@
                 New
             </v-btn>
             <v-spacer></v-spacer>
+            <span>
+                {{ currentPath }}
+            </span>
             <v-btn v-if="profile" round
                    :disabled="$route.path === '/profile'"
                    @click="showProfile">
@@ -23,7 +26,7 @@
             </v-btn>
         </v-toolbar>
         <v-content>
-            <router-view></router-view>
+            <router-view :key="$route.fullPath"></router-view>
         </v-content>
     </v-app>
 </template>
@@ -32,18 +35,27 @@
     import { mapState, mapMutations } from 'vuex'
     import {addHandler} from 'util/ws';
     export default {
-        computed: mapState(['profile']),
+        computed: {
+            ...mapState(['profile']),
+            showListOptions() {
+                return this.$router.currentRoute.path === '/'
+            },
+            currentPath () {
+                console.log(this.$router.currentRoute.name)
+                console.log(this.$router.currentRoute.path)
+                return this.$route.name
+            }
+        },
         methods: {
             ...mapMutations(['addRiskMutation', 'updateRiskMutation', 'removeRiskMutation']),
             showRisks() {
-                this.$router.push('/')
+                this.$router.push({ name: 'RisksList' })
             },
             createRisk() {
-                this.$router.go()
-                this.$router.push('/newRisk')
+                this.$router.push({ path: '/newRisk' })
             },
             showProfile() {
-                this.$router.push('/profile')
+                this.$router.push({ path: '/profile' })
             }
         }
         ,
