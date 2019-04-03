@@ -78,7 +78,7 @@ public class NotificationService {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(env.getProperty("spring.mail.username")));
             message.setSubject(subject.toString());
-            message.setContent(result, "text/html");
+            message.setContent(result, "text/html; charset=UTF-8");
 
             risk.getResponsible().forEach(user -> {
                 try {

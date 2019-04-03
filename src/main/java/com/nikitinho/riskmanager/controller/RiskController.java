@@ -44,12 +44,17 @@ public class RiskController {
 
     @PostMapping
     public Risk create(@RequestBody Risk risk) {
+
+
         risk.setCreationDate(LocalDateTime.now());
         Risk uploadedRisk = riskRepo.save(risk);
+        Runnable runnable = () -> {
+            notificationService.sendNotification(uploadedRisk, EventType.CREATE);
+            wsSender.accept(EventType.CREATE, uploadedRisk);
+        };
 
-        notificationService.sendNotification(uploadedRisk, EventType.CREATE);
-
-        wsSender.accept(EventType.CREATE, uploadedRisk);
+        Thread thread = new Thread(runnable);
+        thread.start();
 
         return uploadedRisk;
     }
@@ -62,9 +67,13 @@ public class RiskController {
 
         Risk updatedRisk = riskRepo.save(riskFromDb);
 
-        notificationService.sendNotification(updatedRisk, EventType.UPDATE);
+        Runnable runnable = () -> {
+            notificationService.sendNotification(updatedRisk, EventType.UPDATE);
+            wsSender.accept(EventType.UPDATE, updatedRisk);
+        };
 
-        wsSender.accept(EventType.UPDATE, updatedRisk);
+        Thread thread = new Thread(runnable);
+        thread.start();
 
         return updatedRisk;
     }
