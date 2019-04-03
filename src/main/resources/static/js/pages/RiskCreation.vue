@@ -4,9 +4,6 @@
                    :validation="validation"
                    @validationForm="checkInput($event)">
         <v-flex xs12 slot="footer-buttons">
-            <v-divider></v-divider>
-        </v-flex>
-        <v-flex xs12 slot="footer-buttons">
             <v-btn color="success"
                    @click="save">
                 Save

@@ -111,9 +111,82 @@
                         v-model="risk.status"
                         :rules="validation.status"
                         required>
-                    ></v-select>
+                </v-select>
             </v-flex>
-            <slot name="footer-buttons">
+            <v-flex xs12>
+                <v-divider></v-divider>
+            </v-flex>
+            <v-flex xs12 v-if="!crammStagesAdded">
+                <v-btn color="success"
+                       @click="() => { this.crammStagesAdded = true;
+                       this.cramm.push({'asset': '', 'assetRate': '', 'threat': '', 'vulnerability': '', 'vulnerabilityRate': ''});
+                       }">
+                    Add cramm criteria
+                </v-btn>
+            </v-flex>
+            <slot v-for="(item, index) in cramm">
+                <v-flex xs4>
+                    <v-subheader>
+                    <v-layout column>
+                        <v-btn fab dark color="indigo" @click="() => cramm.push({'asset': '', 'assetRate': '', 'threat': '', 'vulnerability': '', 'vulnerabilityRate': ''})">
+                            <v-icon dark>add</v-icon>
+                        </v-btn>
+                        <v-btn fab dark color="red" @click="() => cramm.splice(index, 1)">
+                            <v-icon dark>remove</v-icon>
+                        </v-btn>
+                    </v-layout>
+                    </v-subheader>
+                </v-flex>
+                <v-flex xs8>
+                    <v-layout column>
+                        <v-layout row>
+                            <v-flex xs9>
+                                <td v-if="readonly">{{ cramm[index].asset }}</td>
+                                <v-text-field v-else
+                                              placeholder="Asset"
+                                              v-model="cramm[index].asset">
+                                </v-text-field>
+                            </v-flex>
+                            <v-flex xs3>
+                                <td v-if="readonly">{{ cramm[index].assetRate }}</td>
+                                <v-text-field v-else
+                                              placeholder="Asset Rate"
+                                              v-model="cramm[index].assetRate">
+                                </v-text-field>
+                            </v-flex>
+                        </v-layout>
+                        <v-layout row>
+                            <v-flex xs12>
+                                <td v-if="readonly">{{ cramm[index].threat }}</td>
+                                <v-text-field v-else
+                                              placeholder="Threat"
+                                              v-model="cramm[index].threat">
+                                </v-text-field>
+                            </v-flex>
+                        </v-layout>
+                        <v-layout row>
+                            <v-flex xs9>
+                                <td v-if="readonly">{{ cramm[index].vulnerability }}</td>
+                                <v-text-field v-else
+                                              placeholder="Vulnerability"
+                                              v-model="cramm[index].vulnerability">
+                                </v-text-field>
+                            </v-flex>
+                            <v-flex xs3>
+                                <td v-if="readonly">{{ cramm[index].vulnerabilityRate }}</td>
+                                <v-text-field v-else
+                                              placeholder="Vulnerability Rate"
+                                              v-model="cramm[index].vulnerabilityRate">
+                                </v-text-field>
+                            </v-flex>
+                        </v-layout>
+                    </v-layout>
+                </v-flex>
+                <v-flex xs12>
+                    <v-divider></v-divider>
+                </v-flex>
+            </slot>
+            <slot v-if="crammStagesAdded" name="footer-buttons">
             </slot>
         </v-layout>
             </v-form>
@@ -131,8 +204,21 @@
         name: 'RiskTemplate',
         props: ['risk', 'readonly', 'validation'],
         mixins: [printingRiskMixin],
+        data() {
+            return {
+                crammStagesAdded: false,
+                cramm: []
+            }
+        },
         mounted () {
           this.$emit('validationForm', this.$refs.form);
+        },
+        watch: {
+          cramm (val) {
+              if (val.length === 0) {
+                  this.crammStagesAdded = false
+              }
+          }
         },
         computed: {
             ...mapGetters(['riskCategories', 'riskStatuses', 'activeUsers', 'getUserByEmail', 'getRiskById', 'getProfile']),
