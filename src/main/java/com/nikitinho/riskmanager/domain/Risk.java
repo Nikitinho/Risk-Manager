@@ -2,6 +2,7 @@ package com.nikitinho.riskmanager.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonView;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.hibernate.annotations.Type;
@@ -15,6 +16,7 @@ import java.util.List;
 @Table
 @ToString(of = {"id", "text"})
 @EqualsAndHashCode(of = {"id"})
+@Data
 public class Risk {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -50,75 +52,6 @@ public class Risk {
     @JsonView(Views.FullRisk.class)
     private RiskStatusType status;
 
-    public Long getId() {
-        return id;
-    }
-
-    public LocalDateTime getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getCauses() {
-        return causes;
-    }
-
-    public void setCauses(String causes) {
-        this.causes = causes;
-    }
-
-    public String getConsequences() {
-        return consequences;
-    }
-
-    public void setConsequences(String consequences) {
-        this.consequences = consequences;
-    }
-
-    public RiskCategoryType getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = RiskCategoryType.fromString(category);
-    }
-
-    public RiskStatusType getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = RiskStatusType.fromString(status);
-    }
-
-    public List<User> getResponsible() {
-        return responsible;
-    }
-
-    public void setResponsible(List<User> responsible) {
-        this.responsible = responsible;
-    }
+    @OneToMany(mappedBy = "risk", orphanRemoval = true)
+    private List<CRAMM> cramms;
 }

@@ -14,6 +14,9 @@ export default class Risk {
             this.consequences = risk.consequences
             this.responsible = risk.responsible
             this.status = Risk.convertStatus(risk.status)
+            this.cramms = risk.cramms
+        } else {
+            this.cramms = []
         }
     }
 
@@ -46,6 +49,27 @@ export default class Risk {
                 return 'Риски поставщиков'
             case 'LACK_OF_QUALITY':
                 return 'Риски несоответствия качеству'
+            default:
+                return null
+        }
+    }
+
+    static deConvertCategroy(category) {
+        switch (category) {
+            case 'Риск интеграции':
+                return 'INTEGRATION'
+            case 'Финансовые риски':
+                return 'FINANCIAL'
+            case 'Временные риски':
+                return 'TEMPORARY'
+            case 'Риски персонала':
+                return 'PERSONNEL'
+            case 'Коммуникационные риски':
+                return 'COMMUNICATION'
+            case 'Риски поставщиков':
+                return 'VENDOR'
+            case 'Риски несоответствия качеству':
+                return 'LACK_OF_QUALITY'
             default:
                 return null
         }

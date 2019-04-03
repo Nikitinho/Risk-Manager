@@ -113,25 +113,25 @@
                         required>
                 </v-select>
             </v-flex>
-            <v-flex xs12>
+            <v-flex xs12 v-if="!readonly">
                 <v-divider></v-divider>
             </v-flex>
-            <v-flex xs12 v-if="!crammStagesAdded">
+            <v-flex xs12 v-if="!crammStagesAdded && !readonly">
                 <v-btn color="success"
                        @click="() => { this.crammStagesAdded = true;
-                       this.cramm.push({'asset': '', 'assetRate': '', 'threat': '', 'vulnerability': '', 'vulnerabilityRate': ''});
+                       risk.cramms.push({'asset': '', 'assetRate': '', 'threat': '', 'vulnerability': '', 'vulnerabilityRate': ''});
                        }">
                     Add cramm criteria
                 </v-btn>
             </v-flex>
-            <slot v-for="(item, index) in cramm">
+            <slot v-for="(item, index) in risk.cramms">
                 <v-flex xs4>
                     <v-subheader>
                     <v-layout column>
-                        <v-btn fab dark color="indigo" @click="() => cramm.push({'asset': '', 'assetRate': '', 'threat': '', 'vulnerability': '', 'vulnerabilityRate': ''})">
+                        <v-btn fab dark color="indigo" @click="() => risk.cramms.push({'asset': '', 'assetRate': '', 'threat': '', 'vulnerability': '', 'vulnerabilityRate': ''})">
                             <v-icon dark>add</v-icon>
                         </v-btn>
-                        <v-btn fab dark color="red" @click="() => cramm.splice(index, 1)">
+                        <v-btn fab dark color="red" @click="() => risk.cramms.splice(index, 1)">
                             <v-icon dark>remove</v-icon>
                         </v-btn>
                     </v-layout>
@@ -141,42 +141,42 @@
                     <v-layout column>
                         <v-layout row>
                             <v-flex xs9>
-                                <td v-if="readonly">{{ cramm[index].asset }}</td>
+                                <td v-if="readonly">{{ risk.cramms[index].asset }}</td>
                                 <v-text-field v-else
                                               placeholder="Asset"
-                                              v-model="cramm[index].asset">
+                                              v-model="risk.cramms[index].asset">
                                 </v-text-field>
                             </v-flex>
                             <v-flex xs3>
-                                <td v-if="readonly">{{ cramm[index].assetRate }}</td>
+                                <td v-if="readonly">{{ risk.cramms[index].assetRate }}</td>
                                 <v-text-field v-else
                                               placeholder="Asset Rate"
-                                              v-model="cramm[index].assetRate">
+                                              v-model="risk.cramms[index].assetRate">
                                 </v-text-field>
                             </v-flex>
                         </v-layout>
                         <v-layout row>
                             <v-flex xs12>
-                                <td v-if="readonly">{{ cramm[index].threat }}</td>
+                                <td v-if="readonly">{{ risk.cramms[index].threat }}</td>
                                 <v-text-field v-else
                                               placeholder="Threat"
-                                              v-model="cramm[index].threat">
+                                              v-model="risk.cramms[index].threat">
                                 </v-text-field>
                             </v-flex>
                         </v-layout>
                         <v-layout row>
                             <v-flex xs9>
-                                <td v-if="readonly">{{ cramm[index].vulnerability }}</td>
+                                <td v-if="readonly">{{ risk.cramms[index].vulnerability }}</td>
                                 <v-text-field v-else
                                               placeholder="Vulnerability"
-                                              v-model="cramm[index].vulnerability">
+                                              v-model="risk.cramms[index].vulnerability">
                                 </v-text-field>
                             </v-flex>
                             <v-flex xs3>
-                                <td v-if="readonly">{{ cramm[index].vulnerabilityRate }}</td>
+                                <td v-if="readonly">{{ risk.cramms[index].vulnerabilityRate }}</td>
                                 <v-text-field v-else
                                               placeholder="Vulnerability Rate"
-                                              v-model="cramm[index].vulnerabilityRate">
+                                              v-model="risk.cramms[index].vulnerabilityRate">
                                 </v-text-field>
                             </v-flex>
                         </v-layout>
@@ -207,18 +207,18 @@
         data() {
             return {
                 crammStagesAdded: false,
-                cramm: []
+//                cramm: []
             }
         },
         mounted () {
           this.$emit('validationForm', this.$refs.form);
         },
         watch: {
-          cramm (val) {
-              if (val.length === 0) {
-                  this.crammStagesAdded = false
-              }
-          }
+//          cramm (val) {
+//              if (val.length === 0) {
+//                  this.crammStagesAdded = false
+//              }
+//          }
         },
         computed: {
             ...mapGetters(['riskCategories', 'riskStatuses', 'activeUsers', 'getUserByEmail', 'getRiskById', 'getProfile']),

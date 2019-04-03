@@ -69,6 +69,7 @@
                 if (!this.validator.validate()) { return }
 
                 this.risk.responsible = this.risk.responsible.map(x => this.getUserByEmail(x))
+                this.risk.category = Risk.deConvertCategroy(this.risk.category)
                 if (this.isNewRisk) {
                     this.risk["id"] = this.id
                     this.addRiskAction(this.risk)
