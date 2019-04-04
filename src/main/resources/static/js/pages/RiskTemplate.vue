@@ -220,6 +220,11 @@
                 </v-flex>
                 </slot>
             </slot>
+            <slot v-if="readonly">
+                <v-flex xs12>
+                    <bubble-chart :data="risk.cramms"></bubble-chart>
+                </v-flex>
+            </slot>
             <slot v-if="crammStagesAdded" name="footer-buttons">
             </slot>
         </v-layout>
@@ -232,6 +237,7 @@
     import { mapActions } from 'vuex'
     import { mapGetters } from 'vuex'
     import printingRiskMixin from 'mixin/PrintingRiskMixin'
+    import BubbleChart from 'components/risks/BubbleChart.vue'
     import Risk from 'domain/Risk'
 
     export default {
@@ -296,6 +302,9 @@
             removeCRAMMCriteria(index) {
                 this.newRisk.cramms.splice(index, 1);
             }
+        },
+        components: {
+            BubbleChart
         }
     }
 </script>
