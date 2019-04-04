@@ -52,9 +52,6 @@
                 this.risk = undefined
             }
         },
-        mounted () {
-            console.log(this.newRisk)
-        },
         methods: {
             ...mapActions(['addRiskAction', 'updateRiskAction', 'removeRiskAction', 'addCRAMMAction']),
             checkInput(event) {
