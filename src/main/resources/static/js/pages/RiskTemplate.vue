@@ -196,34 +196,45 @@
                 </slot>
             </slot>
             <slot v-if="readonly">
-                <slot v-for="(item, index) in risk.cramms">
                 <v-flex xs12>
                     <v-divider></v-divider>
                 </v-flex>
-                <v-flex xs4>
-                    <v-subheader>Asset</v-subheader>
-                </v-flex>
-                <v-flex xs8>
-                    <td>{{ risk.cramms[index].asset }} {{ risk.cramms[index].assetRate }}</td>
-                </v-flex>
-                <v-flex xs4>
-                    <v-subheader>Threat</v-subheader>
-                </v-flex>
-                <v-flex xs8>
-                    <td>{{ risk.cramms[index].threat }}</td>
-                </v-flex>
-                <v-flex xs4>
-                    <v-subheader>Vulnerability</v-subheader>
-                </v-flex>
-                <v-flex xs8>
-                    <td>{{ risk.cramms[index].vulnerability }} {{ risk.cramms[index].vulnerabilityRate }}</td>
-                </v-flex>
-                </slot>
-            </slot>
-            <slot v-if="readonly">
                 <v-flex xs12>
                     <bubble-chart :data="risk.cramms"></bubble-chart>
                 </v-flex>
+                <v-flex xs12>
+                    <v-btn color="success"
+                           @click="() => isInfoProvided = !isInfoProvided">
+                        <span v-if="isInfoProvided">Show full graph info</span>
+                        <span v-else>Hide full graph info</span>
+
+                    </v-btn>
+                </v-flex>
+            </slot>
+            <slot v-if="readonly && isInfoProvided">
+                <slot v-for="(item, index) in risk.cramms">
+                    <v-flex xs12>
+                        <v-divider></v-divider>
+                    </v-flex>
+                    <v-flex xs4>
+                        <v-subheader>Asset</v-subheader>
+                    </v-flex>
+                    <v-flex xs8>
+                        <td>{{ risk.cramms[index].asset }} {{ risk.cramms[index].assetRate }}</td>
+                    </v-flex>
+                    <v-flex xs4>
+                        <v-subheader>Threat</v-subheader>
+                    </v-flex>
+                    <v-flex xs8>
+                        <td>{{ risk.cramms[index].threat }}</td>
+                    </v-flex>
+                    <v-flex xs4>
+                        <v-subheader>Vulnerability</v-subheader>
+                    </v-flex>
+                    <v-flex xs8>
+                        <td>{{ risk.cramms[index].vulnerability }} {{ risk.cramms[index].vulnerabilityRate }}</td>
+                    </v-flex>
+                </slot>
             </slot>
             <slot v-if="crammStagesAdded" name="footer-buttons">
             </slot>
@@ -247,7 +258,8 @@
         data() {
             return {
                 crammStagesAdded: false,
-                newRisk: null
+                newRisk: null,
+                isInfoProvided: false,
             }
         },
         created () {

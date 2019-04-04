@@ -2,6 +2,7 @@
     // Useful site with samples: www.sitepoint.com/creating-beautiful-charts-vue-chart-js
     //Importing Bubble class from the vue-chartjs wrapper
     import { Bubble } from 'vue-chartjs'
+    import Risk from 'domain/Risk'
     //Exporting this so it can be used in other components
     export default {
         extends: Bubble,
@@ -66,7 +67,7 @@
             addNewBubble(element) {
                 let newBubble = {
                     label: element.vulnerability,
-                    backgroundColor: '#C28535',
+                    backgroundColor: Risk.convertRiskLevelToColor(element.vulnerabilityRate * element.assetRate),
                     pointBackgroundColor: 'white',
                     borderWidth: 2,
                     pointBorderColor: '#000000',
