@@ -15,6 +15,16 @@ export default class Risk {
             this.responsible = risk.responsible
             this.status = Risk.convertStatus(risk.status)
             this.cramms = risk.cramms
+        } else {
+            this.text = ''
+            this.creationDate = ''
+            this.description = ''
+            this.category = null
+            this.causes = []
+            this.consequences = ''
+            this.responsible = []
+            this.status = null
+            this.cramms = []
         }
     }
 

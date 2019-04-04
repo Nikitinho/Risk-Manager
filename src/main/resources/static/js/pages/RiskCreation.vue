@@ -2,7 +2,8 @@
     <risk-template :risk="risk"
                    :readonly="false"
                    :validation="validation"
-                   @validationForm="checkInput($event)">
+                   @validationForm="checkInput($event)"
+                   @newRisk="newRisk = $event">
         <v-flex xs12 slot="footer-buttons">
             <v-btn color="success"
                    @click="save">
@@ -26,7 +27,8 @@
             return {
                 validator: null,
                 risk: null,
-                validation: null
+                validation: null,
+                newRisk: null
             }
         },
         computed: {
@@ -46,13 +48,12 @@
             this.validation = validation
             if (!this.isNewRisk) {
                 this.risk = new Risk(this.getRiskById((Number)(this.riskId)))
-                this.risk.responsible = this.getResponsibleNames(this.risk.responsible)
             } else {
-                this.risk = new Risk()
-                this.risk.responsible = []
-                this.risk.responsible.push(this.getProfile.email)
-                this.risk.cramms = []
+                this.risk = undefined
             }
+        },
+        mounted () {
+            console.log(this.newRisk)
         },
         methods: {
             ...mapActions(['addRiskAction', 'updateRiskAction', 'removeRiskAction', 'addCRAMMAction']),
@@ -69,13 +70,13 @@
             save() {
                 if (!this.validator.validate()) { return }
 
-                this.risk.responsible = this.risk.responsible.map(x => this.getUserByEmail(x))
+                this.newRisk.responsible = this.newRisk.responsible.map(x => this.getUserByEmail(x))
                 if (this.isNewRisk) {
-                    this.risk["id"] = this.id
-                    this.addRiskAction(this.risk)
+                    this.newRisk["id"] = this.id
+                    this.addRiskAction(this.newRisk)
                 } else {
-                    this.risk["id"] = this.riskId
-                    this.updateRiskAction(this.risk)
+                    this.newRisk["id"] = this.riskId
+                    this.updateRiskAction(this.newRisk)
                 }
 
                 this.$router.push({ name: 'RisksList' })

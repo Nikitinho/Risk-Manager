@@ -13,7 +13,7 @@
                 <td v-if="readonly">{{ risk.text }}</td>
                 <v-text-field v-else
                         placeholder="Title"
-                        v-model="risk.text"
+                        v-model="newRisk.text"
                         :rules="validation.title"
                         required>
                 </v-text-field>
@@ -28,7 +28,7 @@
                 <td v-if="readonly">{{ risk.description }}</td>
                 <v-textarea v-else
                         placeholder="Description"
-                        v-model="risk.description"
+                        v-model="newRisk.description"
                         :rules="validation.description"
                         required>
                 </v-textarea>
@@ -44,7 +44,7 @@
                 <v-select v-else
                         :items="riskCategories"
                         placeholder="Risk Category"
-                        v-model="risk.category"
+                        v-model="newRisk.category"
                         :rules="validation.category"
                         required>
                 ></v-select>
@@ -59,7 +59,7 @@
                 <td v-if="readonly">{{ risk.causes }}</td>
                 <v-textarea v-else
                         placeholder="Causes of"
-                        v-model="risk.causes"
+                        v-model="newRisk.causes"
                         :rules="validation.causes"
                         required>
                 </v-textarea>
@@ -74,7 +74,7 @@
                 <td v-if="readonly">{{ risk.consequences }}</td>
                 <v-textarea v-else
                         placeholder="Description of the consequences"
-                        v-model="risk.consequences"
+                        v-model="newRisk.consequences"
                         :rules="validation.consequences"
                         required>
                 </v-textarea>
@@ -89,7 +89,7 @@
                 <td v-if="readonly">{{ risk.responsible }}</td>
                 <v-select v-else
                         chips
-                        v-model="risk.responsible"
+                        v-model="newRisk.responsible"
                         :items="responsibleUsers"
                         placeholder="Responsible people"
                         multiple
@@ -108,7 +108,7 @@
                 <v-select v-else
                         :items="riskStatuses"
                         placeholder="Risk Status"
-                        v-model="risk.status"
+                        v-model="newRisk.status"
                         :rules="validation.status"
                         required>
                 </v-select>
@@ -119,12 +119,13 @@
             <v-flex xs12 v-if="!crammStagesAdded && !readonly">
                 <v-btn color="success"
                        @click="() => { this.crammStagesAdded = true;
-                       this.risk.cramms.push({'asset': '', 'assetRate': '', 'threat': '', 'vulnerability': '', 'vulnerabilityRate': ''});
+                       this.newRisk.cramms.push({'asset': '', 'assetRate': '', 'threat': '', 'vulnerability': '', 'vulnerabilityRate': ''});
                        }">
                     Add cramm criteria
                 </v-btn>
             </v-flex>
-            <slot v-if="!readonly" v-for="(item, index) in risk.cramms">
+            <slot v-if="!readonly">
+                <slot v-for="(item, index) in newRisk.cramms">
                 <v-flex xs4>
                     <v-subheader>
                     <v-layout column>
@@ -145,7 +146,7 @@
                                 <v-text-field v-else
                                               placeholder="Asset"
                                               :rules="validation.cramms.asset"
-                                              v-model="risk.cramms[index].asset">
+                                              v-model="newRisk.cramms[index].asset">
                                 </v-text-field>
                             </v-flex>
                             <v-flex xs3>
@@ -154,7 +155,7 @@
                                               type="number"
                                               placeholder="Asset Rate"
                                               :rules="validation.cramms.assetRate"
-                                              v-model="risk.cramms[index].assetRate">
+                                              v-model="newRisk.cramms[index].assetRate">
                                 </v-text-field>
                             </v-flex>
                         </v-layout>
@@ -164,7 +165,7 @@
                                 <v-text-field v-else
                                               placeholder="Threat"
                                               :rules="validation.cramms.threat"
-                                              v-model="risk.cramms[index].threat">
+                                              v-model="newRisk.cramms[index].threat">
                                 </v-text-field>
                             </v-flex>
                         </v-layout>
@@ -174,7 +175,7 @@
                                 <v-text-field v-else
                                               placeholder="Vulnerability"
                                               :rules="validation.cramms.vulnerability"
-                                              v-model="risk.cramms[index].vulnerability">
+                                              v-model="newRisk.cramms[index].vulnerability">
                                 </v-text-field>
                             </v-flex>
                             <v-flex xs3>
@@ -183,7 +184,7 @@
                                               type="number"
                                               placeholder="Vulnerability Rate"
                                               :rules="validation.cramms.vulnerabilityRate"
-                                              v-model="risk.cramms[index].vulnerabilityRate">
+                                              v-model="newRisk.cramms[index].vulnerabilityRate">
                                 </v-text-field>
                             </v-flex>
                         </v-layout>
@@ -192,8 +193,10 @@
                 <v-flex xs12>
                     <v-divider></v-divider>
                 </v-flex>
+                </slot>
             </slot>
-            <slot v-if="readonly" v-for="(item, index) in risk.cramms">
+            <slot v-if="readonly">
+                <slot v-for="(item, index) in risk.cramms">
                 <v-flex xs12>
                     <v-divider></v-divider>
                 </v-flex>
@@ -215,6 +218,7 @@
                 <v-flex xs8>
                     <td>{{ risk.cramms[index].vulnerability }} {{ risk.cramms[index].vulnerabilityRate }}</td>
                 </v-flex>
+                </slot>
             </slot>
             <slot v-if="crammStagesAdded" name="footer-buttons">
             </slot>
@@ -236,18 +240,40 @@
         mixins: [printingRiskMixin],
         data() {
             return {
-                crammStagesAdded: false
+                crammStagesAdded: false,
+                newRisk: null
+            }
+        },
+        created () {
+            // Don't know why usual "short-circuit" not working
+            let isUndefined = this.risk === undefined || this.risk === null
+            let isNoCrammsArray = (isUndefined) ? true : this.risk.cramms === undefined
+            let isNoCrammsNodes = (isNoCrammsArray) ? true : this.risk.cramms.length === 0
+            this.crammStagesAdded = !isUndefined && !isNoCrammsArray && !isNoCrammsNodes
+            if (!this.readonly) {
+                if (this.risk) {
+                    this.newRisk = new Risk(this.getRiskById((Number)(this.risk.id)))
+                    this.newRisk.responsible = this.getResponsibleNames(this.risk.responsible)
+                } else {
+                    this.newRisk = new Risk()
+                    this.newRisk.responsible = []
+                    this.newRisk.responsible.push(this.getProfile.email)
+                    this.newRisk.cramms = []
+                }
             }
         },
         mounted () {
-          this.crammStagesAdded = this.risk !== undefined && this.risk.cramms !== undefined && this.risk.cramms.length > 0
-          this.$emit('validationForm', this.$refs.form)
+            this.$emit('newRisk', this.newRisk)
+            this.$emit('validationForm', this.$refs.form)
+        },
+        watch: {
+            $refs (func) {
+                console.log(this.$refs.form)
+            },
+            deep: true
         },
         computed: {
             ...mapGetters(['riskCategories', 'riskStatuses', 'activeUsers', 'getUserByEmail', 'getRiskById', 'getProfile']),
-            isNewRisk() {
-                return !this.riskId
-            },
             responsibleUsers() {
                 let users = []
                 Array.from(this.activeUsers).forEach(user =>
@@ -258,10 +284,17 @@
         },
         methods: {
             addCRAMMCriteria() {
-                this.$set(this.risk.cramms, this.risk.cramms.length, {'asset': '', 'assetRate': '', 'threat': '', 'vulnerability': '', 'vulnerabilityRate': ''})
+                this.$set(this.newRisk.cramms, this.newRisk.cramms.length, {'asset': '', 'assetRate': '', 'threat': '', 'vulnerability': '', 'vulnerabilityRate': ''})
+            },
+            getResponsibleNames(people) {
+                let users = []
+                Array.from(people).forEach(user =>
+                    users.push(user.email)
+                )
+                return users
             },
             removeCRAMMCriteria(index) {
-                this.risk.cramms.splice(index, 1);
+                this.newRisk.cramms.splice(index, 1);
             }
         }
     }
