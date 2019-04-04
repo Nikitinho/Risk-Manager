@@ -229,19 +229,12 @@
         mixins: [printingRiskMixin],
         data() {
             return {
-                crammStagesAdded: false,
-//                cramm: []
+                crammStagesAdded: false
             }
         },
         mounted () {
-          this.$emit('validationForm', this.$refs.form);
-        },
-        watch: {
-//          cramm (val) {
-//              if (val.length === 0) {
-//                  this.crammStagesAdded = false
-//              }
-//          }
+          this.crammStagesAdded = this.risk !== undefined && this.risk.cramms !== undefined && this.risk.cramms.length > 0
+          this.$emit('validationForm', this.$refs.form)
         },
         computed: {
             ...mapGetters(['riskCategories', 'riskStatuses', 'activeUsers', 'getUserByEmail', 'getRiskById', 'getProfile']),

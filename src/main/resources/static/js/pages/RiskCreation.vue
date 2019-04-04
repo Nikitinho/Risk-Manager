@@ -55,7 +55,7 @@
             }
         },
         methods: {
-            ...mapActions(['addRiskAction', 'updateRiskAction', 'removeRiskAction']),
+            ...mapActions(['addRiskAction', 'updateRiskAction', 'removeRiskAction', 'addCRAMMAction']),
             checkInput(event) {
                 this.validator = event
             },

@@ -23,8 +23,4 @@ public class CRAMM {
     private String vulnerability;
 
     private Integer vulnerabilityRate;
-
-    @ManyToOne
-    @JoinColumn(name = "risk_id")
-    private Risk risk;
 }

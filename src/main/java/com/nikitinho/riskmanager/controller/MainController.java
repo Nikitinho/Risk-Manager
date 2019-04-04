@@ -1,5 +1,6 @@
 package com.nikitinho.riskmanager.controller;
 
+import com.nikitinho.riskmanager.domain.Risk;
 import com.nikitinho.riskmanager.domain.RiskCategoryType;
 import com.nikitinho.riskmanager.domain.RiskStatusType;
 import com.nikitinho.riskmanager.domain.User;

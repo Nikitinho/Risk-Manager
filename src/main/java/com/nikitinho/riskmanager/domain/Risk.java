@@ -52,7 +52,8 @@ public class Risk {
     @JsonView(Views.FullRisk.class)
     private RiskStatusType status;
 
-    @OneToMany(mappedBy = "risk", orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "risk_id")
     private List<CRAMM> cramms;
 
     public void setCategory(String category) {
