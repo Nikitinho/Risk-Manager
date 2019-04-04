@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Data
 public class CRAMM {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String asset;

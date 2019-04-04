@@ -54,4 +54,12 @@ public class Risk {
 
     @OneToMany(mappedBy = "risk", orphanRemoval = true)
     private List<CRAMM> cramms;
+
+    public void setCategory(String category) {
+        this.category = RiskCategoryType.fromString(category);
+    }
+
+    public void setStatus(String status) {
+        this.status = RiskStatusType.fromString(status);
+    }
 }

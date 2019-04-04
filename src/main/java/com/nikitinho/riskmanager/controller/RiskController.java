@@ -45,7 +45,6 @@ public class RiskController {
     @PostMapping
     public Risk create(@RequestBody Risk risk) {
 
-
         risk.setCreationDate(LocalDateTime.now());
         Risk uploadedRisk = riskRepo.save(risk);
         Runnable runnable = () -> {

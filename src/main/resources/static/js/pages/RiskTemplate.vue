@@ -124,7 +124,7 @@
                     Add cramm criteria
                 </v-btn>
             </v-flex>
-            <slot v-for="(item, index) in risk.cramms">
+            <slot v-if="!readonly" v-for="(item, index) in risk.cramms">
                 <v-flex xs4>
                     <v-subheader>
                     <v-layout column>
@@ -184,6 +184,29 @@
                 </v-flex>
                 <v-flex xs12>
                     <v-divider></v-divider>
+                </v-flex>
+            </slot>
+            <slot v-if="readonly" v-for="(item, index) in risk.cramms">
+                <v-flex xs12>
+                    <v-divider></v-divider>
+                </v-flex>
+                <v-flex xs4>
+                    <v-subheader>Asset</v-subheader>
+                </v-flex>
+                <v-flex xs8>
+                    <td>{{ risk.cramms[index].asset }} {{ risk.cramms[index].assetRate }}</td>
+                </v-flex>
+                <v-flex xs4>
+                    <v-subheader>Threat</v-subheader>
+                </v-flex>
+                <v-flex xs8>
+                    <td>{{ risk.cramms[index].threat }}</td>
+                </v-flex>
+                <v-flex xs4>
+                    <v-subheader>Vulnerability</v-subheader>
+                </v-flex>
+                <v-flex xs8>
+                    <td>{{ risk.cramms[index].vulnerability }} {{ risk.cramms[index].vulnerabilityRate }}</td>
                 </v-flex>
             </slot>
             <slot v-if="crammStagesAdded" name="footer-buttons">
