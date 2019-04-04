@@ -119,7 +119,7 @@
             <v-flex xs12 v-if="!crammStagesAdded && !readonly">
                 <v-btn color="success"
                        @click="() => { this.crammStagesAdded = true;
-                       risk.cramms.push({'asset': '', 'assetRate': '', 'threat': '', 'vulnerability': '', 'vulnerabilityRate': ''});
+                       this.risk.cramms.push({'asset': '', 'assetRate': '', 'threat': '', 'vulnerability': '', 'vulnerabilityRate': ''});
                        }">
                     Add cramm criteria
                 </v-btn>
@@ -128,10 +128,10 @@
                 <v-flex xs4>
                     <v-subheader>
                     <v-layout column>
-                        <v-btn fab dark color="indigo" @click="() => risk.cramms.push({'asset': '', 'assetRate': '', 'threat': '', 'vulnerability': '', 'vulnerabilityRate': ''})">
+                        <v-btn fab dark color="indigo" @click="addCRAMMCriteria">
                             <v-icon dark>add</v-icon>
                         </v-btn>
-                        <v-btn fab dark color="red" @click="() => risk.cramms.splice(index, 1)">
+                        <v-btn fab dark color="red" @click="() => removeCRAMMCriteria(index)">
                             <v-icon dark>remove</v-icon>
                         </v-btn>
                     </v-layout>
@@ -144,13 +144,16 @@
                                 <td v-if="readonly">{{ risk.cramms[index].asset }}</td>
                                 <v-text-field v-else
                                               placeholder="Asset"
+                                              :rules="validation.cramms.asset"
                                               v-model="risk.cramms[index].asset">
                                 </v-text-field>
                             </v-flex>
                             <v-flex xs3>
                                 <td v-if="readonly">{{ risk.cramms[index].assetRate }}</td>
                                 <v-text-field v-else
+                                              type="number"
                                               placeholder="Asset Rate"
+                                              :rules="validation.cramms.assetRate"
                                               v-model="risk.cramms[index].assetRate">
                                 </v-text-field>
                             </v-flex>
@@ -160,6 +163,7 @@
                                 <td v-if="readonly">{{ risk.cramms[index].threat }}</td>
                                 <v-text-field v-else
                                               placeholder="Threat"
+                                              :rules="validation.cramms.threat"
                                               v-model="risk.cramms[index].threat">
                                 </v-text-field>
                             </v-flex>
@@ -169,13 +173,16 @@
                                 <td v-if="readonly">{{ risk.cramms[index].vulnerability }}</td>
                                 <v-text-field v-else
                                               placeholder="Vulnerability"
+                                              :rules="validation.cramms.vulnerability"
                                               v-model="risk.cramms[index].vulnerability">
                                 </v-text-field>
                             </v-flex>
                             <v-flex xs3>
                                 <td v-if="readonly">{{ risk.cramms[index].vulnerabilityRate }}</td>
                                 <v-text-field v-else
+                                              type="number"
                                               placeholder="Vulnerability Rate"
+                                              :rules="validation.cramms.vulnerabilityRate"
                                               v-model="risk.cramms[index].vulnerabilityRate">
                                 </v-text-field>
                             </v-flex>
@@ -247,6 +254,14 @@
                     users.push(user.email)
                 )
                 return users
+            }
+        },
+        methods: {
+            addCRAMMCriteria() {
+                this.$set(this.risk.cramms, this.risk.cramms.length, {'asset': '', 'assetRate': '', 'threat': '', 'vulnerability': '', 'vulnerabilityRate': ''})
+            },
+            removeCRAMMCriteria(index) {
+                this.risk.cramms.splice(index, 1);
             }
         }
     }

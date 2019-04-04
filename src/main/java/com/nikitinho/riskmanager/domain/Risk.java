@@ -67,10 +67,9 @@ public class Risk {
     public void setCramms(List<CRAMM> cramms) {
         if (this.cramms == null) {
             this.cramms = new ArrayList<>();
-            this.cramms.addAll(cramms);
         } else {
             this.cramms.clear();
-            this.cramms.addAll(cramms);
         }
+        this.cramms.addAll(cramms);
     }
 }
