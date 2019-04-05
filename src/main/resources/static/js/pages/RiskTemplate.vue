@@ -155,6 +155,7 @@
                                               type="number"
                                               placeholder="Asset Rate"
                                               :rules="validation.cramms.assetRate"
+                                              @input="() => updateRiskLevel(index)"
                                               v-model="newRisk.cramms[index].assetRate">
                                 </v-text-field>
                             </v-flex>
@@ -184,6 +185,7 @@
                                               type="number"
                                               placeholder="Vulnerability Rate"
                                               :rules="validation.cramms.vulnerabilityRate"
+                                              @input="() => updateRiskLevel(index)"
                                               v-model="newRisk.cramms[index].vulnerabilityRate">
                                 </v-text-field>
                             </v-flex>
@@ -220,7 +222,7 @@
                         <v-subheader>Asset</v-subheader>
                     </v-flex>
                     <v-flex xs8>
-                        <td>{{ risk.cramms[index].asset }} {{ risk.cramms[index].assetRate }}</td>
+                        <td>{{ risk.cramms[index].asset }} ({{ risk.cramms[index].assetRate }})</td>
                     </v-flex>
                     <v-flex xs4>
                         <v-subheader>Threat</v-subheader>
@@ -232,7 +234,13 @@
                         <v-subheader>Vulnerability</v-subheader>
                     </v-flex>
                     <v-flex xs8>
-                        <td>{{ risk.cramms[index].vulnerability }} {{ risk.cramms[index].vulnerabilityRate }}</td>
+                        <td>{{ risk.cramms[index].vulnerability }} ({{ risk.cramms[index].vulnerabilityRate }})</td>
+                    </v-flex>
+                    <v-flex xs4>
+                        <v-subheader>Risk Level</v-subheader>
+                    </v-flex>
+                    <v-flex xs8>
+                        <td>{{ risk.cramms[index].riskLevel }} ({{ risk.cramms[index].riskRate }})</td>
                     </v-flex>
                 </slot>
             </slot>
@@ -284,12 +292,6 @@
             this.$emit('newRisk', this.newRisk)
             this.$emit('validationForm', this.$refs.form)
         },
-        watch: {
-            $refs (func) {
-                console.log(this.$refs.form)
-            },
-            deep: true
-        },
         computed: {
             ...mapGetters(['riskCategories', 'riskStatuses', 'activeUsers', 'getUserByEmail', 'getRiskById', 'getProfile']),
             responsibleUsers() {
@@ -302,7 +304,8 @@
         },
         methods: {
             addCRAMMCriteria() {
-                this.$set(this.newRisk.cramms, this.newRisk.cramms.length, {'asset': '', 'assetRate': '', 'threat': '', 'vulnerability': '', 'vulnerabilityRate': ''})
+                this.$set(this.newRisk.cramms, this.newRisk.cramms.length,
+                    {'asset': '', 'assetRate': '', 'threat': '', 'vulnerability': '', 'vulnerabilityRate': ''})
             },
             getResponsibleNames(people) {
                 let users = []
@@ -313,6 +316,13 @@
             },
             removeCRAMMCriteria(index) {
                 this.newRisk.cramms.splice(index, 1);
+            },
+            updateRiskLevel(index) {
+                if (!this.newRisk.cramms || !this.newRisk.cramms[index].assetRate || !this.newRisk.cramms[index].vulnerabilityRate) {
+                    return
+                }
+                this.newRisk.cramms[index].riskRate = this.newRisk.cramms[index].assetRate * this.newRisk.cramms[index].vulnerabilityRate
+                this.newRisk.cramms[index].riskLevel = Risk.convertRiskRateToLevel(this.newRisk.cramms[index].riskRate)
             }
         },
         components: {

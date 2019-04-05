@@ -14,7 +14,12 @@ export default class Risk {
             this.consequences = risk.consequences
             this.responsible = risk.responsible
             this.status = Risk.convertStatus(risk.status)
+            // Optimization needed
             this.cramms = risk.cramms
+            let self = this
+            this.cramms.forEach(function(item, i)
+            { self.cramms[i].riskLevel = Risk.convertRiskLevel(self.cramms[i].riskLevel) });
+            // ------------------
         } else {
             this.text = ''
             this.creationDate = ''
@@ -28,6 +33,7 @@ export default class Risk {
         }
     }
 
+    // RiskStatusType
     static convertStatus(status) {
         switch (status) {
             case 'CREATED':
@@ -41,6 +47,7 @@ export default class Risk {
         }
     }
 
+    // RiskCategoryType
     static convertCategory(category) {
         switch (category) {
             case 'INTEGRATION':
@@ -62,13 +69,36 @@ export default class Risk {
         }
     }
 
-    static convertRiskLevelToColor(level) {
+    static convertRiskLevel(level) {
+        switch (level) {
+            case 'LOW':
+                return 'Низкий'
+            case 'MEDIUM':
+                return 'Средний'
+            case 'HIGH':
+                return 'Высокий'
+            default:
+                return null
+        }
+    }
+
+    static convertRiskRateToColor(level) {
         if (level >= 0 && level < 34) {
             return 'green'
         } else if (level >= 34 && level < 68) {
             return 'yellow'
         } else if (level >= 68 && level <= 100) {
             return 'red'
+        }
+    }
+
+    static convertRiskRateToLevel(rate) {
+        if (rate >= 0 && rate < 34) {
+            return 'Низкий'
+        } else if (rate >= 34 && rate < 68) {
+            return 'Средний'
+        } else if (rate >= 68 && rate <= 100) {
+            return 'Высокий'
         }
     }
 }

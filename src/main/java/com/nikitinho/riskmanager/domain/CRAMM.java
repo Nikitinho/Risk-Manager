@@ -23,4 +23,14 @@ public class CRAMM {
     private String vulnerability;
 
     private Integer vulnerabilityRate;
+
+    private Integer riskRate;
+
+    private RiskLevelType riskLevel;
+
+    private String countermeasure;
+
+    public void setRiskLevel(String riskLevel) {
+        this.riskLevel = RiskLevelType.fromString(riskLevel);
+    }
 }
