@@ -6,6 +6,7 @@ import Profile from 'pages/Profie.vue'
 import RiskCreation from 'pages/RiskCreation.vue'
 import RiskView from 'pages/RiskView.vue'
 import ProjectsList from 'pages/ProjectsList.vue'
+import ProjectCreation from 'pages/ProjectCreation.vue'
 
 Vue.use(VueRouter)
 
@@ -17,6 +18,7 @@ const routes = [
     { path: '/newRisk', name: 'RiskCreation', component: RiskCreation },
     { path: '/editRisk/:riskId', name: 'RiskEdition', component: RiskCreation, props: true },
     { path: '/viewRisk/:riskId', name: 'RiskView', component: RiskView, props: true },
+    { path: '/newProject', name: 'ProjectCreation', component: ProjectCreation },
     { path: '*', component: RisksList }
 ]
 

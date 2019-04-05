@@ -17,6 +17,7 @@ export default new Vuex.Store({
     },
     getters: {
         sortedRisks: state => (state.risks || []).sort((a, b) => -(a.id - b.id)),
+        sortedProjects: state => (state.projects || []).sort((a, b) => -(a.id - b.id)),
         riskCategories: state => state.categories,
         riskStatuses: state => state.statuses,
         activeUsers: state => state.users,
@@ -25,6 +26,9 @@ export default new Vuex.Store({
         },
         getRiskById: state => id => {
             return state.risks.find(risk => risk.id === id)
+        },
+        getProjectById: state => id => {
+            return state.projects.find(project => project.id === id)
         },
         getProfile: state => state.profile
     },

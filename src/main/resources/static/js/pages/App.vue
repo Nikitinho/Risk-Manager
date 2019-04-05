@@ -7,6 +7,10 @@
                 Projects
             </v-btn>
             <v-btn v-if="profile" flat round
+                   @click="createProject">
+                New
+            </v-btn>
+            <v-btn v-if="profile" flat round
                    :disabled="$route.path === '/'"
                    @click="showRisks">
                 Home
@@ -61,6 +65,9 @@
             },
             showProjects() {
                 this.$router.push({ name: 'ProjectsList' })
+            },
+            createProject() {
+                this.$router.push({ name: 'ProjectCreation' })
             },
             swapListRenderStyle() {
             }
