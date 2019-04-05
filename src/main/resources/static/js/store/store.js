@@ -2,11 +2,13 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import risksApi from 'api/risks'
 import crammApi from 'api/cramm'
+import projectApi from 'api/projects'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
+        projects: frontendData.projects,
         risks: frontendData.risks,
         profile: frontendData.profile,
         categories: frontendData.categories,
@@ -69,6 +71,30 @@ export default new Vuex.Store({
             ]
 
         },
+        addProjectMutation(state, project) {
+            state.projects = [
+                ...state.projects,
+                project
+            ]
+        },
+        updateProjectMutation(state, project) {
+            const updateIndex = state.projects.findIndex(item => item.id === project.id)
+            state.projects = [
+                ...state.projects.slice(0, updateIndex),
+                project,
+                ...state.projects.slice(updateIndex + 1)
+            ]
+        },
+        removeProjectMutation(state, project) {
+            const deletionIndex = state.projects.findIndex(item => item.id === project.id)
+
+            if (deletionIndex > -1) {
+                state.projects = [
+                    ...state.projects.slice(0, deletionIndex),
+                    ...state.projects.slice(deletionIndex + 1)
+                ]
+            }
+        },
     },
     actions: {
         async addRiskAction({commit, state}, risk) {
@@ -97,6 +123,28 @@ export default new Vuex.Store({
             const result = await crammApi.add(cramm)
             const data = await result.json()
             commit('addCRAMMMutation', cramm)
+        },
+        async addProjectAction({commit, state}, project) {
+            const result = await projectApi.add(project)
+            const data = await result.json()
+            const index = state.projects.findIndex(item => item.id === data.id)
+
+            if (index > -1) {
+                commit('updateProjectMutation', data)
+            } else {
+                commit('addProjectMutation', data)
+            }
+        },
+        async updateProjectAction({commit}, project) {
+            const result = await projectApi.update(project)
+            const data = await result.json()
+            commit('updateProjectMutation', data)
+        },
+        async removeProjectAction({commit}, project) {
+            const result = await projectApi.remove(project.id)
+            if (result.ok) {
+                commit('removeProjectMutation', project)
+            }
         }
     }
 })

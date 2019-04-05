@@ -4,6 +4,7 @@ import com.nikitinho.riskmanager.domain.Risk;
 import com.nikitinho.riskmanager.domain.RiskCategoryType;
 import com.nikitinho.riskmanager.domain.RiskStatusType;
 import com.nikitinho.riskmanager.domain.User;
+import com.nikitinho.riskmanager.repo.ProjectRepo;
 import com.nikitinho.riskmanager.repo.RiskRepo;
 import com.nikitinho.riskmanager.repo.UserDetailsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,15 +24,17 @@ import java.util.stream.Stream;
 @RequestMapping("/")
 public class MainController {
     private final RiskRepo riskRepo;
+    private final ProjectRepo projectRepo;
     private final UserDetailsRepo userDetailsRepo;
 
     @Value("${spring.profiles.active}")
     private String profile;
 
     @Autowired
-    public MainController(RiskRepo riskRepo, UserDetailsRepo userDetailsRepo) {
+    public MainController(RiskRepo riskRepo, UserDetailsRepo userDetailsRepo, ProjectRepo projectRepo) {
         this.userDetailsRepo = userDetailsRepo;
         this.riskRepo = riskRepo;
+        this.projectRepo = projectRepo;
     }
 
     @GetMapping
@@ -42,6 +45,7 @@ public class MainController {
             data.put("profile", user);
             data.put("categories", Stream.of(RiskCategoryType.values()).map(RiskCategoryType::toString).toArray());
             data.put("statuses", Stream.of(RiskStatusType.values()).map(RiskStatusType::toString).toArray());
+            data.put("projects", projectRepo.findAll());
             // Only load risks where the user is one of responsible people
             data.put("risks", riskRepo.findAll().stream()
                     .filter(risk -> risk.getResponsible().stream()

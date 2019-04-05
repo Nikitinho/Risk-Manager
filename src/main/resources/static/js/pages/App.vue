@@ -3,6 +3,10 @@
         <v-toolbar app>
             <v-toolbar-title>Risk management tool</v-toolbar-title>
             <v-btn v-if="profile" flat round
+                   @click="showProjects">
+                Projects
+            </v-btn>
+            <v-btn v-if="profile" flat round
                    :disabled="$route.path === '/'"
                    @click="showRisks">
                 Home
@@ -54,6 +58,9 @@
             },
             showProfile() {
                 this.$router.push({ name: 'Profile' })
+            },
+            showProjects() {
+                this.$router.push({ name: 'ProjectsList' })
             },
             swapListRenderStyle() {
             }

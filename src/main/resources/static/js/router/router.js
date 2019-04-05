@@ -5,11 +5,13 @@ import Auth from 'pages/Auth.vue'
 import Profile from 'pages/Profie.vue'
 import RiskCreation from 'pages/RiskCreation.vue'
 import RiskView from 'pages/RiskView.vue'
+import ProjectsList from 'pages/ProjectsList.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
     { path: '/', name: 'RisksList', component: RisksList },
+    { path: '/projects', name: 'ProjectsList', component: ProjectsList},
     { path: '/auth', name: 'GoogleAuth', component: Auth },
     { path: '/profile', name: 'Profile', component: Profile },
     { path: '/newRisk', name: 'RiskCreation', component: RiskCreation },
