@@ -26,11 +26,9 @@
 
                             <v-list-tile avatar
                                          @click="() => { showRisk(risk) }">
-                                <!--<v-list-tile-avatar v-if="user.userpic">-->
-                                    <!--<v-img class="elevation-6"-->
-                                           <!--:src="user.userpic">-->
-                                    <!--</v-img>-->
-                                <!--</v-list-tile-avatar>-->
+                                <v-list-tile-avatar>
+                                     <v-icon :color="getColor(risk.riskRate)">report</v-icon>
+                                </v-list-tile-avatar>
 
                                 <v-list-tile-content>
                                     <v-list-tile-title v-html="risk.text"></v-list-tile-title>
@@ -74,13 +72,19 @@
                     <v-card-title>
                         <span class="headline font-weight-light">Graph</span>
                         <v-spacer></v-spacer>
+                        <v-btn icon @click="() => this.isBubbleChartShown = !this.isBubbleChartShown">
+                            <v-icon dark>loop</v-icon>
+                        </v-btn>
                         <v-btn color="success"
                                @click="() => { this.isGraphShown = !this.isGraphShown }">
                             {{ isGraphShown ? 'Hide' : 'Show' }}
                         </v-btn>
                     </v-card-title>
                     <v-divider></v-divider>
-                    <bubble-chart v-if="isGraphShown" :data="project.risks"></bubble-chart>
+                    <slot v-if="isGraphShown">
+                    <bubble-chart v-if="isBubbleChartShown" :data="project.risks"></bubble-chart>
+                    <doughnut-chart v-else :data="project.risks"></doughnut-chart>
+                    </slot>
                 </v-card>
             </v-flex>
         </v-layout>
@@ -90,6 +94,8 @@
 <script>
     import { mapGetters } from 'vuex'
     import BubbleChart from 'components/risks/BubbleChart.vue'
+    import DoughnutChart from 'components/risks/DoughnutChart.vue'
+    import Risk from 'domain/Risk'
 
     export default {
         name: 'ProjectView',
@@ -98,7 +104,8 @@
             return {
                 project: null,
                 isTeamShown: true,
-                isGraphShown: true
+                isGraphShown: true,
+                isBubbleChartShown: true,
             }
         },
         computed: mapGetters(['getProjectById']),
@@ -114,10 +121,13 @@
             },
             showRisk(risk) {
                 this.$router.push({ name: 'RiskView', params: { riskId: risk.id } })
+            },
+            getColor(riskRate) {
+                return Risk.convertRiskRateToColor(riskRate)
             }
         },
         components: {
-            BubbleChart
+            BubbleChart, DoughnutChart
         }
     }
 </script>
@@ -131,3 +141,4 @@
         font-size:0.9em !important;
         font-weight: bold;
     }
+</style>
