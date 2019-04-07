@@ -4,6 +4,10 @@
                    :validation="validation">
         <v-flex xs12 text-xs-right slot="header-buttons">
             <v-btn color="warning"
+                   @click="() => this.saveXML(this.risk)">
+                Downolad XML
+            </v-btn>
+            <v-btn color="warning"
                    @click="() => this.savePDF(this.risk)">
                 Downolad PDF
             </v-btn>
@@ -28,12 +32,13 @@
     import RiskTemplate from 'pages/RiskTemplate.vue'
     import validation from 'validation/RiskFormValidation'
     import printingRiskMixin from 'mixin/PrintingRiskMixin'
+    import xmlExportMixin from 'mixin/xmlExportMixin'
     import Risk from 'domain/Risk'
 
     export default {
         name: 'RiskView',
         props: ['riskId', 'projectId'],
-        mixins: [printingRiskMixin],
+        mixins: [printingRiskMixin, xmlExportMixin],
         data() {
             return {
                 risk: null,
