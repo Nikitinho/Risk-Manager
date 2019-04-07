@@ -54,11 +54,6 @@
             swapListRenderStyle() {
             }
         },
-        watch: {
-            $route (val) {
-                this.showListOptions = this.$router.currentRoute.name === "RisksList"
-            }
-        },
         created() {
             addHandler(data => {
                 if (data.objectType === 'RISK') {

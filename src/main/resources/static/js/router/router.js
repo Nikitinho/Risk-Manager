@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import RisksList from 'pages/RisksList.vue'
 import Auth from 'pages/Auth.vue'
 import Profile from 'pages/Profie.vue'
 import RiskCreation from 'pages/RiskCreation.vue'
@@ -14,7 +13,6 @@ Vue.use(VueRouter)
 const routes = [
     { path: '/', name: 'ProjectsList', component: ProjectsList},
     { path: '/newProject', name: 'ProjectCreation', component: ProjectCreation },
-    { path: '/risks', name: 'RisksList', component: RisksList },
     { path: '/projects/:projectId', name: 'ProjectView', component: ProjectView, props: true },
     { path: '/projects/:projectId/newRisk', name: 'RiskCreation', component: RiskCreation, props: true },
     { path: '/auth', name: 'GoogleAuth', component: Auth },

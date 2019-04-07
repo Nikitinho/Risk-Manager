@@ -75,7 +75,7 @@
             },
             del (risk) {
                 this.removeRiskAction(risk)
-                this.$router.push({ name: 'RisksList' })
+                this.$router.push({ name: 'ProjectView', params: { projectId: this.projectId } })
             }
         },
         components: {

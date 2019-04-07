@@ -35,6 +35,11 @@
                                 </v-list-tile-content>
 
                                 <v-spacer></v-spacer>
+
+                                <div class="text-xs-center">
+                                    <v-chip>{{getRiskStatus(risk)}}</v-chip>
+                                </div>
+
                                 <v-divider vertical></v-divider>
 
                                 <v-list-tile-avatar v-for="user in getResponsible(risk)">
@@ -153,6 +158,9 @@
             },
             getExtraRiskUsersAmount(risk) {
                 return risk.responsible.length - this.getResponsible(risk).length
+            },
+            getRiskStatus(risk) {
+                return Risk.convertStatus(risk.status)
             }
         },
         components: {
