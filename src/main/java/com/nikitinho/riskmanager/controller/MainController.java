@@ -47,9 +47,12 @@ public class MainController {
             data.put("statuses", Stream.of(RiskStatusType.values()).map(RiskStatusType::toString).toArray());
             data.put("projects", projectRepo.findAll());
             // Only load risks where the user is one of responsible people
-//            Arrays.stream(riskRepo.findAll().stream().filter(risk -> risk.getResponsible().stream().anyMatch(usr ->
-//                    usr.getId().equals(user.getId()))).toArray()).forEach(x->System.out.print(x));
-//            riskRepo.deleteById(284L);
+            Arrays.stream(riskRepo.findAll().stream().filter(risk -> risk.getResponsible().stream().anyMatch(usr ->
+                    usr.getId().equals(user.getId()))).toArray()).forEach(x->System.out.print(x));
+//            riskRepo.deleteById(287L);
+//            riskRepo.deleteById(288L);
+//            riskRepo.deleteById(289L);
+//            riskRepo.deleteById(291L);
             data.put("risks", riskRepo.findAll().stream()
                     .filter(risk -> risk.getResponsible().stream()
                             .anyMatch(usr -> usr.getId().equals(user.getId()))).toArray());

@@ -12,16 +12,6 @@
                    @click="createProject">
                 New
             </v-btn>
-            <v-btn v-if="profile" flat round
-                   :disabled="$route.name === 'RisksList'"
-                   @click="showRisks">
-                Home
-            </v-btn>
-            <v-btn v-if="profile" flat round
-                   :disabled="$route.name === 'RiskCreation'"
-                   @click="createRisk">
-                New
-            </v-btn>
             <v-spacer></v-spacer>
             <v-btn v-if="profile && showListOptions" icon
                    @click="swapListRenderStyle">

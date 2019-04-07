@@ -1,6 +1,7 @@
 package com.nikitinho.riskmanager.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -29,6 +30,7 @@ public class Project {
     private String description;
 
     @OneToMany(mappedBy = "project", orphanRemoval = true)
+    @JsonManagedReference
     private List<Risk> risks;
 
     @ManyToOne

@@ -4,6 +4,7 @@
 /node_modules
 .DS_Store
 yarn.lock
+yarn-error.log
 
 ### STS ###
 .apt_generated

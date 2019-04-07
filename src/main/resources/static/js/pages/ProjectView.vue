@@ -25,7 +25,7 @@
                             <v-divider></v-divider>
 
                             <v-list-tile avatar
-                                         @click="">
+                                         @click="() => { showRisk(risk) }">
                                 <!--<v-list-tile-avatar v-if="user.userpic">-->
                                     <!--<v-img class="elevation-6"-->
                                            <!--:src="user.userpic">-->
@@ -97,6 +97,9 @@
         methods: {
             createRisk() {
                 this.$router.push({ name: 'RiskCreation', params: { projectId: this.project.id } })
+            },
+            showRisk(risk) {
+                this.$router.push({ name: 'RiskView', params: { riskId: risk.id } })
             }
         }
     }
