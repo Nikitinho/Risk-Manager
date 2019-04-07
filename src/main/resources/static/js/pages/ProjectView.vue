@@ -27,12 +27,26 @@
                             <v-list-tile avatar
                                          @click="() => { showRisk(risk) }">
                                 <v-list-tile-avatar>
-                                     <v-icon :color="getColor(risk.riskRate)">report</v-icon>
+                                    <v-icon :color="getColor(risk.riskRate)">report</v-icon>
                                 </v-list-tile-avatar>
 
                                 <v-list-tile-content>
                                     <v-list-tile-title v-html="risk.text"></v-list-tile-title>
                                 </v-list-tile-content>
+
+                                <v-spacer></v-spacer>
+                                <v-divider vertical></v-divider>
+
+                                <v-list-tile-avatar v-for="user in getResponsible(risk)">
+                                    <v-img class="elevation-6"
+                                           :src="user.userpic">
+                                    </v-img>
+                                </v-list-tile-avatar>
+
+                                <v-list-tile-avatar v-if="getExtraRiskUsersAmount(risk) > 0">
+                                    <span class="cetered-text-span">+{{getExtraRiskUsersAmount(risk)}}</span>
+                                </v-list-tile-avatar>
+
                             </v-list-tile>
                         </template>
                     </v-list>
@@ -106,14 +120,14 @@
                 isTeamShown: true,
                 isGraphShown: true,
                 isBubbleChartShown: true,
+                maxRiskUsersAmount: 3
             }
         },
-        computed: mapGetters(['getProjectById']),
+        computed: {
+            ...mapGetters(['getProjectById']),
+        },
         created () {
-//            console.log(this.projectId)
             this.project = this.getProjectById((Number)(this.projectId))
-            console.log(this.project)
-//            console.log(this.project)
         },
         methods: {
             createRisk() {
@@ -124,6 +138,18 @@
             },
             getColor(riskRate) {
                 return Risk.convertRiskRateToColor(riskRate)
+            },
+            getResponsible(risk) {
+                if (risk.responsible) {
+                    if (risk.responsible.length <= this.maxRiskUsersAmount) {
+                        return risk.responsible
+                    } else {
+                        return risk.responsible.slice(0, this.maxRiskUsersAmount)
+                    }
+                }
+            },
+            getExtraRiskUsersAmount(risk) {
+                return risk.responsible.length - this.getResponsible(risk).length
             }
         },
         components: {
@@ -141,4 +167,14 @@
         font-size:0.9em !important;
         font-weight: bold;
     }
+    .cetered-text-span{
+        background: #C0C0C0;
+        border-radius: 50%;
+        height: 100%;
+        width: 100%;
+        line-height: 250%;
+        display: inline-block;
+        text-align: center;
+    }
+
 </style>
