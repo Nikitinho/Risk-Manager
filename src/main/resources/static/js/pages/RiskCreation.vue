@@ -57,7 +57,6 @@
                 this.newRisk.responsible = this.newRisk.responsible.map(x => this.getUserByEmail(x))
                 if (this.isNewRisk) {
                     this.newRisk["id"] = this.id
-//                    this.addRiskAction(this.newRisk)
                     this.newRisk.project = {
                         id: this.projectId
                     }
@@ -67,7 +66,7 @@
                     this.updateRiskAction(this.newRisk)
                 }
 
-                this.$router.push({ name: 'RisksList' })
+                this.$router.push({ name: 'ProjectView', props: { projectId: this.projectId } })
             }
         },
         components: {

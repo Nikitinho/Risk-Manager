@@ -2,10 +2,17 @@
     <v-container fluid>
     <v-layout align-space-around justify-start column>
         <v-card>
-            <v-list>
+            <v-card-title>
+                <span class="headline font-weight-light">Projects List</span>
+                <v-spacer></v-spacer>
+                <v-btn color="success" @click="createProject">
+                    <v-icon dark>add</v-icon>
+                </v-btn>
+            </v-card-title>
+            <v-list v-if="sortedProjects.length > 0">
                 <template v-for="(project, index) in sortedProjects" :v-key="project.id">
 
-                    <v-divider v-if="index > 0"></v-divider>
+                    <v-divider></v-divider>
 
                     <v-list-tile avatar
                             @click="() => showProject(project)">
@@ -36,6 +43,9 @@
         },
         computed: mapGetters(['sortedProjects']),
         methods: {
+            createProject() {
+                this.$router.push({ name: 'ProjectCreation' })
+            },
             showProject(project) {
                 this.$router.push({ name: 'ProjectView', params: { projectId: project.id } })
             }

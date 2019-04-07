@@ -29,7 +29,7 @@ public class Project {
     @JsonView(Views.FullRisk.class)
     private String description;
 
-    @OneToMany(mappedBy = "project", orphanRemoval = true)
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "project")
     @JsonManagedReference
     private List<Risk> risks;
 

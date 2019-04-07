@@ -113,17 +113,56 @@
                         required>
                 </v-select>
             </v-flex>
-            <!--<v-flex xs12 v-if="!readonly">-->
-                <!--<v-divider></v-divider>-->
-            <!--</v-flex>-->
-            <!--<v-flex xs12 v-if="!crammStagesAdded && !readonly">-->
-                <!--<v-btn color="success"-->
-                       <!--@click="() => { this.crammStagesAdded = true;-->
-                       <!--this.newRisk.cramms.push({'asset': '', 'assetRate': '', 'threat': '', 'vulnerability': '', 'vulnerabilityRate': ''});-->
-                       <!--}">-->
-                    <!--Add cramm criteria-->
-                <!--</v-btn>-->
-            <!--</v-flex>-->
+            <v-flex xs12>
+                <v-divider></v-divider>
+            </v-flex>
+            <v-flex xs4>
+                <v-subheader>Asset</v-subheader>
+            </v-flex>
+            <v-flex xs6>
+                <td v-if="readonly">{{ risk.asset }} {{ risk.assetRate }}</td>
+                <v-text-field v-else
+                              placeholder="Asset"
+                              v-model="newRisk.asset">
+                </v-text-field>
+            </v-flex>
+            <v-flex xs2 v-if="!readonly">
+                <v-text-field type="number"
+                              placeholder="Asset Rate"
+                              @input="updateRiskLevel"
+                              v-model="newRisk.assetRate">
+                </v-text-field>
+            </v-flex>
+            <v-flex xs4>
+                <v-subheader>Threat</v-subheader>
+            </v-flex>
+            <v-flex xs8>
+                <td v-if="readonly">{{ risk.threat }}</td>
+                <v-text-field v-else
+                              placeholder="Threat"
+                              v-model="newRisk.threat">
+                </v-text-field>
+            </v-flex>
+            <v-flex xs4>
+                <v-subheader>Vulnerability</v-subheader>
+            </v-flex>
+            <v-flex xs6>
+                <td v-if="readonly">{{ risk.vulnerability }} {{ risk.vulnerabilityRate }}</td>
+                <v-text-field v-else
+                              placeholder="Vulnerability"
+                              v-model="newRisk.vulnerability">
+                </v-text-field>
+            </v-flex>
+            <v-flex xs2 v-if="!readonly">
+                <v-text-field type="number"
+                              placeholder="Vulnerability Rate"
+                              @input="updateRiskLevel"
+                              v-model="newRisk.vulnerabilityRate">
+                </v-text-field>
+            </v-flex>
+            <v-flex xs12 v-if="!readonly">
+                <v-divider></v-divider>
+            </v-flex>
             <!--<slot v-if="!readonly">-->
                 <!--<slot v-for="(item, index) in newRisk.cramms">-->
                 <!--<v-flex xs4>-->
@@ -308,10 +347,6 @@
             }
         },
         methods: {
-            addCRAMMCriteria() {
-                this.$set(this.newRisk.cramms, this.newRisk.cramms.length,
-                    {'asset': '', 'assetRate': '', 'threat': '', 'vulnerability': '', 'vulnerabilityRate': ''})
-            },
             getResponsibleNames(people) {
                 let users = []
                 Array.from(people).forEach(user =>
@@ -319,15 +354,12 @@
                 )
                 return users
             },
-            removeCRAMMCriteria(index) {
-                this.newRisk.cramms.splice(index, 1);
-            },
-            updateRiskLevel(index) {
-                if (!this.newRisk.cramms || !this.newRisk.cramms[index].assetRate || !this.newRisk.cramms[index].vulnerabilityRate) {
+            updateRiskLevel() {
+                if (!this.newRisk.assetRate || !this.newRisk.vulnerabilityRate) {
                     return
                 }
-                this.newRisk.cramms[index].riskRate = this.newRisk.cramms[index].assetRate * this.newRisk.cramms[index].vulnerabilityRate
-                this.newRisk.cramms[index].riskLevel = Risk.convertRiskRateToLevel(this.newRisk.cramms[index].riskRate)
+                this.newRisk.riskRate = this.newRisk.assetRate * this.newRisk.vulnerabilityRate
+                this.newRisk.riskLevel = Risk.convertRiskRateToLevel(this.newRisk.riskRate)
             }
         },
         components: {

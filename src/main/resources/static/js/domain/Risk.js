@@ -14,6 +14,11 @@ export default class Risk {
             this.consequences = risk.consequences
             this.responsible = risk.responsible
             this.status = Risk.convertStatus(risk.status)
+            this.asset = risk.asset
+            this.assetRate = risk.assetRate
+            this.threat = risk.threat
+            this.vulnerability = risk.vulnerability
+            this.vulnerabilityRate = risk.vulnerabilityRate
         } else {
             this.text = ''
             this.creationDate = ''

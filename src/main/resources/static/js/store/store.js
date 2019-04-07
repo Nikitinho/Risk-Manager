@@ -32,12 +32,6 @@ export default new Vuex.Store({
         getProfile: state => state.profile
     },
     mutations: {
-        // addRiskMutation(state, risk) {
-        //     state.risks = [
-        //         ...state.risks,
-        //         risk
-        //     ]
-        // },
         updateRiskMutation(state, risk) {
 
         },
@@ -93,26 +87,15 @@ export default new Vuex.Store({
         },
     },
     actions: {
-        // async addRiskAction({commit, state}, risk) {
-        //     const result = await risksApi.add(risk)
-        //     const data = await result.json()
-        //     const index = state.risks.findIndex(item => item.id === data.id)
-        //
-        //     if (index > -1) {
-        //         commit('updateRiskMutation', data)
-        //     } else {
-        //         commit('addRiskMutation', data)
-        //     }
-        // },
-        async updateRiskAction({commit}, risk) {
-            const result = await risksApi.update(risk)
-            const data = await result.json()
-            commit('updateRiskMutation', data)
-        },
         async addRiskAction({commit, state}, risk) {
             const result = await risksApi.add(risk)
             const data = await result.json()
             commit('addRiskMutation', risk)
+        },
+        async updateRiskAction({commit}, risk) {
+            const result = await risksApi.update(risk)
+            const data = await result.json()
+            commit('updateRiskMutation', data)
         },
         async removeRiskAction({commit}, risk) {
             const result = await risksApi.remove(risk.id)

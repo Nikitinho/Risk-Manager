@@ -41,7 +41,7 @@
                 </v-card>
             </v-flex>
             <v-flex xs4 class="px-1 py-1">
-                <v-card>
+                <v-card class="mb-1">
                     <v-card-title>
                         <span class="headline font-weight-light">Project team</span>
                         <v-spacer></v-spacer>
@@ -70,6 +70,18 @@
                         </template>
                     </v-list>
                 </v-card>
+                <v-card>
+                    <v-card-title>
+                        <span class="headline font-weight-light">Graph</span>
+                        <v-spacer></v-spacer>
+                        <v-btn color="success"
+                               @click="() => { this.isGraphShown = !this.isGraphShown }">
+                            {{ isGraphShown ? 'Hide' : 'Show' }}
+                        </v-btn>
+                    </v-card-title>
+                    <v-divider></v-divider>
+                    <bubble-chart v-if="isGraphShown" :data="project.risks"></bubble-chart>
+                </v-card>
             </v-flex>
         </v-layout>
     </v-container>
@@ -77,6 +89,7 @@
 
 <script>
     import { mapGetters } from 'vuex'
+    import BubbleChart from 'components/risks/BubbleChart.vue'
 
     export default {
         name: 'ProjectView',
@@ -84,7 +97,8 @@
         data() {
             return {
                 project: null,
-                isTeamShown: true
+                isTeamShown: true,
+                isGraphShown: true
             }
         },
         computed: mapGetters(['getProjectById']),
@@ -101,6 +115,9 @@
             showRisk(risk) {
                 this.$router.push({ name: 'RiskView', params: { riskId: risk.id } })
             }
+        },
+        components: {
+            BubbleChart
         }
     }
 </script>

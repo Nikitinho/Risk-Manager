@@ -7,11 +7,6 @@
                    @click="showProjects">
                 Projects
             </v-btn>
-            <v-btn v-if="profile" flat round
-                   :disabled="$route.name === 'ProjectCreation'"
-                   @click="createProject">
-                New
-            </v-btn>
             <v-spacer></v-spacer>
             <v-btn v-if="profile && showListOptions" icon
                    @click="swapListRenderStyle">
