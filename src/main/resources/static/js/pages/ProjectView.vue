@@ -14,22 +14,26 @@
                 <v-card>
                     <v-card-title>
                         <span class="headline font-weight-light">Risks List</span>
+                        <v-spacer></v-spacer>
+                        <v-btn color="success" @click="createRisk">
+                            <v-icon dark>add</v-icon>
+                        </v-btn>
                     </v-card-title>
                     <v-list>
-                        <template v-for="user in project.responsible" :v-key="user.id">
+                        <template v-for="risk in project.risks" :v-key="risk.id">
 
                             <v-divider></v-divider>
 
                             <v-list-tile avatar
                                          @click="">
-                                <v-list-tile-avatar v-if="user.userpic">
-                                    <v-img class="elevation-6"
-                                           :src="user.userpic">
-                                    </v-img>
-                                </v-list-tile-avatar>
+                                <!--<v-list-tile-avatar v-if="user.userpic">-->
+                                    <!--<v-img class="elevation-6"-->
+                                           <!--:src="user.userpic">-->
+                                    <!--</v-img>-->
+                                <!--</v-list-tile-avatar>-->
 
                                 <v-list-tile-content>
-                                    <v-list-tile-title v-html="user.name"></v-list-tile-title>
+                                    <v-list-tile-title v-html="risk.text"></v-list-tile-title>
                                 </v-list-tile-content>
                             </v-list-tile>
                         </template>
@@ -87,7 +91,13 @@
         created () {
 //            console.log(this.projectId)
             this.project = this.getProjectById((Number)(this.projectId))
+            console.log(this.project)
 //            console.log(this.project)
+        },
+        methods: {
+            createRisk() {
+                this.$router.push({ name: 'RiskCreation', params: { projectId: this.project.id } })
+            }
         }
     }
 </script>

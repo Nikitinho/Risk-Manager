@@ -5,7 +5,6 @@ import com.nikitinho.riskmanager.domain.Risk;
 import com.nikitinho.riskmanager.domain.Views;
 import com.nikitinho.riskmanager.dto.EventType;
 import com.nikitinho.riskmanager.dto.ObjectType;
-import com.nikitinho.riskmanager.repo.CRAMMRepo;
 import com.nikitinho.riskmanager.repo.RiskRepo;
 import com.nikitinho.riskmanager.service.NotificationService;
 import com.nikitinho.riskmanager.util.WsSender;

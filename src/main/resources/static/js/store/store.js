@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import risksApi from 'api/risks'
-import crammApi from 'api/cramm'
 import projectApi from 'api/projects'
 
 Vue.use(Vuex)
@@ -58,23 +57,6 @@ export default new Vuex.Store({
                 ]
             }
         },
-        addCRAMMMutation(state, cramm) {
-            const updateIndex = state.risks.findIndex(item => item.id === cramm.risk.id)
-            const risk = state.risks[updateIndex]
-
-            state.risks = [
-                ...state.risks.slice(0, updateIndex),
-                {
-                    ...risk,
-                    cramms: [
-                        ...risk.cramms,
-                        cramm
-                    ]
-                },
-                ...state.risks.slice(updateIndex + 1)
-            ]
-
-        },
         addProjectMutation(state, project) {
             state.projects = [
                 ...state.projects,
@@ -122,11 +104,6 @@ export default new Vuex.Store({
             if (result.ok) {
                 commit('removeRiskMutation', risk)
             }
-        },
-        async addCRAMMAction({commit, state}, cramm) {
-            const result = await crammApi.add(cramm)
-            const data = await result.json()
-            commit('addCRAMMMutation', cramm)
         },
         async addProjectAction({commit, state}, project) {
             const result = await projectApi.add(project)

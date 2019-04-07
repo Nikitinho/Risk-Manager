@@ -52,9 +52,25 @@ public class Risk {
     @JsonView(Views.FullRisk.class)
     private RiskStatusType status;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "risk_id")
-    private List<CRAMM> cramms;
+    @ManyToOne
+    @JoinColumn(name = "project_id")
+    private Project project;
+
+    private String asset;
+
+    private Integer assetRate;
+
+    private String threat;
+
+    private String vulnerability;
+
+    private Integer vulnerabilityRate;
+
+    private Integer riskRate;
+
+    private RiskLevelType riskLevel;
+
+    private String countermeasure;
 
     public void setCategory(String category) {
         this.category = RiskCategoryType.fromString(category);
@@ -64,12 +80,7 @@ public class Risk {
         this.status = RiskStatusType.fromString(status);
     }
 
-    public void setCramms(List<CRAMM> cramms) {
-        if (this.cramms == null) {
-            this.cramms = new ArrayList<>();
-        } else {
-            this.cramms.clear();
-        }
-        this.cramms.addAll(cramms);
+    public void setRiskLevel(String riskLevel) {
+        this.riskLevel = RiskLevelType.fromString(riskLevel);
     }
 }

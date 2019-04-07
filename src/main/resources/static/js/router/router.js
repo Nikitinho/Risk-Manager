@@ -12,15 +12,15 @@ import ProjectView from 'pages/ProjectView.vue'
 Vue.use(VueRouter)
 
 const routes = [
+    { path: '/', name: 'ProjectsList', component: ProjectsList},
+    { path: '/newProject', name: 'ProjectCreation', component: ProjectCreation },
     { path: '/risks', name: 'RisksList', component: RisksList },
     { path: '/projects/:projectId', name: 'ProjectView', component: ProjectView, props: true },
-    { path: '/', name: 'ProjectsList', component: ProjectsList},
+    { path: '/projects/:projectId/newRisk', name: 'RiskCreation', component: RiskCreation, props: true },
     { path: '/auth', name: 'GoogleAuth', component: Auth },
     { path: '/profile', name: 'Profile', component: Profile },
-    { path: '/newRisk', name: 'RiskCreation', component: RiskCreation },
     { path: '/editRisk/:riskId', name: 'RiskEdition', component: RiskCreation, props: true },
     { path: '/viewRisk/:riskId', name: 'RiskView', component: RiskView, props: true },
-    { path: '/newProject', name: 'ProjectCreation', component: ProjectCreation },
     { path: '*', component: ProjectsList }
 ]
 

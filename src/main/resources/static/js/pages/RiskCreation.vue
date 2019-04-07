@@ -2,6 +2,7 @@
     <risk-template :risk="risk"
                    :readonly="false"
                    :validation="validation"
+                   :projectId="projectId"
                    @validationForm="checkInput($event)"
                    @newRisk="newRisk = $event">
         <v-flex xs12 slot="footer-buttons">
@@ -22,7 +23,7 @@
 
     export default {
         name: 'RiskCreation',
-        props: ['riskId'],
+        props: ['riskId', 'projectId'],
         data() {
             return {
                 validator: null,
@@ -46,7 +47,7 @@
             }
         },
         methods: {
-            ...mapActions(['addRiskAction', 'updateRiskAction', 'removeRiskAction', 'addCRAMMAction']),
+            ...mapActions(['addRiskAction', 'updateRiskAction', 'removeRiskAction']),
             checkInput(event) {
                 this.validator = event
             },

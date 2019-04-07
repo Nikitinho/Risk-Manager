@@ -14,12 +14,6 @@ export default class Risk {
             this.consequences = risk.consequences
             this.responsible = risk.responsible
             this.status = Risk.convertStatus(risk.status)
-            // Optimization needed
-            this.cramms = risk.cramms
-            let self = this
-            this.cramms.forEach(function(item, i)
-            { self.cramms[i].riskLevel = Risk.convertRiskLevel(self.cramms[i].riskLevel) });
-            // ------------------
         } else {
             this.text = ''
             this.creationDate = ''
@@ -29,7 +23,6 @@ export default class Risk {
             this.consequences = ''
             this.responsible = []
             this.status = null
-            this.cramms = []
         }
     }
 

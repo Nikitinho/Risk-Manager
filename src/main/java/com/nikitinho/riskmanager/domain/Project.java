@@ -28,6 +28,9 @@ public class Project {
     @JsonView(Views.FullRisk.class)
     private String description;
 
+    @OneToMany(mappedBy = "project", orphanRemoval = true)
+    private List<Risk> risks;
+
     @ManyToOne
     @JoinColumn(name = "author_id", updatable = false)
     private User author;
