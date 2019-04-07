@@ -35,13 +35,6 @@
             ...mapGetters(['riskCategories', 'riskStatuses', 'activeUsers', 'getUserByEmail', 'getRiskById', 'getProfile']),
             isNewRisk() {
                 return !this.riskId
-            },
-            responsibleUsers() {
-                let users = []
-                Array.from(this.activeUsers).forEach(user =>
-                    users.push(user.email)
-                )
-                return users
             }
         },
         created () {
@@ -56,13 +49,6 @@
             ...mapActions(['addRiskAction', 'updateRiskAction', 'removeRiskAction', 'addCRAMMAction']),
             checkInput(event) {
                 this.validator = event
-            },
-            getResponsibleNames(people) {
-                let users = []
-                Array.from(people).forEach(user =>
-                    users.push(user.email)
-                )
-                return users
             },
             save() {
                 if (!this.validator.validate()) { return }

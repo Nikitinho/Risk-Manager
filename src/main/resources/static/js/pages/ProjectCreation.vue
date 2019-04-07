@@ -1,17 +1,57 @@
 <template>
     <v-container grid-list-md text-xs-center>
             <v-card class="py-2 px-2">
+
+
+                    <v-card-title>
+                        <!--<v-list-tile-avatar color="grey darken-3">-->
+                            <!--<v-img class="elevation-6"-->
+                                   <!--:src="getProfile.userpic">-->
+                            <!--</v-img>-->
+                        <!--</v-list-tile-avatar>-->
+                        <span class="headline font-weight-light">New project</span>
+                    </v-card-title>
+
                 <v-form lazy-validation>
                     <v-layout row wrap align-center>
                         <v-flex xs12>
+                            <v-divider></v-divider>
+                        </v-flex>
+                        <v-flex xs4>
+                            <v-subheader>Project name</v-subheader>
+                        </v-flex>
+                        <v-flex xs8>
                             <v-text-field placeholder="Name"
                                           v-model="newProject.name">
                             </v-text-field>
                         </v-flex>
                         <v-flex xs12>
+                            <v-divider></v-divider>
+                        </v-flex>
+                        <v-flex xs4>
+                            <v-subheader>Project description</v-subheader>
+                        </v-flex>
+                        <v-flex xs8>
                             <v-text-field placeholder="Description"
                                           v-model="newProject.description">
                             </v-text-field>
+                        </v-flex>
+                        <v-flex xs12>
+                            <v-divider></v-divider>
+                        </v-flex>
+                        <v-flex xs4>
+                            <v-subheader>Responsible people</v-subheader>
+                        </v-flex>
+                        <v-flex xs8>
+                            <v-select chips
+                                      v-model="newProject.responsible"
+                                      :items="responsibleUsers"
+                                      placeholder="Responsible people"
+                                      multiple
+                            ></v-select>
+                        </v-flex>
+                        <v-flex xs12>
+                            <v-divider></v-divider>
                         </v-flex>
                         <v-flex xs12 slot="footer-buttons">
                             <v-btn color="success"
