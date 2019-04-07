@@ -1,8 +1,10 @@
 package com.nikitinho.riskmanager.controller;
 
 import com.nikitinho.riskmanager.domain.Project;
+import com.nikitinho.riskmanager.domain.User;
 import com.nikitinho.riskmanager.repo.ProjectRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.BeanUtils;
 
@@ -31,9 +33,11 @@ public class ProjectController {
     }
 
     @PostMapping
-    public Project create(@RequestBody Project project) {
+    public Project create(@RequestBody Project project,
+                          @AuthenticationPrincipal User user) {
 
         project.setCreationDate(LocalDateTime.now());
+        project.setAuthor(user);
         Project uploadedProject = projectRepo.save(project);
 
         return uploadedProject;

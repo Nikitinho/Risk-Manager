@@ -28,6 +28,10 @@ public class Project {
     @JsonView(Views.FullRisk.class)
     private String description;
 
+    @ManyToOne
+    @JoinColumn(name = "author_id", updatable = false)
+    private User author;
+
     @JsonView(Views.FullRisk.class)
     @ManyToMany
     @JoinTable(name = "project_user",

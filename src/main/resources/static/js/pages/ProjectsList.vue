@@ -1,31 +1,26 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <v-container fluid>
     <v-layout align-space-around justify-start column>
-            <v-card v-for="project in sortedProjects" :key="project.id" class="py-2 px-2 mb-1">
-                <v-card-title>
-                    <span class="title font-weight-bold">
-                        {{ project.name }}
-                    </span>
-                    <v-spacer></v-spacer>
-                    <!--<v-divider vertical></v-divider>-->
-                    <!--<slot v-for="i in 15">-->
-                    <!--<span v-for="user in project.responsible">-->
+        <v-card>
+            <v-list>
+                <template v-for="(project, index) in sortedProjects" :v-key="project.id">
 
-                    <!--<v-tooltip bottom>-->
-                        <!--<template v-slot:activator="{ on }">-->
-                            <!--<v-list-tile-avatar color="grey darken-3">-->
-                            <!--<v-img class="elevation-6"-->
-                                   <!--:src="user.userpic"-->
-                                   <!--v-on="on">-->
-                            <!--</v-img>-->
-                            <!--</v-list-tile-avatar>-->
-                        <!--</template>-->
-                        <!--<span>{{ user.name }}</span>-->
-                    <!--</v-tooltip>-->
+                    <v-divider v-if="index > 0"></v-divider>
 
-                <!--</span>-->
-                    <!--</slot>-->
-                </v-card-title>
+                    <v-list-tile avatar
+                            @click="">
+                        <v-list-tile-avatar v-if="project.author">
+                            <v-img class="elevation-6"
+                                   :src="project.author.userpic">
+                            </v-img>
+                        </v-list-tile-avatar>
+
+                        <v-list-tile-content>
+                            <v-list-tile-title v-html="project.description"></v-list-tile-title>
+                        </v-list-tile-content>
+                    </v-list-tile>
+                </template>
+            </v-list>
             </v-card>
     </v-layout>
     </v-container>
@@ -39,7 +34,7 @@
             return {
             }
         },
-        computed: mapGetters(['sortedProjects'])
+        computed: mapGetters(['sortedProjects', 'getProfile'])
 
     }
 </script>
