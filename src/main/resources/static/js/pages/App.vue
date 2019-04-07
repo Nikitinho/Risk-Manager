@@ -3,20 +3,22 @@
         <v-toolbar app>
             <v-toolbar-title>Risk management tool</v-toolbar-title>
             <v-btn v-if="profile" flat round
+                   :disabled="$route.name === 'ProjectsList'"
                    @click="showProjects">
                 Projects
             </v-btn>
             <v-btn v-if="profile" flat round
+                   :disabled="$route.name === 'ProjectCreation'"
                    @click="createProject">
                 New
             </v-btn>
             <v-btn v-if="profile" flat round
-                   :disabled="$route.path === '/'"
+                   :disabled="$route.name === 'RisksList'"
                    @click="showRisks">
                 Home
             </v-btn>
             <v-btn v-if="profile" flat round
-                   :disabled="$route.path === '/newRisk'"
+                   :disabled="$route.name === 'RiskCreation'"
                    @click="createRisk">
                 New
             </v-btn>
@@ -26,7 +28,7 @@
                 <v-icon>list</v-icon>
             </v-btn>
             <v-btn v-if="profile" round
-                   :disabled="$route.path === '/profile'"
+                   :disabled="$route.name === 'Profile'"
                    @click="showProfile">
                 {{profile.name}}
             </v-btn>

@@ -4,12 +4,12 @@
 
 
                     <v-card-title>
-                        <!--<v-list-tile-avatar color="grey darken-3">-->
-                            <!--<v-img class="elevation-6"-->
-                                   <!--:src="getProfile.userpic">-->
-                            <!--</v-img>-->
-                        <!--</v-list-tile-avatar>-->
-                        <span class="headline font-weight-light">New project</span>
+                        <v-list-tile-avatar color="grey darken-3">
+                            <v-img class="elevation-6"
+                                   :src="getProfile.userpic">
+                            </v-img>
+                        </v-list-tile-avatar>
+                        <span class="headline font-weight-light">{{ newProject.name || 'New project' }}</span>
                     </v-card-title>
 
                 <v-form lazy-validation>

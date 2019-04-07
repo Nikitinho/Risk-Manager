@@ -7,19 +7,21 @@ import RiskCreation from 'pages/RiskCreation.vue'
 import RiskView from 'pages/RiskView.vue'
 import ProjectsList from 'pages/ProjectsList.vue'
 import ProjectCreation from 'pages/ProjectCreation.vue'
+import ProjectView from 'pages/ProjectView.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
-    { path: '/', name: 'RisksList', component: RisksList },
-    { path: '/projects', name: 'ProjectsList', component: ProjectsList},
+    { path: '/risks', name: 'RisksList', component: RisksList },
+    { path: '/projects/:projectId', name: 'ProjectView', component: ProjectView, props: true },
+    { path: '/', name: 'ProjectsList', component: ProjectsList},
     { path: '/auth', name: 'GoogleAuth', component: Auth },
     { path: '/profile', name: 'Profile', component: Profile },
     { path: '/newRisk', name: 'RiskCreation', component: RiskCreation },
     { path: '/editRisk/:riskId', name: 'RiskEdition', component: RiskCreation, props: true },
     { path: '/viewRisk/:riskId', name: 'RiskView', component: RiskView, props: true },
     { path: '/newProject', name: 'ProjectCreation', component: ProjectCreation },
-    { path: '*', component: RisksList }
+    { path: '*', component: ProjectsList }
 ]
 
 export default new VueRouter({

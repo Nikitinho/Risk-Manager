@@ -8,7 +8,7 @@
                     <v-divider v-if="index > 0"></v-divider>
 
                     <v-list-tile avatar
-                            @click="">
+                            @click="() => showProject(project)">
                         <v-list-tile-avatar v-if="project.author">
                             <v-img class="elevation-6"
                                    :src="project.author.userpic">
@@ -34,7 +34,12 @@
             return {
             }
         },
-        computed: mapGetters(['sortedProjects', 'getProfile'])
+        computed: mapGetters(['sortedProjects']),
+        methods: {
+            showProject(project) {
+                this.$router.push({ name: 'ProjectView', params: { projectId: project.id } })
+            }
+        }
 
     }
 </script>
