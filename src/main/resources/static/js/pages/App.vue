@@ -41,12 +41,6 @@
         },
         methods: {
             ...mapMutations(['addRiskMutation', 'updateRiskMutation', 'removeRiskMutation']),
-            showRisks() {
-                this.$router.push({ name: 'RisksList' })
-            },
-            createRisk() {
-                this.$router.push({ name: 'RiskCreation' })
-            },
             showProfile() {
                 this.$router.push({ name: 'Profile' })
             },

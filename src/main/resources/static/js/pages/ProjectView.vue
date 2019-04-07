@@ -134,7 +134,7 @@
                 this.$router.push({ name: 'RiskCreation', params: { projectId: this.project.id } })
             },
             showRisk(risk) {
-                this.$router.push({ name: 'RiskView', params: { riskId: risk.id } })
+                this.$router.push({ name: 'RiskView', params: { projectId: this.project.id, riskId: risk.id } })
             },
             getColor(riskRate) {
                 return Risk.convertRiskRateToColor(riskRate)

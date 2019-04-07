@@ -19,8 +19,8 @@ const routes = [
     { path: '/projects/:projectId/newRisk', name: 'RiskCreation', component: RiskCreation, props: true },
     { path: '/auth', name: 'GoogleAuth', component: Auth },
     { path: '/profile', name: 'Profile', component: Profile },
-    { path: '/editRisk/:riskId', name: 'RiskEdition', component: RiskCreation, props: true },
-    { path: '/viewRisk/:riskId', name: 'RiskView', component: RiskView, props: true },
+    { path: '/projects/:projectId/editRisk/:riskId', name: 'RiskEdition', component: RiskCreation, props: true },
+    { path: '/projects/:projectId/viewRisk/:riskId', name: 'RiskView', component: RiskView, props: true },
     { path: '*', component: ProjectsList }
 ]
 

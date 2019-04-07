@@ -55,11 +55,11 @@
                 if (!this.validator.validate()) { return }
 
                 this.newRisk.responsible = this.newRisk.responsible.map(x => this.getUserByEmail(x))
+                this.newRisk.project = {
+                    id: this.projectId
+                }
                 if (this.isNewRisk) {
                     this.newRisk["id"] = this.id
-                    this.newRisk.project = {
-                        id: this.projectId
-                    }
                     this.addRiskAction(this.newRisk)
                 } else {
                     this.newRisk["id"] = this.riskId

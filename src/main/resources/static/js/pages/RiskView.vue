@@ -32,7 +32,7 @@
 
     export default {
         name: 'RiskView',
-        props: ['riskId'],
+        props: ['riskId', 'projectId'],
         mixins: [printingRiskMixin],
         data() {
             return {
@@ -66,7 +66,7 @@
                 return users
             },
             edit (risk) {
-                this.$router.push({ name: 'RiskEdition', params: { riskId: risk.id } })
+                this.$router.push({ name: 'RiskEdition', params: { projectId: this.projectId, riskId: risk.id } })
             },
             del (risk) {
                 this.removeRiskAction(risk)
