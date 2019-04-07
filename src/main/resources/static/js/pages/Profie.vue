@@ -5,20 +5,20 @@
             <v-flex :xs6="!$vuetify.breakpoint.xsOnly">
                 <v-layout row justify-space-between>
                     <v-flex class="px-1" align-self-center>
-                        <v-img class="img-circle" :src="profile.userpic"></v-img>
+                        <v-img class="img-circle" :src="userProfile.userpic"></v-img>
                     </v-flex>
                     <v-flex align-self-center>
                         <v-layout class="px-1" column>
                             <v-divider></v-divider>
-                            <v-flex>Name: {{ profile.name || 'Name is not provided' }}</v-flex>
+                            <v-flex>Name: {{ userProfile.name || 'Name is not provided' }}</v-flex>
                             <v-divider></v-divider>
-                            <v-flex>Locale: {{ profile.locale || 'Locale is not provided' }}</v-flex>
+                            <v-flex>Locale: {{ userProfile.locale || 'Locale is not provided' }}</v-flex>
                             <v-divider></v-divider>
-                            <v-flex>Gender: {{ profile.gender || 'Gender is not provided' }}</v-flex>
+                            <v-flex>Gender: {{ userProfile.gender || 'Gender is not provided' }}</v-flex>
                             <v-divider></v-divider>
-                            <v-flex>Email: {{ profile.email || 'Email is not provided' }}</v-flex>
+                            <v-flex>Email: {{ userProfile.email || 'Email is not provided' }}</v-flex>
                             <v-divider></v-divider>
-                            <v-flex>Last action: {{ profile.lastVisit || 'Last action is not provided' }}</v-flex>
+                            <v-flex>Last action: {{ userProfile.lastVisit || 'Last action is not provided' }}</v-flex>
                             <v-divider></v-divider>
                         </v-layout>
                     </v-flex>
@@ -30,10 +30,17 @@
 </template>
 
 <script>
-    import { mapState } from 'vuex'
+    import { mapGetters } from 'vuex'
     export default {
         name: 'Profile',
-        computed: mapState(['profile'])
+        props: ['userId'],
+        computed: { 
+            ...mapGetters(['getUserById']),
+            userProfile() {
+                return this.getUserById(this.userId)
+            }
+        }
+        
     }
 </script>
 

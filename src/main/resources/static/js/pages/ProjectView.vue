@@ -68,7 +68,7 @@
                             <v-divider></v-divider>
 
                             <v-list-tile avatar
-                                         @click="">
+                                         @click="() => showProfile(user.id)">
                                 <v-list-tile-avatar v-if="user.userpic">
                                     <v-img class="elevation-6"
                                            :src="user.userpic">
@@ -138,6 +138,9 @@
             },
             getColor(riskRate) {
                 return Risk.convertRiskRateToColor(riskRate)
+            },
+            showProfile(userId) {
+                this.$router.push({ name: 'Profile', params: { userId: userId } })
             },
             getResponsible(risk) {
                 if (risk.responsible) {

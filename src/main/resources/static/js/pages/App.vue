@@ -42,7 +42,8 @@
         methods: {
             ...mapMutations(['addRiskMutation', 'updateRiskMutation', 'removeRiskMutation']),
             showProfile() {
-                this.$router.push({ name: 'Profile' })
+                console.log(this.profile.id)
+                this.$router.push({ name: 'Profile', params: { userId: this.profile.id } })
             },
             showProjects() {
                 this.$router.push({ name: 'ProjectsList' })

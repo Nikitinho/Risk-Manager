@@ -63,13 +63,9 @@
 
 <script>
     import { mapGetters } from 'vuex'
-    import RiskRow from 'components/risks/RiskRow.vue'
     import Risk from 'domain/Risk'
 
     export default {
-        components: {
-          RiskRow
-        },
         data() {
             return {
                 risk: null,

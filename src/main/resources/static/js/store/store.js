@@ -23,6 +23,9 @@ export default new Vuex.Store({
         getUserByEmail: state => name => {
             return state.users.find(user => user.email === name);
         },
+        getUserById: state => id => {
+            return state.users.find(user => user.id === id);
+        },
         getRiskById: state => id => {
             return state.risks.find(risk => risk.id === id)
         },
