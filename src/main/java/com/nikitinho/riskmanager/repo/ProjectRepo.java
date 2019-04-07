@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ProjectRepo extends JpaRepository<Project, Long> {
-//    @EntityGraph(attributePaths = { "risks" })
-//    List<Project> findAll();
+    @EntityGraph(attributePaths = { "risks" })
+    List<Project> findAll();
 }

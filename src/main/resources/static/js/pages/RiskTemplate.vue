@@ -123,14 +123,18 @@
                 <td v-if="readonly">{{ risk.asset }} {{ risk.assetRate }}</td>
                 <v-text-field v-else
                               placeholder="Asset"
-                              v-model="newRisk.asset">
+                              v-model="newRisk.asset"
+                              :rules="validation.asset"
+                              required>
                 </v-text-field>
             </v-flex>
             <v-flex xs2 v-if="!readonly">
                 <v-text-field type="number"
                               placeholder="Asset Rate"
                               @input="updateRiskLevel"
-                              v-model="newRisk.assetRate">
+                              v-model="newRisk.assetRate"
+                              :rules="validation.assetRate"
+                              required>
                 </v-text-field>
             </v-flex>
             <v-flex xs4>
@@ -140,7 +144,9 @@
                 <td v-if="readonly">{{ risk.threat }}</td>
                 <v-text-field v-else
                               placeholder="Threat"
-                              v-model="newRisk.threat">
+                              v-model="newRisk.threat"
+                              :rules="validation.threat"
+                              required>
                 </v-text-field>
             </v-flex>
             <v-flex xs4>
@@ -150,140 +156,23 @@
                 <td v-if="readonly">{{ risk.vulnerability }} {{ risk.vulnerabilityRate }}</td>
                 <v-text-field v-else
                               placeholder="Vulnerability"
-                              v-model="newRisk.vulnerability">
+                              v-model="newRisk.vulnerability"
+                              :rules="validation.vulnerability"
+                              required>
                 </v-text-field>
             </v-flex>
             <v-flex xs2 v-if="!readonly">
                 <v-text-field type="number"
                               placeholder="Vulnerability Rate"
                               @input="updateRiskLevel"
-                              v-model="newRisk.vulnerabilityRate">
+                              v-model="newRisk.vulnerabilityRate"
+                              :rules="validation.vulnerabilityRate"
+                              required>
                 </v-text-field>
             </v-flex>
             <v-flex xs12 v-if="!readonly">
                 <v-divider></v-divider>
             </v-flex>
-            <!--<slot v-if="!readonly">-->
-                <!--<slot v-for="(item, index) in newRisk.cramms">-->
-                <!--<v-flex xs4>-->
-                    <!--<v-subheader>-->
-                    <!--<v-layout column>-->
-                        <!--<v-btn fab dark color="indigo" @click="addCRAMMCriteria">-->
-                            <!--<v-icon dark>add</v-icon>-->
-                        <!--</v-btn>-->
-                        <!--<v-btn fab dark color="red" @click="() => removeCRAMMCriteria(index)">-->
-                            <!--<v-icon dark>remove</v-icon>-->
-                        <!--</v-btn>-->
-                    <!--</v-layout>-->
-                    <!--</v-subheader>-->
-                <!--</v-flex>-->
-                <!--<v-flex xs8>-->
-                    <!--<v-layout column>-->
-                        <!--<v-layout row>-->
-                            <!--<v-flex xs9>-->
-                                <!--<td v-if="readonly">{{ risk.cramms[index].asset }}</td>-->
-                                <!--<v-text-field v-else-->
-                                              <!--placeholder="Asset"-->
-                                              <!--:rules="validation.cramms.asset"-->
-                                              <!--v-model="newRisk.cramms[index].asset">-->
-                                <!--</v-text-field>-->
-                            <!--</v-flex>-->
-                            <!--<v-flex xs3>-->
-                                <!--<td v-if="readonly">{{ risk.cramms[index].assetRate }}</td>-->
-                                <!--<v-text-field v-else-->
-                                              <!--type="number"-->
-                                              <!--placeholder="Asset Rate"-->
-                                              <!--:rules="validation.cramms.assetRate"-->
-                                              <!--@input="() => updateRiskLevel(index)"-->
-                                              <!--v-model="newRisk.cramms[index].assetRate">-->
-                                <!--</v-text-field>-->
-                            <!--</v-flex>-->
-                        <!--</v-layout>-->
-                        <!--<v-layout row>-->
-                            <!--<v-flex xs12>-->
-                                <!--<td v-if="readonly">{{ risk.cramms[index].threat }}</td>-->
-                                <!--<v-text-field v-else-->
-                                              <!--placeholder="Threat"-->
-                                              <!--:rules="validation.cramms.threat"-->
-                                              <!--v-model="newRisk.cramms[index].threat">-->
-                                <!--</v-text-field>-->
-                            <!--</v-flex>-->
-                        <!--</v-layout>-->
-                        <!--<v-layout row>-->
-                            <!--<v-flex xs9>-->
-                                <!--<td v-if="readonly">{{ risk.cramms[index].vulnerability }}</td>-->
-                                <!--<v-text-field v-else-->
-                                              <!--placeholder="Vulnerability"-->
-                                              <!--:rules="validation.cramms.vulnerability"-->
-                                              <!--v-model="newRisk.cramms[index].vulnerability">-->
-                                <!--</v-text-field>-->
-                            <!--</v-flex>-->
-                            <!--<v-flex xs3>-->
-                                <!--<td v-if="readonly">{{ risk.cramms[index].vulnerabilityRate }}</td>-->
-                                <!--<v-text-field v-else-->
-                                              <!--type="number"-->
-                                              <!--placeholder="Vulnerability Rate"-->
-                                              <!--:rules="validation.cramms.vulnerabilityRate"-->
-                                              <!--@input="() => updateRiskLevel(index)"-->
-                                              <!--v-model="newRisk.cramms[index].vulnerabilityRate">-->
-                                <!--</v-text-field>-->
-                            <!--</v-flex>-->
-                        <!--</v-layout>-->
-                    <!--</v-layout>-->
-                <!--</v-flex>-->
-                <!--<v-flex xs12>-->
-                    <!--<v-divider></v-divider>-->
-                <!--</v-flex>-->
-                <!--</slot>-->
-            <!--</slot>-->
-            <!--<slot v-if="readonly">-->
-                <!--<v-flex xs12>-->
-                    <!--<v-divider></v-divider>-->
-                <!--</v-flex>-->
-                <!--<v-flex xs12>-->
-                    <!--<bubble-chart :data="risk.cramms"></bubble-chart>-->
-                <!--</v-flex>-->
-                <!--<v-flex xs12>-->
-                    <!--<v-btn color="success"-->
-                           <!--@click="() => isInfoProvided = !isInfoProvided">-->
-                        <!--<span v-if="isInfoProvided">Show full graph info</span>-->
-                        <!--<span v-else>Hide full graph info</span>-->
-
-                    <!--</v-btn>-->
-                <!--</v-flex>-->
-            <!--</slot>-->
-            <!--<slot v-if="readonly && isInfoProvided">-->
-                <!--<slot v-for="(item, index) in risk.cramms">-->
-                    <!--<v-flex xs12>-->
-                        <!--<v-divider></v-divider>-->
-                    <!--</v-flex>-->
-                    <!--<v-flex xs4>-->
-                        <!--<v-subheader>Asset</v-subheader>-->
-                    <!--</v-flex>-->
-                    <!--<v-flex xs8>-->
-                        <!--<td>{{ risk.cramms[index].asset }} ({{ risk.cramms[index].assetRate }})</td>-->
-                    <!--</v-flex>-->
-                    <!--<v-flex xs4>-->
-                        <!--<v-subheader>Threat</v-subheader>-->
-                    <!--</v-flex>-->
-                    <!--<v-flex xs8>-->
-                        <!--<td>{{ risk.cramms[index].threat }}</td>-->
-                    <!--</v-flex>-->
-                    <!--<v-flex xs4>-->
-                        <!--<v-subheader>Vulnerability</v-subheader>-->
-                    <!--</v-flex>-->
-                    <!--<v-flex xs8>-->
-                        <!--<td>{{ risk.cramms[index].vulnerability }} ({{ risk.cramms[index].vulnerabilityRate }})</td>-->
-                    <!--</v-flex>-->
-                    <!--<v-flex xs4>-->
-                        <!--<v-subheader>Risk Level</v-subheader>-->
-                    <!--</v-flex>-->
-                    <!--<v-flex xs8>-->
-                        <!--<td>{{ risk.cramms[index].riskLevel }} ({{ risk.cramms[index].riskRate }})</td>-->
-                    <!--</v-flex>-->
-                <!--</slot>-->
-            <!--</slot>-->
-            <!--<slot v-if="crammStagesAdded" name="footer-buttons">-->
             <slot name="footer-buttons">
             </slot>
         </v-layout>
