@@ -19,8 +19,82 @@
                             <v-icon dark>add</v-icon>
                         </v-btn>
                     </v-card-title>
+                    <v-divider></v-divider>
+                    <v-toolbar dense flat>
+                        <v-text-field
+                                class="elevation-0"
+                                prepend-icon="search"
+                                v-model="searchField"
+                                single-line
+                                flat>
+                        </v-text-field>
+                        <v-btn icon @click="() => showFilters = !showFilters">
+                            <v-icon>filter_list</v-icon>
+                        </v-btn>
+                        <template v-if="showFilters" v-slot:extension>
+                            <v-tabs centered fixed-tabs
+                                    color="transparent">
+                                <v-tabs-slider></v-tabs-slider>
+
+                                <v-tab>
+                                    <v-menu>
+                                        <template v-slot:activator="{ on }">
+                                            <v-toolbar-title v-on="on">
+                                                <span style="font-size: 75%; white-space:pre-wrap;">{{ chosenCategory.label }}</span>
+                                            </v-toolbar-title>
+                                        </template>
+
+                                        <v-list>
+                                            <v-list-tile
+                                                    v-for="(item, index) in categories"
+                                                    @click="() => chosenCategory = item">
+                                                <v-list-tile-title>{{ item.label }}</v-list-tile-title>
+                                            </v-list-tile>
+                                        </v-list>
+                                    </v-menu>
+                                </v-tab>
+
+                                <v-tab>
+                                    <v-menu>
+                                        <template v-slot:activator="{ on }">
+                                            <v-toolbar-title v-on="on">
+                                                <span style="font-size: 75%; white-space:pre-wrap;">{{ chosenStatus.label }}</span>
+                                            </v-toolbar-title>
+                                        </template>
+
+                                        <v-list>
+                                            <v-list-tile
+                                                    v-for="(item, index) in statuses"
+                                                    @click="() => chosenStatus = item">
+                                                <v-list-tile-title>{{ item.label }}</v-list-tile-title>
+                                            </v-list-tile>
+                                        </v-list>
+                                    </v-menu>
+                                </v-tab>
+
+                                <v-tab>
+                                    <v-menu>
+                                        <template v-slot:activator="{ on }">
+                                            <v-toolbar-title v-on="on">
+                                                <span style="font-size: 75%; white-space:pre-wrap;">{{ chosenLevel.label }}</span>
+                                            </v-toolbar-title>
+                                        </template>
+
+                                        <v-list>
+                                            <v-list-tile
+                                                    v-for="(item, index) in levels"
+                                                    @click="() => chosenLevel = item">
+                                                <v-list-tile-title>{{ item.label }}</v-list-tile-title>
+                                            </v-list-tile>
+                                        </v-list>
+                                    </v-menu>
+                                </v-tab>
+
+                            </v-tabs>
+                        </template>
+                    </v-toolbar>
                     <v-list>
-                        <template v-for="risk in project.risks" :v-key="risk.id">
+                        <template v-for="risk in filteredRisksList" :v-key="risk.id">
 
                             <v-divider></v-divider>
 
@@ -132,11 +206,54 @@
                 isTeamShown: true,
                 isGraphShown: true,
                 isBubbleChartShown: true,
-                maxRiskUsersAmount: 3
+                maxRiskUsersAmount: 3,
+                showFilters: false,
+                categories: [
+                    {label: 'Риск интеграции', value: 'INTEGRATION'},
+                    {label: 'Финансовые риски', value: 'FINANCIAL'},
+                    {label: 'Временные риски', value: 'TEMPORARY'},
+                    {label: 'Риски персонала', value: 'PERSONNEL'},
+                    {label: 'Коммуникационные риски', value: 'COMMUNICATION'},
+                    {label: 'Риски поставщиков', value: 'VENDOR'},
+                    {label: 'Риски несоответствия качеству', value: 'LACK_OF_QUALITY'},
+                    {label: 'Выберите категорию', value: null}
+                ],
+                chosenCategory: {label: 'Выберите категорию', value: null},
+                statuses: [
+                    {label: 'Открыт', value: 'CREATED'},
+                    {label: 'В работе', value: 'IN_THE_WORK'},
+                    {label: 'Закрыт', value: 'CLOSED'},
+                    {label: 'Выберите статус', value: null}
+                ],
+                chosenStatus: {label: 'Выберите статус', value: null},
+                levels: [
+                    {label: 'Низкий', value: 'LOW'},
+                    {label: 'Средний', value: 'MEDIUM'},
+                    {label: 'Высокий', value: 'HIGH'},
+                    {label: 'Выберите уровень', value: null}
+                ],
+                chosenLevel: {label: 'Выберите уровень', value: null},
+                searchField: ''
             }
         },
         computed: {
             ...mapGetters(['getProjectById']),
+            filteredRisksList() {
+                let list = this.project.risks
+                if (this.searchField.length > 0) {
+                    list = list.filter(risk => risk.text.toLowerCase().includes(this.searchField.toLowerCase()))
+                }
+                if (this.chosenCategory.value !== null) {
+                    list = list.filter(risk => risk.category === this.chosenCategory.value)
+                }
+                if (this.chosenLevel.value !== null) {
+                    list = list.filter(risk => risk.riskLevel === this.chosenLevel.value)
+                }
+                if (this.chosenStatus.value !== null) {
+                    list = list.filter(risk => risk.status === this.chosenStatus.value)
+                }
+                return list
+            }
         },
         created () {
             this.project = this.getProjectById((Number)(this.projectId))
