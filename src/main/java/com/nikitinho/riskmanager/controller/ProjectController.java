@@ -1,5 +1,6 @@
 package com.nikitinho.riskmanager.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.nikitinho.riskmanager.domain.Project;
 import com.nikitinho.riskmanager.domain.User;
 import com.nikitinho.riskmanager.domain.Views;
@@ -26,15 +27,17 @@ public class ProjectController {
     @Autowired
     public ProjectController(ProjectRepo projectRepo, WsSender wsSender) {
         this.projectRepo = projectRepo;
-        this.wsSender = wsSender.getSender(ObjectType.PROJECT, Views.IdName.class);
+        this.wsSender = wsSender.getSender(ObjectType.PROJECT, Views.FullProject.class);
     }
 
     @GetMapping
+    @JsonView(Views.FullProject.class)
     public List<Project> list() {
         return projectRepo.findAll();
     }
 
     @GetMapping("{id}")
+    @JsonView(Views.FullProject.class)
     public Project getOne(@PathVariable("id") Project project) {
         return project;
     }

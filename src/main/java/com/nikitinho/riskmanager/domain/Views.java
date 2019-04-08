@@ -5,5 +5,7 @@ public final class Views {
 
     public interface IdName extends Id {}
 
-    public interface FullRisk extends Id {}
+    public interface FullProject extends IdName {}
+
+    public interface FullRisk extends IdName {}
 }

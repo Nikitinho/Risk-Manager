@@ -1,9 +1,9 @@
 package com.nikitinho.riskmanager.controller;
 
-import com.nikitinho.riskmanager.domain.Risk;
-import com.nikitinho.riskmanager.domain.RiskCategoryType;
-import com.nikitinho.riskmanager.domain.RiskStatusType;
-import com.nikitinho.riskmanager.domain.User;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.nikitinho.riskmanager.domain.*;
 import com.nikitinho.riskmanager.repo.ProjectRepo;
 import com.nikitinho.riskmanager.repo.RiskRepo;
 import com.nikitinho.riskmanager.repo.UserDetailsRepo;
@@ -38,7 +38,7 @@ public class MainController {
     }
 
     @GetMapping
-    public String main(Model model, @AuthenticationPrincipal User user) {
+    public String main(Model model, @AuthenticationPrincipal User user) throws JsonProcessingException {
         HashMap<Object, Object> data = new HashMap<>();
 
         if (user != null) {
@@ -47,6 +47,7 @@ public class MainController {
             data.put("statuses", Stream.of(RiskStatusType.values()).map(RiskStatusType::toString).toArray());
             data.put("projects", projectRepo.findAll().stream().filter(project -> project.getResponsible().stream()
                     .anyMatch(usr -> usr.getId().equals(user.getId()))).toArray());
+
             // Only load risks where the user is one of responsible people
 //            Arrays.stream(riskRepo.findAll().stream().filter(risk -> risk.getResponsible().stream().anyMatch(usr ->
 //                    usr.getId().equals(user.getId()))).toArray()).forEach(x->System.out.print(x));

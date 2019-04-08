@@ -1,6 +1,7 @@
 package com.nikitinho.riskmanager.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.nikitinho.riskmanager.domain.Project;
 import com.nikitinho.riskmanager.domain.Risk;
 import com.nikitinho.riskmanager.domain.RiskStatusType;
 import com.nikitinho.riskmanager.domain.Views;
@@ -27,12 +28,12 @@ public class RiskController {
     @Autowired
     public RiskController(RiskRepo riskRepo, WsSender wsSender, NotificationService notificationService) {
         this.riskRepo = riskRepo;
-        this.wsSender = wsSender.getSender(ObjectType.RISK, Views.IdName.class);
+        this.wsSender = wsSender.getSender(ObjectType.RISK, Views.FullRisk.class);
         this.notificationService = notificationService;
     }
 
     @GetMapping
-    @JsonView(Views.IdName.class)
+    @JsonView(Views.FullRisk.class)
     public List<Risk> list() {
         return riskRepo.findAll();
     }
@@ -44,6 +45,7 @@ public class RiskController {
     }
 
     @PostMapping
+    @JsonView(Views.FullRisk.class)
     public Risk create(@RequestBody Risk risk) {
 
         risk.setCreationDate(LocalDateTime.now());
@@ -62,6 +64,7 @@ public class RiskController {
     }
 
     @PutMapping("{id}")
+    @JsonView(Views.FullRisk.class)
     public Risk update(@PathVariable("id") Risk riskFromDb,
                                       @RequestBody Risk risk) {
 
@@ -85,7 +88,7 @@ public class RiskController {
     public void delete(@PathVariable("id") Risk risk) {
         riskRepo.delete(risk);
 //        notificationService.sendNotification(risk, EventType.REMOVE);
-        wsSender.accept(EventType.REMOVE, risk);
+//        wsSender.accept(EventType.REMOVE, risk);
     }
 
 }

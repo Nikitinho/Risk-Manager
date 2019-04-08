@@ -206,13 +206,8 @@
                     this.newRisk = new Risk()
                     this.newRisk.responsible = []
                     this.newRisk.responsible.push(this.getProfile.email)
-//                    this.newRisk.cramms = []
-//                    this.newRisk.project = this.getProjectById(((Number)(this.projectId)))
                 }
             }
-//            console.log(this.projectId)
-//            console.log(this.getProjectById(((Number)(this.projectId))))
-//            console.log(this.newRisk.project)
         },
         mounted () {
             this.$emit('newRisk', this.newRisk)

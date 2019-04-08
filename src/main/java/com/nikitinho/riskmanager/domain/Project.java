@@ -17,27 +17,31 @@ import java.util.List;
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonView(Views.Id.class)
     private Long id;
 
+    @JsonView(Views.IdName.class)
     private String name;
 
     @Column(updatable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
-    @JsonView(Views.FullRisk.class)
+    @JsonView(Views.FullProject.class)
     private LocalDateTime creationDate;
 
-    @JsonView(Views.FullRisk.class)
+    @JsonView(Views.FullProject.class)
     private String description;
 
     @OneToMany(orphanRemoval = true, cascade = {CascadeType.ALL}, mappedBy = "project")
     @JsonManagedReference
+    @JsonView(Views.FullProject.class)
     private List<Risk> risks;
 
     @ManyToOne
     @JoinColumn(name = "author_id", updatable = false)
+    @JsonView(Views.FullProject.class)
     private User author;
 
-    @JsonView(Views.FullRisk.class)
+    @JsonView(Views.FullProject.class)
     @ManyToMany
     @JoinTable(name = "project_user",
             joinColumns = {@JoinColumn(name = "project_id")},

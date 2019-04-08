@@ -23,6 +23,7 @@ public class Risk {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonView(Views.Id.class)
     private Long id;
+
     @JsonView(Views.IdName.class)
     private String text;
 
@@ -56,22 +57,31 @@ public class Risk {
     @ManyToOne
     @JoinColumn(name = "project_id")
     @JsonBackReference
+    @JsonView(Views.FullRisk.class)
     private Project project;
 
+    @JsonView(Views.FullRisk.class)
     private String asset;
 
+    @JsonView(Views.FullRisk.class)
     private Integer assetRate;
 
+    @JsonView(Views.FullRisk.class)
     private String threat;
 
+    @JsonView(Views.FullRisk.class)
     private String vulnerability;
 
+    @JsonView(Views.FullRisk.class)
     private Integer vulnerabilityRate;
 
+    @JsonView(Views.FullRisk.class)
     private Integer riskRate;
 
+    @JsonView(Views.FullRisk.class)
     private RiskLevelType riskLevel;
 
+    @JsonView(Views.FullRisk.class)
     private String countermeasure;
 
     public void setCategory(String category) {
