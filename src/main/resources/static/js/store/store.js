@@ -34,65 +34,88 @@ export default new Vuex.Store({
     },
     mutations: {
         updateRiskMutation(state, risk) {
-            const updateIndex = state.projects.findIndex(item => Number(item.id) === Number(risk.project.id))
-            const project = state.projects[updateIndex]
-            const updateRiskIndex = project.risks.findIndex(item => Number(item.id) === Number(risk.id))
-
-            state.projects = [
-                ...state.projects.slice(0, updateIndex),
-                {
-                    ...project,
-                    risks: [
-                        ...project.risks.slice(0, updateRiskIndex),
-                        risk,
-                        ...project.risks.slice(updateRiskIndex + 1)
-                    ]
-                },
-                ...state.projects.slice(updateIndex + 1)
-            ]
+            // const updateIndex = state.projects.findIndex(item => Number(item.id) === Number(risk.project.id))
+            // const project = state.projects[updateIndex]
+            // const updateRiskIndex = project.risks.findIndex(item => Number(item.id) === Number(risk.id))
+            //
+            // state.projects = [
+            //     ...state.projects.slice(0, updateIndex),
+            //     {
+            //         ...project,
+            //         risks: [
+            //             ...project.risks.slice(0, updateRiskIndex),
+            //             risk,
+            //             ...project.risks.slice(updateRiskIndex + 1)
+            //         ]
+            //     },
+            //     ...state.projects.slice(updateIndex + 1)
+            // ]
+            let index = (state.projects.findIndex(projects => projects.risks.some(x => x.id === risk.id)))
+            console.log(index)
+            let item = state.projects.find(projects => projects.risks.some(x => x.id === risk.id))
+            console.log(item)
+            let riskIndex = item ? item.risks.findIndex(x => x.id = risk.id) : undefined
+            if (riskIndex > -1) {
+                item.risks.splice(riskIndex, 1, risk)
+                state.projects.splice(index, 1, item)
+            }
+                //vm.items.splice(indexOfItem, 1, newValue)
         },
         addRiskMutation(state, risk) {
-            console.log('addRiskMutation')
-            const updateIndex = state.projects.findIndex(item => item.id === risk.project.id)
-            const project = state.projects[updateIndex]
-            state.projects = [
-                ...state.projects.slice(0, updateIndex),
-                {
-                    ...project,
-                    risks: [
-                        ...project.risks,
-                        risk
-                    ]
-                },
-                ...state.projects.slice(updateIndex + 1)
-            ]
+            // console.log('addRiskMutation')
+            // const updateIndex = state.projects.findIndex(item => item.id === risk.project.id)
+            // const project = state.projects[updateIndex]
+            // state.projects = [
+            //     ...state.projects.slice(0, updateIndex),
+            //     {
+            //         ...project,
+            //         risks: [
+            //             ...project.risks,
+            //             risk
+            //         ]
+            //     },
+            //     ...state.projects.slice(updateIndex + 1)
+            // ]
+            let index = state.projects.findIndex(project => project.id === risk.project.id)
+            console.log(index)
+            let item = state.projects.find(project => project.id === risk.project.id)
+            console.log(item)
+            if (index > -1) {
+                item.risks.splice(0, 0, risk)
+                state.projects.splice(index, 1, item)
+
+                // state.projects[index].risks.push(risk)
+            }
         },
         removeRiskMutation(state, risk) {
-            const deletionIndex = state.risks.findIndex(item => item.id === risk.id)
-            const project = state.projects[deletionIndex]
-            const deletionRiskIndex = project.risks.findIndex(item => Number(item.id) === Number(risk.id))
-
-            if (deletionIndex > -1) {
-                state.projects = [
-                    ...state.projects.slice(0, deletionIndex),
-                    {
-                        ...project,
-                        risks: [
-                            ...project.risks.slice(0, deletionRiskIndex),
-                            ...project.risks.slice(deletionRiskIndex + 1)
-                        ]
-                    },
-                    ...state.projects.slice(deletionIndex + 1)
-                ]
-
-                state.risks = [
-                    ...state.risks.slice(0, deletionIndex),
-                    ...state.risks.slice(deletionIndex + 1)
-                ]
+            // const deletionIndex = state.projects.findIndex(item => Number(item.id) === Number(risk.project.id))
+            // const project = state.projects[deletionIndex]
+            // const deletionRiskIndex = project.risks.findIndex(item => Number(item.id) === Number(risk.id))
+            //
+            // if (deletionIndex > -1) {
+            //     state.projects = [
+            //         ...state.projects.slice(0, deletionIndex),
+            //         {
+            //             ...project,
+            //             risks: [
+            //                 ...project.risks.slice(0, deletionRiskIndex),
+            //                 ...project.risks.slice(deletionRiskIndex + 1)
+            //             ]
+            //         },
+            //         ...state.projects.slice(deletionIndex + 1)
+            //     ]
+            // }
+            let index = (state.projects.findIndex(projects => projects.risks.some(x => x.id === risk.id)))
+            console.log(index)
+            let item = state.projects.find(projects => projects.risks.some(x => x.id === risk.id))
+            console.log(item)
+            let riskIndex = item ? item.risks.findIndex(x => x.id = risk.id) : undefined
+            if (riskIndex > -1) {
+                item.risks.splice(riskIndex, 1)
+                state.projects.splice(index, 1, item)
             }
         },
         addProjectMutation(state, project) {
-            console.log('addProjectMutation')
             state.projects = [
                 ...state.projects,
                 project
@@ -121,12 +144,20 @@ export default new Vuex.Store({
         async addRiskAction({commit, state}, risk) {
             const result = await risksApi.add(risk)
             const data = await result.json()
+            // TODO: temporarily fix. Another solution needed.
+            if (!data.project) {
+                data.project = risk.project
+            }
             commit('addRiskMutation', data)
 
         },
         async updateRiskAction({commit}, risk) {
             const result = await risksApi.update(risk)
             const data = await result.json()
+            // TODO: temporarily fix. Another solution needed.
+            if (!data.project) {
+                data.project = risk.project
+            }
             commit('updateRiskMutation', data)
         },
         async removeRiskAction({commit}, risk) {

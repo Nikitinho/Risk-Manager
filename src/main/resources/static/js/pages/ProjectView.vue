@@ -101,8 +101,15 @@
                     </v-card-title>
                     <v-divider></v-divider>
                     <slot v-if="isGraphShown">
-                    <bubble-chart v-if="isBubbleChartShown" :data="project.risks"></bubble-chart>
-                    <doughnut-chart v-else :data="project.risks"></doughnut-chart>
+                        <slot v-if="project.risks && project.risks.length > 0">
+                            <bubble-chart v-if="isBubbleChartShown" :data="project.risks"></bubble-chart>
+                            <doughnut-chart v-else :data="project.risks"></doughnut-chart>
+                        </slot>
+                        <slot v-else>
+                            <v-card-text>
+                                Nothing to show here
+                            </v-card-text>
+                        </slot>
                     </slot>
                 </v-card>
             </v-flex>
