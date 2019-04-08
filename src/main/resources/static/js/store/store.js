@@ -52,6 +52,7 @@ export default new Vuex.Store({
             ]
         },
         addRiskMutation(state, risk) {
+            console.log('addRiskMutation')
             const updateIndex = state.projects.findIndex(item => item.id === risk.project.id)
             const project = state.projects[updateIndex]
             state.projects = [
@@ -91,6 +92,7 @@ export default new Vuex.Store({
             }
         },
         addProjectMutation(state, project) {
+            console.log('addProjectMutation')
             state.projects = [
                 ...state.projects,
                 project
@@ -117,20 +119,14 @@ export default new Vuex.Store({
     },
     actions: {
         async addRiskAction({commit, state}, risk) {
-            console.log(risk)
             const result = await risksApi.add(risk)
-            console.log(result)
             const data = await result.json()
-            console.log(data)
-            data.project = risk.project
-            console.log(data)
             commit('addRiskMutation', data)
 
         },
         async updateRiskAction({commit}, risk) {
             const result = await risksApi.update(risk)
             const data = await result.json()
-            data.project = risk.project
             commit('updateRiskMutation', data)
         },
         async removeRiskAction({commit}, risk) {

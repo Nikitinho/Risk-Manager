@@ -33,7 +33,7 @@
             }
         },
         computed: {
-            ...mapGetters(['riskCategories', 'riskStatuses', 'activeUsers', 'getUserByEmail', 'getRiskById', 'getProfile']),
+            ...mapGetters(['riskCategories', 'riskStatuses', 'activeUsers', 'getUserByEmail', 'getProjectById', 'getProfile']),
             isNewRisk() {
                 return !this.riskId
             }
@@ -41,7 +41,7 @@
         created () {
             this.validation = validation
             if (!this.isNewRisk) {
-                this.risk = new Risk(this.getRiskById((Number)(this.riskId)))
+                this.risk = this.getProjectById((Number)(this.projectId)).risks.find(x => x.id === this.riskId)
             } else {
                 this.risk = undefined
             }

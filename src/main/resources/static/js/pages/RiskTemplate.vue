@@ -200,7 +200,7 @@
             this.crammStagesAdded = !isUndefined && !isNoCrammsArray && !isNoCrammsNodes
             if (!this.readonly) {
                 if (this.risk) {
-                    this.newRisk = new Risk(this.getRiskById((Number)(this.risk.id)))
+                    this.newRisk = new Risk(this.risk)
                     this.newRisk.responsible = this.getResponsibleNames(this.risk.responsible)
                 } else {
                     this.newRisk = new Risk()

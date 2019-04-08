@@ -88,7 +88,7 @@
             }
         },
         computed: {
-            ...mapGetters(['riskCategories', 'riskStatuses', 'activeUsers', 'getUserByEmail', 'getRiskById', 'getProfile']),
+            ...mapGetters(['riskCategories', 'riskStatuses', 'activeUsers', 'getUserByEmail', 'getProjectById', 'getProfile']),
             responsibleUsers() {
                 let users = []
                 Array.from(this.activeUsers).forEach(user =>
@@ -104,9 +104,9 @@
             }
         },
         created () {
-            this.readOnly = (this.readonly === 'true' || this.readonly === true)
             this.validation = validation
-            this.risk = new Risk(this.getRiskById((Number)(this.riskId)))
+            this.risk = new Risk(this.getProjectById((Number)(this.projectId))
+                .risks.find(x => (Number)(x.id) === (Number)(this.riskId)))
             this.risk.responsible = this.getResponsibleNames(this.risk.responsible)
         },
         methods: {
