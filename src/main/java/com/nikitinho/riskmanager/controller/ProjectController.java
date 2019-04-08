@@ -8,6 +8,8 @@ import com.nikitinho.riskmanager.dto.EventType;
 import com.nikitinho.riskmanager.dto.ObjectType;
 import com.nikitinho.riskmanager.util.WsSender;
 import com.nikitinho.riskmanager.repo.ProjectRepo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +22,8 @@ import java.util.function.BiConsumer;
 @RestController
 @RequestMapping("project")
 public class ProjectController {
+
+    private static final Logger logger = LoggerFactory.getLogger(ProjectController.class);
 
     private final ProjectRepo projectRepo;
     private final BiConsumer<EventType, Project> wsSender;
@@ -46,11 +50,15 @@ public class ProjectController {
     public Project create(@RequestBody Project project,
                           @AuthenticationPrincipal User user) {
 
+        logger.info("Set up");
         project.setCreationDate(LocalDateTime.now());
         project.setAuthor(user);
+        logger.info("Loading Start");
         Project uploadedProject = projectRepo.save(project);
 
+        logger.info("sender start" + uploadedProject);
         wsSender.accept(EventType.CREATE, uploadedProject);
+        logger.info("sender" + wsSender.toString());
 
         return uploadedProject;
     }
