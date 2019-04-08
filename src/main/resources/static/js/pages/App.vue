@@ -16,7 +16,7 @@
         <v-toolbar dark>
             <v-toolbar-side-icon
                     @click.stop="sideNav = !sideNav"
-                    class="hidden-md-and-up ">
+                    class="hidden-md-and-up">
             </v-toolbar-side-icon>
             <v-toolbar-title>
                 <router-link :to="{ name: 'ProjectsList' }" tag="span" style="cursor: pointer">

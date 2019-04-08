@@ -9,9 +9,9 @@ export function connect() {
     const socket = new SockJS('/gs-guide-websocket')
     stompClient = Stomp.over(socket)
     // Turn off debug mod
-    // stompClient.debug = () => {}
+    stompClient.debug = () => {}
     stompClient.connect({}, frame => {
-        console.log('Connected: ' + frame)
+        // console.log('Connected: ' + frame)
         stompClient.subscribe('/topic/activity', object => {
             handlers.forEach(handler => handler(JSON.parse(object.body)))
         })
