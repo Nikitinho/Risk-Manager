@@ -121,8 +121,8 @@
             edit (risk) {
                 this.$router.push({ name: 'RiskEdition', params: { projectId: this.projectId, riskId: risk.id } })
             },
-            del (risk) {
-                this.removeRiskAction(risk)
+            async del (risk) {
+                await this.removeRiskAction(risk)
                 this.$router.push({ name: 'ProjectView', params: { projectId: this.projectId } })
             },
             exportDocument(risk, DocumentType) {
@@ -132,7 +132,7 @@
                     this.saveXML(risk)
                 }
             },
-            changeStatus(status) {
+            async changeStatus(status) {
                 let newRisk = new Risk(this.risk)
                 newRisk.status = status
                 newRisk.responsible = newRisk.responsible.map(x => this.getUserByEmail(x))
@@ -140,7 +140,8 @@
                     id: (Number)(this.projectId)
                 }
                 newRisk["id"] = this.riskId
-                this.updateRiskAction(newRisk)
+                await this.updateRiskAction(newRisk)
+                this.$router.go()
             }
         },
         components: {

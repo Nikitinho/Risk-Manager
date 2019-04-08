@@ -100,11 +100,11 @@
                 )
                 return users
             },
-            save() {
+            async save() {
                 this.newProject.responsible = this.newProject.responsible.map(x => this.getUserByEmail(x))
 
                 this.newProject["id"] = this.id
-                this.addProjectAction(this.newProject)
+                await this.addProjectAction(this.newProject)
 
                 this.$router.push({ name: 'ProjectsList' })
             }

@@ -51,7 +51,7 @@
             checkInput(event) {
                 this.validator = event
             },
-            save() {
+            async save() {
                 if (!this.validator.validate()) { return }
 
                 this.newRisk.responsible = this.newRisk.responsible.map(x => this.getUserByEmail(x))
@@ -60,10 +60,10 @@
                 }
                 if (this.isNewRisk) {
                     this.newRisk["id"] = this.id
-                    this.addRiskAction(this.newRisk)
+                    await this.addRiskAction(this.newRisk)
                 } else {
                     this.newRisk["id"] = this.riskId
-                    this.updateRiskAction(this.newRisk)
+                    await this.updateRiskAction(this.newRisk)
                 }
 
                 this.$router.push({ name: 'ProjectView', props: { projectId: this.projectId } })
