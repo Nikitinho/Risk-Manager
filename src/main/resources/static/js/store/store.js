@@ -73,17 +73,13 @@ export default new Vuex.Store({
             //     },
             //     ...state.projects.slice(updateIndex + 1)
             // ]
-            let item = null
-            let index = -1
-            if (risk.project) {
-                index = this.state.projects.findIndex(project => project.id === risk.project.id)
-                item = this.state.projects.find(project => project.id === risk.project.id)
-            } else {
-                item = this.state.projects.find(project => project.risks.some(r => Number(r.id) === Number(risk.id)))
-                index = this.state.projects.findIndex(project => project.risks.some(r => Number(r.id) === Number(risk.id)))
-            }
+
+
+            let index = this.state.projects.findIndex(project => project.id === risk.project.id)
+            let item = this.state.projects.find(project => project.id === risk.project.id)
+
             if (index > -1) {
-                item.risks.splice(0, 0, risk)
+                item.risks.splice(item.risks.length, 0, risk)
                 state.projects.splice(index, 1, item)
             }
         },
@@ -140,25 +136,26 @@ export default new Vuex.Store({
     },
     actions: {
         async addRiskAction({commit, state}, risk) {
-            const result = await risksApi.add(risk)
+            await risksApi.add(risk)
+        },
+        async addRiskRefresh({commit, state}, risk) {
+            const result = await risksApi.get(risk.id)
             const data = await result.json()
-            // TODO: temporarily fix. Another solution needed.
-            if (!data.project) {
-                data.project = risk.project
-            }
             commit('addRiskMutation', data)
-
         },
         async updateRiskAction({commit}, risk) {
-            const result = await risksApi.update(risk)
+             await risksApi.update(risk)
+        },
+        async updateRiskRefresh({commit, state}, risk) {
+            const result = await risksApi.get(risk.id)
             const data = await result.json()
             commit('updateRiskMutation', data)
         },
         async removeRiskAction({commit}, risk) {
-            const result = await risksApi.remove(risk.id)
-            if (result.ok) {
-                commit('removeRiskMutation', risk)
-            }
+            await risksApi.remove(risk.id)
+        },
+        async removeRiskRefresh({commit, state}, risk) {
+            commit('removeRiskMutation', risk)
         },
         async addProjectAction({commit, state}, project) {
             const result = await projectApi.add(project)

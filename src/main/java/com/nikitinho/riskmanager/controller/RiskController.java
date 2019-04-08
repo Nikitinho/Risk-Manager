@@ -86,9 +86,9 @@ public class RiskController {
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable("id") Risk risk) {
+        wsSender.accept(EventType.REMOVE, risk);
         riskRepo.delete(risk);
 //        notificationService.sendNotification(risk, EventType.REMOVE);
-//        wsSender.accept(EventType.REMOVE, risk);
     }
 
 }

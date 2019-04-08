@@ -2,6 +2,7 @@ package com.nikitinho.riskmanager.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -56,7 +57,7 @@ public class Risk {
 
     @ManyToOne
     @JoinColumn(name = "project_id")
-    @JsonBackReference
+    @JsonIgnoreProperties("risks")
     @JsonView(Views.FullRisk.class)
     private Project project;
 

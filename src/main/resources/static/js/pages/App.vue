@@ -47,7 +47,7 @@
 </template>
 
 <script>
-    import { mapState, mapMutations } from 'vuex'
+    import { mapState, mapMutations, mapActions } from 'vuex'
     import { addHandler } from 'util/ws'
     export default {
         data () {
@@ -61,7 +61,8 @@
             ...mapState(['profile'])
         },
         methods: {
-            ...mapMutations(['addRiskMutation', 'updateRiskMutation', 'removeRiskMutation', 'addProjectMutation', 'updateProjectMutation', 'removeProjectMutation']),
+            ...mapMutations(['addProjectMutation', 'updateProjectMutation', 'removeProjectMutation']),
+            ...mapActions(['addRiskRefresh', 'updateRiskRefresh', 'removeRiskRefresh']),
             showProfile() {
                 this.$router.push({ name: 'Profile', params: { userId: this.profile.id } })
             },
@@ -77,13 +78,13 @@
                 if (data.objectType === 'RISK') {
                     switch (data.eventType) {
                         case 'CREATE':
-                            this.addRiskMutation(data.body)
+                            this.addRiskRefresh(data.body)
                             break
                         case 'UPDATE':
-                            this.updateRiskMutation(data.body)
+                            this.updateRiskRefresh(data.body)
                             break
                         case 'REMOVE':
-                            this.removeRiskMutation(data.body)
+                            this.removeRiskRefresh(data.body)
                             break
                         default:
                             console.error(`Event type ${data.eventType} is unknown`)

@@ -34,6 +34,7 @@ public class Project {
     private String description;
 
     @OneToMany(orphanRemoval = true, cascade = {CascadeType.ALL}, mappedBy = "project")
+    @JsonIgnoreProperties("project")
     @JsonView(Views.FullProject.class)
     private List<Risk> risks;
 
