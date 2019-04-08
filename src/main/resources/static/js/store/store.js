@@ -8,14 +8,12 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         projects: frontendData.projects,
-        risks: frontendData.risks,
         profile: frontendData.profile,
         categories: frontendData.categories,
         statuses: frontendData.statuses,
         users: frontendData.users
     },
     getters: {
-        sortedRisks: state => (state.risks || []).sort((a, b) => -(a.id - b.id)),
         sortedProjects: state => (state.projects || []).sort((a, b) => -(a.id - b.id)),
         riskCategories: state => state.categories,
         riskStatuses: state => state.statuses,
@@ -70,8 +68,22 @@ export default new Vuex.Store({
         },
         removeRiskMutation(state, risk) {
             const deletionIndex = state.risks.findIndex(item => item.id === risk.id)
+            const project = state.projects[deletionIndex]
+            const deletionRiskIndex = project.risks.findIndex(item => Number(item.id) === Number(risk.id))
 
             if (deletionIndex > -1) {
+                state.projects = [
+                    ...state.projects.slice(0, deletionIndex),
+                    {
+                        ...project,
+                        risks: [
+                            ...project.risks.slice(0, deletionRiskIndex),
+                            ...project.risks.slice(deletionRiskIndex + 1)
+                        ]
+                    },
+                    ...state.projects.slice(deletionIndex + 1)
+                ]
+
                 state.risks = [
                     ...state.risks.slice(0, deletionIndex),
                     ...state.risks.slice(deletionIndex + 1)
@@ -105,15 +117,21 @@ export default new Vuex.Store({
     },
     actions: {
         async addRiskAction({commit, state}, risk) {
+            console.log(risk)
             const result = await risksApi.add(risk)
+            console.log(result)
             const data = await result.json()
-            commit('addRiskMutation', risk)
+            console.log(data)
+            data.project = risk.project
+            console.log(data)
+            commit('addRiskMutation', data)
 
         },
         async updateRiskAction({commit}, risk) {
             const result = await risksApi.update(risk)
             const data = await result.json()
-            commit('updateRiskMutation', risk)
+            data.project = risk.project
+            commit('updateRiskMutation', data)
         },
         async removeRiskAction({commit}, risk) {
             const result = await risksApi.remove(risk.id)

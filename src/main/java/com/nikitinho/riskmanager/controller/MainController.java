@@ -51,7 +51,7 @@ public class MainController {
             // Only load risks where the user is one of responsible people
 //            Arrays.stream(riskRepo.findAll().stream().filter(risk -> risk.getResponsible().stream().anyMatch(usr ->
 //                    usr.getId().equals(user.getId()))).toArray()).forEach(x->System.out.print(x));
-            data.put("risks", riskRepo.findAll());
+//            data.put("risks", riskRepo.findAll());
             // Filer for risks is not needed anymore
 //            data.put("risks", riskRepo.findAll().stream()
 //                    .filter(risk -> risk.getResponsible().stream()
