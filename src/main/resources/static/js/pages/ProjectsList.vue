@@ -23,7 +23,7 @@
                         </v-list-tile-avatar>
 
                         <v-list-tile-content>
-                            <v-list-tile-title v-html="project.description"></v-list-tile-title>
+                            <v-list-tile-title v-html="`${project.name} - ${project.description}`"></v-list-tile-title>
                         </v-list-tile-content>
                     </v-list-tile>
                 </template>
