@@ -11,8 +11,8 @@ export function connect() {
     // Turn off debug mod
     stompClient.debug = () => {}
     stompClient.connect({}, frame => {
-        stompClient.subscribe('/topic/activity', risk => {
-            handlers.forEach(handler => handler(JSON.parse(risk.body)))
+        stompClient.subscribe('/topic/activity', object => {
+            handlers.forEach(handler => handler(JSON.parse(object.body)))
         })
     })
 }
@@ -30,4 +30,8 @@ export function disconnect() {
 
 export function sendRisk(risk) {
     stompClient.send("/app/changeRisk", {}, JSON.stringify(risk))
+}
+
+export function sendProject(project) {
+    stompClient.send("/app/changeProject", {}, JSON.stringify(project))
 }

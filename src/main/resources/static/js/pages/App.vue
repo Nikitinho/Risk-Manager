@@ -61,7 +61,7 @@
             ...mapState(['profile'])
         },
         methods: {
-            ...mapMutations(['addRiskMutation', 'updateRiskMutation', 'removeRiskMutation']),
+            ...mapMutations(['addRiskMutation', 'updateRiskMutation', 'removeRiskMutation', 'addProjectMutation', 'updateProjectMutation', 'removeProjectMutation']),
             showProfile() {
                 this.$router.push({ name: 'Profile', params: { userId: this.profile.id } })
             },
@@ -84,6 +84,20 @@
                             break
                         case 'REMOVE':
                             this.removeRiskMutation(data.body)
+                            break
+                        default:
+                            console.error(`Event type ${data.eventType} is unknown`)
+                    }
+                } else if (data.objectType === 'PROJECT') {
+                    switch (data.eventType) {
+                        case 'CREATE':
+                            this.addProjectMutation(data.body)
+                            break
+                        case 'UPDATE':
+                            this.updateProjectMutation(data.body)
+                            break
+                        case 'REMOVE':
+                            this.removeProjectMutation(data.body)
                             break
                         default:
                             console.error(`Event type ${data.eventType} is unknown`)

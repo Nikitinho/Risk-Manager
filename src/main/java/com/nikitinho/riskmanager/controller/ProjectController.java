@@ -2,6 +2,10 @@ package com.nikitinho.riskmanager.controller;
 
 import com.nikitinho.riskmanager.domain.Project;
 import com.nikitinho.riskmanager.domain.User;
+import com.nikitinho.riskmanager.domain.Views;
+import com.nikitinho.riskmanager.dto.EventType;
+import com.nikitinho.riskmanager.dto.ObjectType;
+import com.nikitinho.riskmanager.util.WsSender;
 import com.nikitinho.riskmanager.repo.ProjectRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -10,16 +14,19 @@ import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.function.BiConsumer;
 
 @RestController
 @RequestMapping("project")
 public class ProjectController {
 
     private final ProjectRepo projectRepo;
+    private final BiConsumer<EventType, Project> wsSender;
 
     @Autowired
-    public ProjectController(ProjectRepo projectRepo) {
+    public ProjectController(ProjectRepo projectRepo, WsSender wsSender) {
         this.projectRepo = projectRepo;
+        this.wsSender = wsSender.getSender(ObjectType.PROJECT, Views.IdName.class);
     }
 
     @GetMapping
@@ -40,6 +47,8 @@ public class ProjectController {
         project.setAuthor(user);
         Project uploadedProject = projectRepo.save(project);
 
+        wsSender.accept(EventType.CREATE, uploadedProject);
+
         return uploadedProject;
     }
 
@@ -51,11 +60,15 @@ public class ProjectController {
 
         Project updatedProject = projectRepo.save(projectFromDb);
 
+        wsSender.accept(EventType.UPDATE, updatedProject);
+
         return updatedProject;
     }
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable("id") Project project) {
         projectRepo.delete(project);
+
+        wsSender.accept(EventType.REMOVE, project);
     }
 }
