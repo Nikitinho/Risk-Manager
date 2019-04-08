@@ -13,7 +13,7 @@
                 <!--</v-list-tile>-->
             <!--</v-list>-->
         <!--</v-navigation-drawer>-->
-        <v-toolbar dark>
+        <v-toolbar dark color="#455A64">
             <v-toolbar-side-icon
                     @click.stop="sideNav = !sideNav"
                     class="hidden-md-and-up">
@@ -40,9 +40,36 @@
                 </v-btn>
             </v-toolbar-items>
         </v-toolbar>
-        <main>
+        <main style="height: 100%">
             <router-view :key="$route.fullPath"></router-view>
         </main>
+        <v-footer height="auto" style="width: 100%">
+            <v-card class="text-xs-center" dark color="#455A64" width="100%">
+
+                <v-card-text>
+                    <v-btn class="mx-3"
+                           large icon
+                           :href="icons.github.link">
+                        <v-avatar>
+                            <v-img style="height: 100%;" :src="icons.github.img" />
+                        </v-avatar>
+                    </v-btn>
+                    <v-btn class="mx-3"
+                           large icon
+                           :href="icons.tg.link">
+                        <v-avatar>
+                            <v-img style="height: 100%;" :src="icons.tg.img" />
+                        </v-avatar>
+                    </v-btn>
+                </v-card-text>
+
+                <v-divider></v-divider>
+
+                <v-card-text>
+                    &copy;2019 — <strong>Nikitinho</strong>
+                </v-card-text>
+            </v-card>
+        </v-footer>
     </v-app>
 </template>
 
@@ -54,7 +81,13 @@
             return {
                 showListOptions: true,
                 sideNav: false,
-                menuItems: []
+                menuItems: [],
+                icons: {
+                    'github': {img: 'https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png',
+                        link: 'https://github.com/Nikitinho' },
+                    'tg': {img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telegram_logo.svg/1024px-Telegram_logo.svg.png',
+                        link: 'http://t.me/nikitinho_jr'}
+                }
             }
         },
         computed: {
