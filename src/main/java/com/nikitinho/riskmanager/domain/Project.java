@@ -1,8 +1,6 @@
 package com.nikitinho.riskmanager.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -14,6 +12,10 @@ import java.util.List;
 @Table
 @EqualsAndHashCode(of = {"id"})
 @Data
+@JsonIdentityInfo(
+        property = "id",
+        generator = ObjectIdGenerators.PropertyGenerator.class
+)
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,7 +34,6 @@ public class Project {
     private String description;
 
     @OneToMany(orphanRemoval = true, cascade = {CascadeType.ALL}, mappedBy = "project")
-    @JsonManagedReference
     @JsonView(Views.FullProject.class)
     private List<Risk> risks;
 

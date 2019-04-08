@@ -24,8 +24,8 @@ export default new Vuex.Store({
         getUserById: state => id => {
             return state.users.find(user => user.id === id);
         },
-        getRiskById: state => id => {
-            return state.risks.find(risk => risk.id === id)
+        getProjectByRiskId: state => id => {
+            return state.projects.find(project => project.risks.some(risk => Number(risk.id) === Number(id)))
         },
         getProjectById: state => id => {
             return state.projects.find(project => project.id === id)
@@ -50,16 +50,13 @@ export default new Vuex.Store({
             //     },
             //     ...state.projects.slice(updateIndex + 1)
             // ]
-            let index = (state.projects.findIndex(projects => projects.risks.some(x => x.id === risk.id)))
-            console.log(index)
-            let item = state.projects.find(projects => projects.risks.some(x => x.id === risk.id))
-            console.log(item)
+            let item = this.state.projects.find(project => project.risks.some(r => Number(r.id) === Number(risk.id)))
+            let index = this.state.projects.findIndex(project => project.risks.some(r => Number(r.id) === Number(risk.id)))
             let riskIndex = item ? item.risks.findIndex(x => x.id = risk.id) : undefined
             if (riskIndex > -1) {
                 item.risks.splice(riskIndex, 1, risk)
                 state.projects.splice(index, 1, item)
             }
-                //vm.items.splice(indexOfItem, 1, newValue)
         },
         addRiskMutation(state, risk) {
             // console.log('addRiskMutation')
@@ -76,15 +73,18 @@ export default new Vuex.Store({
             //     },
             //     ...state.projects.slice(updateIndex + 1)
             // ]
-            let index = state.projects.findIndex(project => project.id === risk.project.id)
-            console.log(index)
-            let item = state.projects.find(project => project.id === risk.project.id)
-            console.log(item)
+            let item = null
+            let index = -1
+            if (risk.project) {
+                index = this.state.projects.findIndex(project => project.id === risk.project.id)
+                item = this.state.projects.find(project => project.id === risk.project.id)
+            } else {
+                item = this.state.projects.find(project => project.risks.some(r => Number(r.id) === Number(risk.id)))
+                index = this.state.projects.findIndex(project => project.risks.some(r => Number(r.id) === Number(risk.id)))
+            }
             if (index > -1) {
                 item.risks.splice(0, 0, risk)
                 state.projects.splice(index, 1, item)
-
-                // state.projects[index].risks.push(risk)
             }
         },
         removeRiskMutation(state, risk) {
@@ -105,10 +105,8 @@ export default new Vuex.Store({
             //         ...state.projects.slice(deletionIndex + 1)
             //     ]
             // }
-            let index = (state.projects.findIndex(projects => projects.risks.some(x => x.id === risk.id)))
-            console.log(index)
-            let item = state.projects.find(projects => projects.risks.some(x => x.id === risk.id))
-            console.log(item)
+            let item = this.state.projects.find(project => project.risks.some(r => Number(r.id) === Number(risk.id)))
+            let index = this.state.projects.findIndex(project => project.risks.some(r => Number(r.id) === Number(risk.id)))
             let riskIndex = item ? item.risks.findIndex(x => x.id = risk.id) : undefined
             if (riskIndex > -1) {
                 item.risks.splice(riskIndex, 1)
@@ -154,10 +152,6 @@ export default new Vuex.Store({
         async updateRiskAction({commit}, risk) {
             const result = await risksApi.update(risk)
             const data = await result.json()
-            // TODO: temporarily fix. Another solution needed.
-            if (!data.project) {
-                data.project = risk.project
-            }
             commit('updateRiskMutation', data)
         },
         async removeRiskAction({commit}, risk) {
