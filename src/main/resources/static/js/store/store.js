@@ -36,9 +36,9 @@ export default new Vuex.Store({
     },
     mutations: {
         updateRiskMutation(state, risk) {
-            const updateIndex = state.projects.findIndex(item => item.id === risk.project.id)
+            const updateIndex = state.projects.findIndex(item => Number(item.id) === Number(risk.project.id))
             const project = state.projects[updateIndex]
-            const updateRiskIndex = project.risks.findIndex(item => item.id === risk.id)
+            const updateRiskIndex = project.risks.findIndex(item => Number(item.id) === Number(risk.id))
 
             state.projects = [
                 ...state.projects.slice(0, updateIndex),

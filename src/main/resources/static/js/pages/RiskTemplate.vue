@@ -97,21 +97,14 @@
                         required
                 ></v-select>
             </v-flex>
-            <v-flex xs12>
+            <v-flex xs12 v-if="readonly">
                 <v-divider></v-divider>
             </v-flex>
-            <v-flex xs4>
+            <v-flex xs4 v-if="readonly">
                 <v-subheader>Risk status</v-subheader>
             </v-flex>
-            <v-flex xs8>
-                <td v-if="readonly">{{ risk.status }}</td>
-                <v-select v-else
-                        :items="riskStatuses"
-                        placeholder="Risk Status"
-                        v-model="newRisk.status"
-                        :rules="validation.status"
-                        required>
-                </v-select>
+            <v-flex xs8 v-if="readonly">
+                <td>{{ risk.status }}</td>
             </v-flex>
             <v-flex xs12>
                 <v-divider></v-divider>

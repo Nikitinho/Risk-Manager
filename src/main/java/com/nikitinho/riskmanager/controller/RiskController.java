@@ -2,6 +2,7 @@ package com.nikitinho.riskmanager.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.nikitinho.riskmanager.domain.Risk;
+import com.nikitinho.riskmanager.domain.RiskStatusType;
 import com.nikitinho.riskmanager.domain.Views;
 import com.nikitinho.riskmanager.dto.EventType;
 import com.nikitinho.riskmanager.dto.ObjectType;
@@ -46,6 +47,8 @@ public class RiskController {
     public Risk create(@RequestBody Risk risk) {
 
         risk.setCreationDate(LocalDateTime.now());
+        risk.setStatus(RiskStatusType.CREATED.toString());
+
         Risk uploadedRisk = riskRepo.save(risk);
         Runnable runnable = () -> {
             notificationService.sendNotification(uploadedRisk, EventType.CREATE);
@@ -63,6 +66,7 @@ public class RiskController {
                                       @RequestBody Risk risk) {
 
         BeanUtils.copyProperties(risk, riskFromDb, "id");
+        riskFromDb.setStatus(RiskStatusType.fromString(risk.getStatus().toString()).toString());
 
         Risk updatedRisk = riskRepo.save(riskFromDb);
 

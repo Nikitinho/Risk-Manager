@@ -13,6 +13,7 @@ if (frontendData.profile) {
 }
 
 Vue.use(Vuetify)
+// Vue.config.productionTip = false
 
 new Vue({
     el: "#app",
