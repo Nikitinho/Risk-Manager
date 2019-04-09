@@ -110,56 +110,29 @@
                 <v-divider></v-divider>
             </v-flex>
             <v-flex xs4>
-                <v-subheader>Asset</v-subheader>
-            </v-flex>
-            <v-flex xs6>
-                <td v-if="readonly">{{ risk.asset }} {{ risk.assetRate }}</td>
-                <v-text-field v-else
-                              placeholder="Asset"
-                              v-model="newRisk.asset"
-                              :rules="validation.asset"
-                              required>
-                </v-text-field>
-            </v-flex>
-            <v-flex xs2 v-if="!readonly">
-                <v-text-field type="number"
-                              placeholder="Asset Rate"
-                              @input="updateRiskLevel"
-                              v-model="newRisk.assetRate"
-                              :rules="validation.assetRate"
-                              required>
-                </v-text-field>
-            </v-flex>
-            <v-flex xs4>
-                <v-subheader>Threat</v-subheader>
+                <v-subheader>Probability</v-subheader>
             </v-flex>
             <v-flex xs8>
-                <td v-if="readonly">{{ risk.threat }}</td>
+                <td v-if="readonly">{{ risk.probability }}</td>
                 <v-text-field v-else
-                              placeholder="Threat"
-                              v-model="newRisk.threat"
-                              :rules="validation.threat"
+                              placeholder="Probability"
+                              v-model="newRisk.probability"
+                              :rules="validation.probability"
                               required>
                 </v-text-field>
+            </v-flex>
+            <v-flex xs12>
+                <v-divider></v-divider>
             </v-flex>
             <v-flex xs4>
-                <v-subheader>Vulnerability</v-subheader>
+                <v-subheader>Impact</v-subheader>
             </v-flex>
-            <v-flex xs6>
-                <td v-if="readonly">{{ risk.vulnerability }} {{ risk.vulnerabilityRate }}</td>
+            <v-flex xs8>
+                <td v-if="readonly">{{ risk.impact }}</td>
                 <v-text-field v-else
-                              placeholder="Vulnerability"
-                              v-model="newRisk.vulnerability"
-                              :rules="validation.vulnerability"
-                              required>
-                </v-text-field>
-            </v-flex>
-            <v-flex xs2 v-if="!readonly">
-                <v-text-field type="number"
-                              placeholder="Vulnerability Rate"
-                              @input="updateRiskLevel"
-                              v-model="newRisk.vulnerabilityRate"
-                              :rules="validation.vulnerabilityRate"
+                              placeholder="Impact"
+                              v-model="newRisk.impact"
+                              :rules="validation.impact"
                               required>
                 </v-text-field>
             </v-flex>
@@ -235,10 +208,10 @@
                 return users
             },
             updateRiskLevel() {
-                if (!this.newRisk.assetRate || !this.newRisk.vulnerabilityRate) {
+                if (!this.newRisk.probability || !this.newRisk.impact) {
                     return
                 }
-                this.newRisk.riskRate = this.newRisk.assetRate * this.newRisk.vulnerabilityRate
+                this.newRisk.riskRate = this.newRisk.probability * this.newRisk.impact
                 this.newRisk.riskLevel = Risk.convertRiskRateToLevel(this.newRisk.riskRate)
             }
         },

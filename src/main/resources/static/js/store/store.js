@@ -43,6 +43,7 @@ export default new Vuex.Store({
             let item = this.state.projects.find(project => project.id === risk.project.id)
 
             if (index > -1) {
+                if (!item.risks) { item.risks = [] }
                 item.risks.splice(item.risks.length, 0, risk)
                 state.projects.splice(index, 1, item)
             }

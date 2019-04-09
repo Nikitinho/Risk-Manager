@@ -67,14 +67,14 @@
             addNewBubble(element) {
                 let newBubble = {
                     label: element.text,
-                    backgroundColor: Risk.convertRiskRateToColor(element.vulnerabilityRate * element.assetRate),
+                    backgroundColor: Risk.convertRiskRateToColor(element.probability * element.impact),
                     pointBackgroundColor: 'white',
                     borderWidth: 2,
                     pointBorderColor: '#000000',
                     data: [
                         {
-                            x: element.vulnerabilityRate,
-                            y: element.assetRate,
+                            x: element.probability,
+                            y: element.impact,
                             r: 25
                         }
                     ]

@@ -61,19 +61,10 @@ public class Risk {
     private Project project;
 
     @JsonView(Views.FullRisk.class)
-    private String asset;
+    private Integer probability;
 
     @JsonView(Views.FullRisk.class)
-    private Integer assetRate;
-
-    @JsonView(Views.FullRisk.class)
-    private String threat;
-
-    @JsonView(Views.FullRisk.class)
-    private String vulnerability;
-
-    @JsonView(Views.FullRisk.class)
-    private Integer vulnerabilityRate;
+    private Integer impact;
 
     @JsonView(Views.FullRisk.class)
     private Integer riskRate;

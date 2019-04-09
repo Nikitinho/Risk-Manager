@@ -14,11 +14,8 @@ export default class Risk {
             this.consequences = risk.consequences
             this.responsible = risk.responsible
             this.status = Risk.convertStatus(risk.status)
-            this.asset = risk.asset
-            this.assetRate = risk.assetRate
-            this.threat = risk.threat
-            this.vulnerability = risk.vulnerability
-            this.vulnerabilityRate = risk.vulnerabilityRate
+            this.probability = risk.probability
+            this.impact = risk.impact
             this.riskRate = risk.riskRate
             this.riskLevel = Risk.convertRiskLevel(risk.riskLevel)
             this.consequences = risk.consequences
@@ -32,11 +29,8 @@ export default class Risk {
             this.consequences = ''
             this.responsible = []
             this.status = null
-            this.asset = ''
-            this.assetRate = ''
-            this.threat = ''
-            this.vulnerability = ''
-            this.vulnerabilityRate = ''
+            this.probability = ''
+            this.impact = ''
             this.riskRate = ''
             this.riskLevel = null
             this.comments = []

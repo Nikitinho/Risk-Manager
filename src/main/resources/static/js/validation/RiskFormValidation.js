@@ -20,21 +20,12 @@ export default {
     status: [
         v => !!v || 'Status is required'
     ],
-    asset: [
-        v => !!v || 'Asset is required'
-    ],
-    assetRate: [
-        v => !!v || 'Asset rate is required',
+    probability: [
+        v => !!v || 'Probability is required',
         v => (v >= 0 &&  v <= 10) || 'Value must be between 0 and 10'
     ],
-    threat: [
-        v => !!v || 'Threat is required'
-    ],
-    vulnerability: [
-        v => !!v || 'Vulnerability is required'
-    ],
-    vulnerabilityRate: [
-        v => !!v || 'Vulnerability rate is required',
+    impact: [
+        v => !!v || 'Impact rate is required',
         v => (v >= 0 &&  v <= 10) || 'Value must be between 0 and 10'
     ]
 }

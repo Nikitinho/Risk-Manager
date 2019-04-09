@@ -41,23 +41,11 @@ export default {
                         style: 'default'
                     },
                     {
-                        text: `Risk asset: ${risk.asset}`,
+                        text: `Risk impact: ${risk.impact}`,
                         style: 'default'
                     },
                     {
-                        text: `Risk asset rate: ${risk.assetRate}`,
-                        style: 'default'
-                    },
-                    {
-                        text: `Risk threat: ${risk.threat}`,
-                        style: 'default'
-                    },
-                    {
-                        text: `Risk vulnerability: ${risk.vulnerability}`,
-                        style: 'default'
-                    },
-                    {
-                        text: `Risk vulnerability rate: ${risk.vulnerabilityRate}`,
+                        text: `Risk probability: ${risk.probability}`,
                         style: 'default'
                     }
                 ],
