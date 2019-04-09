@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.nikitinho.riskmanager.domain.*;
+import com.nikitinho.riskmanager.repo.BoardRepo;
 import com.nikitinho.riskmanager.repo.ProjectRepo;
 import com.nikitinho.riskmanager.repo.RiskRepo;
 import com.nikitinho.riskmanager.repo.UserDetailsRepo;
@@ -23,7 +24,7 @@ import java.util.stream.Stream;
 @Controller
 @RequestMapping("/")
 public class MainController {
-    private final RiskRepo riskRepo;
+    private final BoardRepo boardRepo;
     private final ProjectRepo projectRepo;
     private final UserDetailsRepo userDetailsRepo;
 
@@ -31,9 +32,9 @@ public class MainController {
     private String profile;
 
     @Autowired
-    public MainController(RiskRepo riskRepo, UserDetailsRepo userDetailsRepo, ProjectRepo projectRepo) {
+    public MainController(BoardRepo boardRepo, UserDetailsRepo userDetailsRepo, ProjectRepo projectRepo) {
         this.userDetailsRepo = userDetailsRepo;
-        this.riskRepo = riskRepo;
+        this.boardRepo = boardRepo;
         this.projectRepo = projectRepo;
     }
 
@@ -56,6 +57,7 @@ public class MainController {
 //            data.put("risks", riskRepo.findAll().stream()
 //                    .filter(risk -> risk.getResponsible().stream()
 //                            .anyMatch(usr -> usr.getId().equals(user.getId()))).toArray());
+            data.put("boards", boardRepo.findAll());
             data.put("users", userDetailsRepo.findAll());
         }
 

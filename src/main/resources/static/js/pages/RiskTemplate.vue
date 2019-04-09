@@ -181,7 +181,7 @@
     import printingRiskMixin from 'mixin/PrintingRiskMixin'
     import BubbleChart from 'components/risks/BubbleChart.vue'
     import Risk from 'domain/Risk'
-    import RiskComments from '../pages/RiskComments.vue'
+    import RiskComments from 'components/risks/RiskComments.vue'
 
     export default {
         name: 'RiskTemplate',

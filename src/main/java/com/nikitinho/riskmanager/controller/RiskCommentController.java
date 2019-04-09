@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/rcomment")
+@RequestMapping("rcomment")
 public class RiskCommentController {
 
     private final RiskCommentService riskCommentService;

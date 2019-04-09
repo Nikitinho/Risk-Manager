@@ -38,7 +38,7 @@ public class RiskCommentService {
         riskComment.setAuthor(user);
         RiskComment updatedRiskComment = riskCommentRepo.save(riskComment);
 
-        return riskComment;
+        return updatedRiskComment;
     }
 
     public List<RiskComment> findAll() {

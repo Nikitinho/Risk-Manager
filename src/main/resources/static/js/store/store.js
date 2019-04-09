@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import risksApi from 'api/risks'
 import projectApi from 'api/projects'
 import rcommentsApi from 'api/rcomments'
+import boardsApi from 'api/boards'
 
 Vue.use(Vuex)
 
@@ -12,11 +13,13 @@ export default new Vuex.Store({
         profile: frontendData.profile,
         categories: frontendData.categories,
         statuses: frontendData.statuses,
-        users: frontendData.users
+        users: frontendData.users,
+        boards: frontendData.boards
     },
     getters: {
         sortedProjects: state => (state.projects || []).sort((a, b) => -(a.id - b.id)),
         riskCategories: state => state.categories,
+        getBoards: state => state.boards,
         riskStatuses: state => state.statuses,
         activeUsers: state => state.users,
         getUserByEmail: state => name => {
@@ -141,6 +144,15 @@ export default new Vuex.Store({
         },
         async removeRCommentAction({commit}, rcomment) {
             await rcommentsApi.remove(rcomment.id)
+        },
+        async addBoardAction({commit, state}, board) {
+            await boardsApi.add(board)
+        },
+        async updateBoardAction({commit}, board) {
+            await boardsApi.update(board)
+        },
+        async removeBoardAction({commit}, board) {
+            await boardsApi.remove(board.id)
         }
     }
 })

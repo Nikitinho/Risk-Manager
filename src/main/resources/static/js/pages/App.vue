@@ -23,6 +23,11 @@
             <v-spacer></v-spacer>
             <v-toolbar-items class="hidden-sm-and-down">
                 <v-btn v-if="profile" flat
+                       :disabled="$route.name === 'Discussion'"
+                       @click="showDiscussion">
+                    Discussion
+                </v-btn>
+                <v-btn v-if="profile" flat
                        :disabled="$route.name === 'ProjectsList'"
                        @click="showProjects">
                     Projects
@@ -92,6 +97,9 @@
         methods: {
             ...mapMutations(['addProjectMutation', 'updateProjectMutation', 'removeProjectMutation']),
             ...mapActions(['addRiskRefresh', 'updateRiskRefresh', 'removeRiskRefresh']),
+            showDiscussion() {
+                this.$router.push({ name: 'Discussion' })
+            },
             showProfile() {
                 this.$router.push({ name: 'Profile', params: { userId: this.profile.id } })
             },
