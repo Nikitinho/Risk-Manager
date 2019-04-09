@@ -33,7 +33,7 @@ export default {
                         style: 'default'
                     },
                     {
-                        text: `Responsible people: ${risk.consequences}`,
+                        text: `Responsible people: ${risk.responsible}`,
                         style: 'default'
                     },
                     {
