@@ -32,6 +32,13 @@ export default class Risk {
             this.consequences = ''
             this.responsible = []
             this.status = null
+            this.asset = ''
+            this.assetRate = ''
+            this.threat = ''
+            this.vulnerability = ''
+            this.vulnerabilityRate = ''
+            this.riskRate = ''
+            this.riskLevel = null
             this.comments = []
         }
     }

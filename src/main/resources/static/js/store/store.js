@@ -4,6 +4,7 @@ import risksApi from 'api/risks'
 import projectApi from 'api/projects'
 import rcommentsApi from 'api/rcomments'
 import boardsApi from 'api/boards'
+import boarditemsApi from 'api/boarditems'
 
 Vue.use(Vuex)
 
@@ -153,6 +154,15 @@ export default new Vuex.Store({
         },
         async removeBoardAction({commit}, board) {
             await boardsApi.remove(board.id)
+        },
+        async addBoardItemAction({commit, state}, item) {
+            await boarditemsApi.add(item)
+        },
+        async updateBoardItemAction({commit}, item) {
+            await boarditemsApi.update(item)
+        },
+        async removeBoardItemAction({commit}, item) {
+            await boarditemsApi.remove(item.id)
         }
     }
 })
