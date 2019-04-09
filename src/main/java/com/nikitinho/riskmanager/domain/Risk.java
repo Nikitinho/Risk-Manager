@@ -85,6 +85,11 @@ public class Risk {
     @JsonView(Views.FullRisk.class)
     private String countermeasure;
 
+    @OneToMany(orphanRemoval = true, cascade = {CascadeType.ALL}, mappedBy = "risk")
+    @JsonIgnoreProperties("risk")
+    @JsonView(Views.FullRisk.class)
+    private List<RiskComment> comments;
+
     public void setCategory(String category) {
         this.category = RiskCategoryType.fromString(category);
     }

@@ -171,6 +171,7 @@
         </v-layout>
             </v-form>
         </v-card>
+        <risk-comments v-if="readonly" :comments="risk.comments"></risk-comments>
     </v-container>
 </template>
 
@@ -180,6 +181,7 @@
     import printingRiskMixin from 'mixin/PrintingRiskMixin'
     import BubbleChart from 'components/risks/BubbleChart.vue'
     import Risk from 'domain/Risk'
+    import RiskComments from '../pages/RiskComments.vue'
 
     export default {
         name: 'RiskTemplate',
@@ -240,7 +242,7 @@
             }
         },
         components: {
-            BubbleChart
+            BubbleChart, RiskComments
         }
     }
 </script>

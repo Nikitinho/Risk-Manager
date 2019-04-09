@@ -8,4 +8,6 @@ public final class Views {
     public interface FullProject extends IdName {}
 
     public interface FullRisk extends IdName {}
+
+    public interface FullRiskComment extends IdName {}
 }

@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <v-navigation-drawer style="width: 100%;" v-if="sideNav" v-model="sideNav">
+        <v-navigation-drawer style="width: 100%; height: auto" v-if="sideNav" v-model="sideNav">
             <v-list>
                 <v-list-tile :to="{ name: 'ProjectsList' }">
                     <v-list-tile-content>Projects</v-list-tile-content>
