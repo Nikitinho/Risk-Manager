@@ -16,7 +16,6 @@ import java.util.List;
 
 @Entity
 @Table
-@ToString(of = {"id", "text"})
 @EqualsAndHashCode(of = {"id"})
 @Data
 public class Risk {

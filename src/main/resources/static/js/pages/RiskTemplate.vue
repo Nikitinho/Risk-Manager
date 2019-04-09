@@ -1,5 +1,5 @@
 <template>
-    <v-container v-if="validation" grid-list-md text-xs-center>
+    <v-container v-if="validation" fluid>
         <v-card class="py-2 px-2">
             <v-form ref="form"
                     lazy-validation>
@@ -171,7 +171,7 @@
         </v-layout>
             </v-form>
         </v-card>
-        <risk-comments v-if="readonly" :comments="risk.comments"></risk-comments>
+        <risk-comments v-if="readonly" :comments="risk.comments" :riskId="risk.id"></risk-comments>
     </v-container>
 </template>
 
@@ -210,6 +210,7 @@
                     this.newRisk.responsible.push(this.getProfile.email)
                 }
             }
+            console.log(this.risk)
         },
         mounted () {
             this.$emit('newRisk', this.newRisk)

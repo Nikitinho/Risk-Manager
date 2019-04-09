@@ -22,6 +22,7 @@ export default class Risk {
             this.riskRate = risk.riskRate
             this.riskLevel = Risk.convertRiskLevel(risk.riskLevel)
             this.consequences = risk.consequences
+            this.comments = risk.comments
         } else {
             this.text = ''
             this.creationDate = ''
@@ -31,6 +32,7 @@ export default class Risk {
             this.consequences = ''
             this.responsible = []
             this.status = null
+            this.comments = []
         }
     }
 

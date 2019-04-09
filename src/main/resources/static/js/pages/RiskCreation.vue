@@ -5,7 +5,7 @@
                    :projectId="projectId"
                    @validationForm="checkInput($event)"
                    @newRisk="newRisk = $event">
-        <v-flex xs12 slot="footer-buttons">
+        <v-flex xs12 slot="footer-buttons" text-xs-center>
             <v-btn color="success"
                    @click="save">
                 Save

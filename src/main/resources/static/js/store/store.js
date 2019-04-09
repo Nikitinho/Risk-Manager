@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import risksApi from 'api/risks'
 import projectApi from 'api/projects'
+import rcommentsApi from 'api/rcomments'
 
 Vue.use(Vuex)
 
@@ -131,6 +132,15 @@ export default new Vuex.Store({
             if (result.ok) {
                 commit('removeProjectMutation', project)
             }
+        },
+        async addRCommentAction({commit, state}, rcomment) {
+            await rcommentsApi.add(rcomment)
+        },
+        async updateRCommentAction({commit}, rcomment) {
+            await rcommentsApi.update(rcomment)
+        },
+        async removeRCommentAction({commit}, rcomment) {
+            await rcommentsApi.remove(rcomment.id)
         }
     }
 })
