@@ -99,6 +99,23 @@ export default class Risk {
                 return 'Планирование'
             case 'MONITORING':
                 return 'Мониторинг'
+            default:
+                return null
+        }
+    }
+
+    static convertStageToStep(stage) {
+        switch (stage) {
+            case 'IDENTIFICATION':
+                return 1
+            case 'EVALUATION':
+                return 2
+            case 'PLANNING':
+                return 3
+            case 'MONITORING':
+                return 4
+            default:
+                return 0
         }
     }
 
