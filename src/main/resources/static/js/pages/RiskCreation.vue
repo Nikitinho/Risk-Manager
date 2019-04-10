@@ -52,7 +52,7 @@
                 this.validator = event
             },
             async save() {
-                if (!this.validator.validate()) { return }
+                if (!Object.keys(this.validator).every(i => this.validator[i].validate())) { return; }
 
                 this.newRisk.responsible = this.newRisk.responsible.map(x => this.getUserByEmail(x))
                 this.newRisk.project = {

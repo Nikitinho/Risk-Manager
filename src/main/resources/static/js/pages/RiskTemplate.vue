@@ -18,7 +18,7 @@
                         :key="stages[0].key"
                         :step="stages[0].key">
                     <v-card class="py-2 px-2">
-                        <v-form ref="form"
+                        <v-form ref="form0"
                                 lazy-validation>
                             <v-layout row wrap align-center>
                                 <v-flex xs4>
@@ -94,24 +94,6 @@
                                                 required>
                                     </v-textarea>
                                 </v-flex>
-                                <v-flex xs12>
-                                    <v-divider></v-divider>
-                                </v-flex>
-                                <v-flex xs4>
-                                    <v-subheader>Responsible people</v-subheader>
-                                </v-flex>
-                                <v-flex xs8>
-                                    <td v-if="readonly">{{ risk.responsible }}</td>
-                                    <v-select v-else
-                                              chips
-                                              v-model="newRisk.responsible"
-                                              :items="responsibleUsers"
-                                              placeholder="Responsible people"
-                                              multiple
-                                              :rules="validation.responsible"
-                                              required
-                                    ></v-select>
-                                </v-flex>
                                 <v-flex xs12 v-if="readonly">
                                     <v-divider></v-divider>
                                 </v-flex>
@@ -134,7 +116,7 @@
                         :key="stages[1].key"
                         :step="stages[1].key">
                     <v-card class="py-2 px-2">
-                        <v-form ref="form"
+                        <v-form ref="form1"
                                 lazy-validation>
                             <v-layout row wrap align-center>
                                 <v-flex xs4>
@@ -145,6 +127,7 @@
                                     <v-text-field v-else
                                                   placeholder="Probability"
                                                   v-model="newRisk.probability"
+                                                  @input="updateRiskLevel"
                                                   :rules="validation.probability"
                                                   required>
                                     </v-text-field>
@@ -160,9 +143,59 @@
                                     <v-text-field v-else
                                                   placeholder="Impact"
                                                   v-model="newRisk.impact"
+                                                  @input="updateRiskLevel"
                                                   :rules="validation.impact"
                                                   required>
                                     </v-text-field>
+                                </v-flex>
+                                <v-flex xs12 v-if="readonly">
+                                    <v-divider></v-divider>
+                                </v-flex>
+                                <v-flex xs4 v-if="readonly">
+                                    <v-subheader>Risk rate</v-subheader>
+                                </v-flex>
+                                <v-flex xs8 v-if="readonly">
+                                    <td>{{ risk.riskRate }}</td>
+                                </v-flex>
+                                <v-flex xs12 v-if="readonly">
+                                    <v-divider></v-divider>
+                                </v-flex>
+                                <v-flex xs4 v-if="readonly">
+                                    <v-subheader>Risk level</v-subheader>
+                                </v-flex>
+                                <v-flex xs8 v-if="readonly">
+                                    <td>{{ risk.riskLevel }}</td>
+                                </v-flex>
+                                <v-flex xs12>
+                                    <v-divider></v-divider>
+                                </v-flex>
+                                <slot name="footer-buttons">
+                                </slot>
+                            </v-layout>
+                        </v-form>
+                    </v-card>
+                </v-stepper-content>
+                <v-stepper-content
+                        :key="stages[2].key"
+                        :step="stages[2].key">
+                    <v-card class="py-2 px-2">
+                        <v-form ref="form2"
+                                lazy-validation>
+                            <v-layout row wrap align-center>
+                                <v-flex xs4>
+                                    <v-subheader>Responsible people</v-subheader>
+                                </v-flex>
+                                <v-flex xs8>
+                                    <td v-if="readonly">{{ risk.responsible }}</td>
+                                    <v-select v-else
+                                              chips
+                                              v-model="newRisk.responsible"
+                                              :items="responsibleUsers"
+                                              placeholder="Responsible people"
+                                              multiple
+                                              :rules="validation.responsible"
+                                              required
+                                    ></v-select>
                                 </v-flex>
                                 <v-flex xs12>
                                     <v-divider></v-divider>
@@ -225,8 +258,7 @@
         },
         mounted () {
             this.$emit('newRisk', this.newRisk)
-            this.$emit('validationForm', this.$refs.form)
-            console.log(this.$refs)
+            this.$emit('validationForm', this.$refs)
         },
         watch: {
             steps (val) {
