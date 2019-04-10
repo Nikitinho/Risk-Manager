@@ -1,6 +1,6 @@
 <template>
     <v-container text-xs-center>
-        <v-card class="my-2 py-2" max-width="100%">
+        <v-card class="my-2 py-2" max-width="100%" flat color="transparent">
         <v-layout justify-space-around>
             <v-flex :xs6="!$vuetify.breakpoint.xsOnly">
                 <v-layout row justify-space-between>

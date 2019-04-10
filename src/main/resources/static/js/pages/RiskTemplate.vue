@@ -1,149 +1,319 @@
 <template>
     <v-container v-if="validation" fluid>
-        <v-card class="py-2 px-2">
-            <v-form ref="form"
-                    lazy-validation>
-        <v-layout row wrap align-center>
-            <slot name="header-buttons">
-            </slot>
-            <v-flex xs4>
-                <v-subheader>Risk title</v-subheader>
-            </v-flex>
-            <v-flex xs8>
-                <td v-if="readonly">{{ risk.text }}</td>
-                <v-text-field v-else
-                        placeholder="Title"
-                        v-model="newRisk.text"
-                        :rules="validation.title"
-                        required>
-                </v-text-field>
-            </v-flex>
-            <v-flex xs12>
-                <v-divider></v-divider>
-            </v-flex>
-            <v-flex xs4>
-                <v-subheader>Risk description</v-subheader>
-            </v-flex>
-            <v-flex xs8>
-                <td v-if="readonly">{{ risk.description }}</td>
-                <v-textarea v-else
-                        placeholder="Description"
-                        v-model="newRisk.description"
-                        :rules="validation.description"
-                        required>
-                </v-textarea>
-            </v-flex>
-            <v-flex xs12>
-                <v-divider></v-divider>
-            </v-flex>
-            <v-flex xs4>
-                <v-subheader>Risk category</v-subheader>
-            </v-flex>
-            <v-flex xs8>
-                <td v-if="readonly">{{ risk.category }}</td>
-                <v-select v-else
-                        :items="riskCategories"
-                        placeholder="Risk Category"
-                        v-model="newRisk.category"
-                        :rules="validation.category"
-                        required>
-                ></v-select>
-            </v-flex>
-            <v-flex xs12>
-                <v-divider></v-divider>
-            </v-flex>
-            <v-flex xs4>
-                <v-subheader>Risk causes</v-subheader>
-            </v-flex>
-            <v-flex xs8>
-                <td v-if="readonly">{{ risk.causes }}</td>
-                <v-textarea v-else
-                        placeholder="Causes of"
-                        v-model="newRisk.causes"
-                        :rules="validation.causes"
-                        required>
-                </v-textarea>
-            </v-flex>
-            <v-flex xs12>
-                <v-divider></v-divider>
-            </v-flex>
-            <v-flex xs4>
-                <v-subheader>Description of the consequences</v-subheader>
-            </v-flex>
-            <v-flex xs8>
-                <td v-if="readonly">{{ risk.consequences }}</td>
-                <v-textarea v-else
-                        placeholder="Description of the consequences"
-                        v-model="newRisk.consequences"
-                        :rules="validation.consequences"
-                        required>
-                </v-textarea>
-            </v-flex>
-            <v-flex xs12>
-                <v-divider></v-divider>
-            </v-flex>
-            <v-flex xs4>
-                <v-subheader>Responsible people</v-subheader>
-            </v-flex>
-            <v-flex xs8>
-                <td v-if="readonly">{{ risk.responsible }}</td>
-                <v-select v-else
-                        chips
-                        v-model="newRisk.responsible"
-                        :items="responsibleUsers"
-                        placeholder="Responsible people"
-                        multiple
-                        :rules="validation.responsible"
-                        required
-                ></v-select>
-            </v-flex>
-            <v-flex xs12 v-if="readonly">
-                <v-divider></v-divider>
-            </v-flex>
-            <v-flex xs4 v-if="readonly">
-                <v-subheader>Risk status</v-subheader>
-            </v-flex>
-            <v-flex xs8 v-if="readonly">
-                <td>{{ risk.status }}</td>
-            </v-flex>
-            <v-flex xs12>
-                <v-divider></v-divider>
-            </v-flex>
-            <v-flex xs4>
-                <v-subheader>Probability</v-subheader>
-            </v-flex>
-            <v-flex xs8>
-                <td v-if="readonly">{{ risk.probability }}</td>
-                <v-text-field v-else
-                              placeholder="Probability"
-                              v-model="newRisk.probability"
-                              :rules="validation.probability"
-                              required>
-                </v-text-field>
-            </v-flex>
-            <v-flex xs12>
-                <v-divider></v-divider>
-            </v-flex>
-            <v-flex xs4>
-                <v-subheader>Impact</v-subheader>
-            </v-flex>
-            <v-flex xs8>
-                <td v-if="readonly">{{ risk.impact }}</td>
-                <v-text-field v-else
-                              placeholder="Impact"
-                              v-model="newRisk.impact"
-                              :rules="validation.impact"
-                              required>
-                </v-text-field>
-            </v-flex>
-            <v-flex xs12 v-if="!readonly">
-                <v-divider></v-divider>
-            </v-flex>
-            <slot name="footer-buttons">
-            </slot>
-        </v-layout>
-            </v-form>
-        </v-card>
+        <!--<v-stepper v-model="e1">-->
+            <!--<v-stepper-header>-->
+                <!--<template v-for="n in 2">-->
+                    <!--<v-stepper-step-->
+                            <!--:key="`${n}-step`"-->
+                            <!--:complete="false"-->
+                            <!--:step="n"-->
+                            <!--:editable="false"-->
+                    <!--&gt;-->
+                        <!--Step {{ n }}-->
+                    <!--</v-stepper-step>-->
+
+                    <!--<v-divider-->
+                            <!--v-if="n !== steps"-->
+                            <!--:key="n"-->
+                    <!--&gt;</v-divider>-->
+                <!--</template>-->
+            <!--</v-stepper-header>-->
+
+            <!--<v-stepper-items>-->
+                <!--<v-stepper-content-->
+                        <!--v-for="n in 2"-->
+                        <!--:key="`${n}-content`"-->
+                        <!--:step="n"-->
+                <!--&gt;-->
+                    <v-card class="py-2 px-2">
+                        <v-form ref="form"
+                                lazy-validation>
+                            <v-layout row wrap align-center>
+                                <v-flex xs4>
+                                    <v-subheader>Risk title</v-subheader>
+                                </v-flex>
+                                <v-flex xs8>
+                                    <td v-if="readonly">{{ risk.text }}</td>
+                                    <v-text-field v-else
+                                                  placeholder="Title"
+                                                  v-model="newRisk.text"
+                                                  :rules="validation.title"
+                                                  required>
+                                    </v-text-field>
+                                </v-flex>
+                                <v-flex xs12>
+                                    <v-divider></v-divider>
+                                </v-flex>
+                                <v-flex xs4>
+                                    <v-subheader>Risk description</v-subheader>
+                                </v-flex>
+                                <v-flex xs8>
+                                    <td v-if="readonly">{{ risk.description }}</td>
+                                    <v-textarea v-else
+                                                placeholder="Description"
+                                                v-model="newRisk.description"
+                                                :rules="validation.description"
+                                                required>
+                                    </v-textarea>
+                                </v-flex>
+                                <v-flex xs12>
+                                    <v-divider></v-divider>
+                                </v-flex>
+                                <v-flex xs4>
+                                    <v-subheader>Risk category</v-subheader>
+                                </v-flex>
+                                <v-flex xs8>
+                                    <td v-if="readonly">{{ risk.category }}</td>
+                                    <v-select v-else
+                                              :items="riskCategories"
+                                              placeholder="Risk Category"
+                                              v-model="newRisk.category"
+                                              :rules="validation.category"
+                                              required>
+                                        ></v-select>
+                                </v-flex>
+                                <v-flex xs12>
+                                    <v-divider></v-divider>
+                                </v-flex>
+                                <v-flex xs4>
+                                    <v-subheader>Risk causes</v-subheader>
+                                </v-flex>
+                                <v-flex xs8>
+                                    <td v-if="readonly">{{ risk.causes }}</td>
+                                    <v-textarea v-else
+                                                placeholder="Causes of"
+                                                v-model="newRisk.causes"
+                                                :rules="validation.causes"
+                                                required>
+                                    </v-textarea>
+                                </v-flex>
+                                <v-flex xs12>
+                                    <v-divider></v-divider>
+                                </v-flex>
+                                <v-flex xs4>
+                                    <v-subheader>Description of the consequences</v-subheader>
+                                </v-flex>
+                                <v-flex xs8>
+                                    <td v-if="readonly">{{ risk.consequences }}</td>
+                                    <v-textarea v-else
+                                                placeholder="Description of the consequences"
+                                                v-model="newRisk.consequences"
+                                                :rules="validation.consequences"
+                                                required>
+                                    </v-textarea>
+                                </v-flex>
+                                <v-flex xs12>
+                                    <v-divider></v-divider>
+                                </v-flex>
+                                <v-flex xs4>
+                                    <v-subheader>Responsible people</v-subheader>
+                                </v-flex>
+                                <v-flex xs8>
+                                    <td v-if="readonly">{{ risk.responsible }}</td>
+                                    <v-select v-else
+                                              chips
+                                              v-model="newRisk.responsible"
+                                              :items="responsibleUsers"
+                                              placeholder="Responsible people"
+                                              multiple
+                                              :rules="validation.responsible"
+                                              required
+                                    ></v-select>
+                                </v-flex>
+                                <v-flex xs12 v-if="readonly">
+                                    <v-divider></v-divider>
+                                </v-flex>
+                                <v-flex xs4 v-if="readonly">
+                                    <v-subheader>Risk status</v-subheader>
+                                </v-flex>
+                                <v-flex xs8 v-if="readonly">
+                                    <td>{{ risk.status }}</td>
+                                </v-flex>
+                                <v-flex xs12>
+                                    <v-divider></v-divider>
+                                </v-flex>
+                                <v-flex xs4>
+                                    <v-subheader>Probability</v-subheader>
+                                </v-flex>
+                                <v-flex xs8>
+                                    <td v-if="readonly">{{ risk.probability }}</td>
+                                    <v-text-field v-else
+                                                  placeholder="Probability"
+                                                  v-model="newRisk.probability"
+                                                  :rules="validation.probability"
+                                                  required>
+                                    </v-text-field>
+                                </v-flex>
+                                <v-flex xs12>
+                                    <v-divider></v-divider>
+                                </v-flex>
+                                <v-flex xs4>
+                                    <v-subheader>Impact</v-subheader>
+                                </v-flex>
+                                <v-flex xs8>
+                                    <td v-if="readonly">{{ risk.impact }}</td>
+                                    <v-text-field v-else
+                                                  placeholder="Impact"
+                                                  v-model="newRisk.impact"
+                                                  :rules="validation.impact"
+                                                  required>
+                                    </v-text-field>
+                                </v-flex>
+                                <v-flex xs12>
+                                    <v-divider></v-divider>
+                                </v-flex>
+                                <slot name="footer-buttons">
+                                </slot>
+                            </v-layout>
+                        </v-form>
+                    </v-card>
+                <!--</v-stepper-content>-->
+            <!--</v-stepper-items>-->
+        <!--</v-stepper>-->
+        <!--<v-card class="py-2 px-2">-->
+            <!--<v-form ref="form"-->
+                    <!--lazy-validation>-->
+        <!--<v-layout row wrap align-center>-->
+            <!--<slot name="header-buttons">-->
+            <!--</slot>-->
+            <!--<v-flex xs4>-->
+                <!--<v-subheader>Risk title</v-subheader>-->
+            <!--</v-flex>-->
+            <!--<v-flex xs8>-->
+                <!--<td v-if="readonly">{{ risk.text }}</td>-->
+                <!--<v-text-field v-else-->
+                        <!--placeholder="Title"-->
+                        <!--v-model="newRisk.text"-->
+                        <!--:rules="validation.title"-->
+                        <!--required>-->
+                <!--</v-text-field>-->
+            <!--</v-flex>-->
+            <!--<v-flex xs12>-->
+                <!--<v-divider></v-divider>-->
+            <!--</v-flex>-->
+            <!--<v-flex xs4>-->
+                <!--<v-subheader>Risk description</v-subheader>-->
+            <!--</v-flex>-->
+            <!--<v-flex xs8>-->
+                <!--<td v-if="readonly">{{ risk.description }}</td>-->
+                <!--<v-textarea v-else-->
+                        <!--placeholder="Description"-->
+                        <!--v-model="newRisk.description"-->
+                        <!--:rules="validation.description"-->
+                        <!--required>-->
+                <!--</v-textarea>-->
+            <!--</v-flex>-->
+            <!--<v-flex xs12>-->
+                <!--<v-divider></v-divider>-->
+            <!--</v-flex>-->
+            <!--<v-flex xs4>-->
+                <!--<v-subheader>Risk category</v-subheader>-->
+            <!--</v-flex>-->
+            <!--<v-flex xs8>-->
+                <!--<td v-if="readonly">{{ risk.category }}</td>-->
+                <!--<v-select v-else-->
+                        <!--:items="riskCategories"-->
+                        <!--placeholder="Risk Category"-->
+                        <!--v-model="newRisk.category"-->
+                        <!--:rules="validation.category"-->
+                        <!--required>-->
+                <!--&gt;</v-select>-->
+            <!--</v-flex>-->
+            <!--<v-flex xs12>-->
+                <!--<v-divider></v-divider>-->
+            <!--</v-flex>-->
+            <!--<v-flex xs4>-->
+                <!--<v-subheader>Risk causes</v-subheader>-->
+            <!--</v-flex>-->
+            <!--<v-flex xs8>-->
+                <!--<td v-if="readonly">{{ risk.causes }}</td>-->
+                <!--<v-textarea v-else-->
+                        <!--placeholder="Causes of"-->
+                        <!--v-model="newRisk.causes"-->
+                        <!--:rules="validation.causes"-->
+                        <!--required>-->
+                <!--</v-textarea>-->
+            <!--</v-flex>-->
+            <!--<v-flex xs12>-->
+                <!--<v-divider></v-divider>-->
+            <!--</v-flex>-->
+            <!--<v-flex xs4>-->
+                <!--<v-subheader>Description of the consequences</v-subheader>-->
+            <!--</v-flex>-->
+            <!--<v-flex xs8>-->
+                <!--<td v-if="readonly">{{ risk.consequences }}</td>-->
+                <!--<v-textarea v-else-->
+                        <!--placeholder="Description of the consequences"-->
+                        <!--v-model="newRisk.consequences"-->
+                        <!--:rules="validation.consequences"-->
+                        <!--required>-->
+                <!--</v-textarea>-->
+            <!--</v-flex>-->
+            <!--<v-flex xs12>-->
+                <!--<v-divider></v-divider>-->
+            <!--</v-flex>-->
+            <!--<v-flex xs4>-->
+                <!--<v-subheader>Responsible people</v-subheader>-->
+            <!--</v-flex>-->
+            <!--<v-flex xs8>-->
+                <!--<td v-if="readonly">{{ risk.responsible }}</td>-->
+                <!--<v-select v-else-->
+                        <!--chips-->
+                        <!--v-model="newRisk.responsible"-->
+                        <!--:items="responsibleUsers"-->
+                        <!--placeholder="Responsible people"-->
+                        <!--multiple-->
+                        <!--:rules="validation.responsible"-->
+                        <!--required-->
+                <!--&gt;</v-select>-->
+            <!--</v-flex>-->
+            <!--<v-flex xs12 v-if="readonly">-->
+                <!--<v-divider></v-divider>-->
+            <!--</v-flex>-->
+            <!--<v-flex xs4 v-if="readonly">-->
+                <!--<v-subheader>Risk status</v-subheader>-->
+            <!--</v-flex>-->
+            <!--<v-flex xs8 v-if="readonly">-->
+                <!--<td>{{ risk.status }}</td>-->
+            <!--</v-flex>-->
+            <!--<v-flex xs12>-->
+                <!--<v-divider></v-divider>-->
+            <!--</v-flex>-->
+            <!--<v-flex xs4>-->
+                <!--<v-subheader>Probability</v-subheader>-->
+            <!--</v-flex>-->
+            <!--<v-flex xs8>-->
+                <!--<td v-if="readonly">{{ risk.probability }}</td>-->
+                <!--<v-text-field v-else-->
+                              <!--placeholder="Probability"-->
+                              <!--v-model="newRisk.probability"-->
+                              <!--:rules="validation.probability"-->
+                              <!--required>-->
+                <!--</v-text-field>-->
+            <!--</v-flex>-->
+            <!--<v-flex xs12>-->
+                <!--<v-divider></v-divider>-->
+            <!--</v-flex>-->
+            <!--<v-flex xs4>-->
+                <!--<v-subheader>Impact</v-subheader>-->
+            <!--</v-flex>-->
+            <!--<v-flex xs8>-->
+                <!--<td v-if="readonly">{{ risk.impact }}</td>-->
+                <!--<v-text-field v-else-->
+                              <!--placeholder="Impact"-->
+                              <!--v-model="newRisk.impact"-->
+                              <!--:rules="validation.impact"-->
+                              <!--required>-->
+                <!--</v-text-field>-->
+            <!--</v-flex>-->
+            <!--<v-flex xs12 v-if="!readonly">-->
+                <!--<v-divider></v-divider>-->
+            <!--</v-flex>-->
+            <!--<slot name="footer-buttons">-->
+            <!--</slot>-->
+        <!--</v-layout>-->
+            <!--</v-form>-->
+        <!--</v-card>-->
         <risk-comments v-if="readonly" :comments="risk.comments" :riskId="risk.id"></risk-comments>
     </v-container>
 </template>
@@ -162,6 +332,8 @@
         mixins: [printingRiskMixin],
         data() {
             return {
+                e1: 1,
+                steps: 2,
                 crammStagesAdded: false,
                 newRisk: null,
                 isInfoProvided: false,
@@ -188,6 +360,14 @@
         mounted () {
             this.$emit('newRisk', this.newRisk)
             this.$emit('validationForm', this.$refs.form)
+            console.log(this.$refs)
+        },
+        watch: {
+            steps (val) {
+                if (this.e1 > val) {
+                    this.e1 = val
+                }
+            }
         },
         computed: {
             ...mapGetters(['riskCategories', 'riskStatuses', 'activeUsers', 'getUserByEmail', 'getRiskById', 'getProfile', 'getProjectById']),

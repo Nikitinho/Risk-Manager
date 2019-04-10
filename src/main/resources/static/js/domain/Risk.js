@@ -14,12 +14,13 @@ export default class Risk {
             this.consequences = risk.consequences
             this.responsible = risk.responsible
             this.status = Risk.convertStatus(risk.status)
+            this.stage = Risk.convertStage(risk.stage)
             this.probability = risk.probability
             this.impact = risk.impact
             this.riskRate = risk.riskRate
             this.riskLevel = Risk.convertRiskLevel(risk.riskLevel)
             this.consequences = risk.consequences
-            this.comments = risk.comments
+            this.comments = risk.comments || []
         } else {
             this.text = ''
             this.creationDate = ''
@@ -29,10 +30,12 @@ export default class Risk {
             this.consequences = ''
             this.responsible = []
             this.status = null
+            this.stage = 'Идентификация'
             this.probability = ''
             this.impact = ''
             this.riskRate = ''
             this.riskLevel = null
+            this.consequences = ''
             this.comments = []
         }
     }
@@ -83,6 +86,19 @@ export default class Risk {
                 return 'Высокий'
             default:
                 return null
+        }
+    }
+
+    static convertStage(stage) {
+        switch (stage) {
+            case 'IDENTIFICATION':
+                return 'Идентификация'
+            case 'EVALUATION':
+                return 'Оценка'
+            case 'PLANNING':
+                return 'Планирование'
+            case 'MONITORING':
+                return 'Мониторинг'
         }
     }
 

@@ -2,7 +2,7 @@
     <risk-template :risk="risk"
                    :readonly="true"
                    :validation="validation">
-        <v-flex v-if="!$vuetify.breakpoint.mdAndDown" xs12 text-xs-right slot="header-buttons">
+        <v-flex v-if="!$vuetify.breakpoint.mdAndDown" xs12 text-xs-right slot="footer-buttons">
             <v-layout row align-center justify-end>
                 <v-menu
                         bottom
@@ -61,9 +61,6 @@
                 Delete
             </v-btn>
             </v-layout>
-        </v-flex>
-        <v-flex xs12 slot="header-buttons">
-            <v-divider></v-divider>
         </v-flex>
     </risk-template>
 </template>

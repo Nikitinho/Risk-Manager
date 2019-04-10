@@ -54,6 +54,9 @@ public class Risk {
     @JsonView(Views.FullRisk.class)
     private RiskStatusType status;
 
+    @JsonView(Views.FullRisk.class)
+    private RiskStageType stage;
+
     @ManyToOne
     @JoinColumn(name = "project_id")
     @JsonIgnoreProperties("risks")
@@ -90,5 +93,19 @@ public class Risk {
 
     public void setRiskLevel(String riskLevel) {
         this.riskLevel = RiskLevelType.fromString(riskLevel);
+    }
+
+    public void setStage(String stage) {
+        this.stage = RiskStageType.fromString(stage);
+    }
+
+    public void setComments(List<RiskComment> comments) {
+        if (this.comments == null) {
+            this.comments = new ArrayList<>();
+            this.comments.addAll(comments);
+        } else {
+            this.comments.clear();
+            this.comments.addAll(comments);
+        }
     }
 }

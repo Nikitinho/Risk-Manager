@@ -11,7 +11,7 @@
             return {
                 datacollection: {
                     //Data to be represented on x-axis
-                    labels: ['High', 'Medium', 'Low'],
+                    labels: ['Low', 'Medium', 'High'],
                     datasets: [
                         {
                             backgroundColor: ['green', 'yellow', 'red'],
