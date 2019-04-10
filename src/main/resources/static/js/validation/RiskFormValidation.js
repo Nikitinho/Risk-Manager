@@ -27,5 +27,8 @@ export default {
     impact: [
         v => !!v || 'Impact rate is required',
         v => (v >= 0 &&  v <= 10) || 'Value must be between 0 and 10'
+    ],
+    strategy: [
+        v => !!v || 'Strategy is required'
     ]
 }

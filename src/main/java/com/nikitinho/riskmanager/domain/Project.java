@@ -23,6 +23,7 @@ public class Project {
     private Long id;
 
     @JsonView(Views.IdName.class)
+    @Column(columnDefinition = "TEXT")
     private String name;
 
     @Column(updatable = false)
@@ -31,6 +32,7 @@ public class Project {
     private LocalDateTime creationDate;
 
     @JsonView(Views.FullProject.class)
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @OneToMany(orphanRemoval = true, cascade = {CascadeType.ALL}, mappedBy = "project")

@@ -1,8 +1,6 @@
 <template>
     <v-container grid-list-md text-xs-center>
             <v-card class="py-2 px-2">
-
-
                     <v-card-title>
                         <v-list-tile-avatar color="grey darken-3">
                             <v-img class="elevation-6"
@@ -32,9 +30,9 @@
                             <v-subheader>Project description</v-subheader>
                         </v-flex>
                         <v-flex xs8>
-                            <v-text-field placeholder="Description"
+                            <v-textarea placeholder="Description"
                                           v-model="newProject.description">
-                            </v-text-field>
+                            </v-textarea>
                         </v-flex>
                         <v-flex xs12>
                             <v-divider></v-divider>

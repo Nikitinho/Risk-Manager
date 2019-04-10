@@ -25,6 +25,7 @@ public class Risk {
     private Long id;
 
     @JsonView(Views.IdName.class)
+    @Column(columnDefinition = "TEXT")
     private String text;
 
     @Column(updatable = false)
@@ -33,12 +34,15 @@ public class Risk {
     private LocalDateTime creationDate;
 
     @JsonView(Views.FullRisk.class)
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @JsonView(Views.FullRisk.class)
+    @Column(columnDefinition = "TEXT")
     private String causes;
 
     @JsonView(Views.FullRisk.class)
+    @Column(columnDefinition = "TEXT")
     private String consequences;
 
     @JsonView(Views.FullRisk.class)
@@ -76,7 +80,7 @@ public class Risk {
     private RiskLevelType riskLevel;
 
     @JsonView(Views.FullRisk.class)
-    private String countermeasure;
+    private RiskActionStrategyType strategy;
 
     @OneToMany(orphanRemoval = true, cascade = {CascadeType.ALL}, mappedBy = "risk")
     @JsonIgnoreProperties("risk")
@@ -97,6 +101,10 @@ public class Risk {
 
     public void setStage(String stage) {
         this.stage = RiskStageType.fromString(stage);
+    }
+
+    public void setStrategy(String strategy) {
+        this.strategy = RiskActionStrategyType.fromString(strategy);
     }
 
     public void setComments(List<RiskComment> comments) {

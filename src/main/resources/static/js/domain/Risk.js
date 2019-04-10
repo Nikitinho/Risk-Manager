@@ -19,7 +19,7 @@ export default class Risk {
             this.impact = risk.impact
             this.riskRate = risk.riskRate
             this.riskLevel = Risk.convertRiskLevel(risk.riskLevel)
-            this.consequences = risk.consequences
+            this.strategy = Risk.convertStrategy(risk.strategy)
             this.comments = risk.comments || []
         } else {
             this.text = ''
@@ -35,7 +35,7 @@ export default class Risk {
             this.impact = ''
             this.riskRate = ''
             this.riskLevel = null
-            this.consequences = ''
+            this.strategy = null
             this.comments = []
         }
     }
@@ -116,6 +116,25 @@ export default class Risk {
                 return 4
             default:
                 return 0
+        }
+    }
+
+    static convertStrategy(strategy) {
+        switch (strategy) {
+            case 'INVESTIGATION':
+                return 'Исследование'
+            case 'ACCEPTANCE':
+                return 'Принятие'
+            case 'AVOIDANCE':
+                return 'Избежание'
+            case 'TRANSMISSION':
+                return 'Передача'
+            case 'PREVENTION':
+                return 'Предотвращение'
+            case 'MINIMIZATION':
+                return 'Минимизация'
+            default:
+                return null
         }
     }
 

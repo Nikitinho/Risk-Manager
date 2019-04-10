@@ -200,6 +200,22 @@
                                 <v-flex xs12>
                                     <v-divider></v-divider>
                                 </v-flex>
+                                <v-flex xs4>
+                                    <v-subheader>Action strategy</v-subheader>
+                                </v-flex>
+                                <v-flex xs8>
+                                    <td v-if="readonly">{{ risk.strategy }}</td>
+                                    <v-select v-else
+                                              :items="actionStrategies"
+                                              placeholder="Risk Strategy"
+                                              v-model="newRisk.strategy"
+                                              :rules="validation.strategy"
+                                              required>
+                                        ></v-select>
+                                </v-flex>
+                                <v-flex xs12>
+                                    <v-divider></v-divider>
+                                </v-flex>
                                 <slot name="footer-buttons">
                                 </slot>
                             </v-layout>
@@ -268,7 +284,7 @@
             }
         },
         computed: {
-            ...mapGetters(['riskCategories', 'riskStatuses', 'activeUsers', 'getUserByEmail', 'getRiskById', 'getProfile', 'getProjectById']),
+            ...mapGetters(['riskCategories', 'riskStatuses', 'actionStrategies', 'activeUsers', 'getUserByEmail', 'getRiskById', 'getProfile', 'getProjectById']),
             responsibleUsers() {
                 let users = []
                 Array.from(this.activeUsers).forEach(user =>
