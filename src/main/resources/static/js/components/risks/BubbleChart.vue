@@ -60,6 +60,7 @@
         methods: {
             addData(data) {
                 for (let element of data) {
+                    if (!element.probability || !element.impact) { continue; }
                     this.addNewBubble(element)
                 }
                 this.addGraphPerimeter(10, 10)

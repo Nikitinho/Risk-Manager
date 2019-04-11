@@ -116,7 +116,11 @@
 
                                 <v-divider vertical></v-divider>
 
-                                <v-list-tile-avatar v-for="user in getResponsible(risk)">
+                                <v-list-tile-avatar v-if="!risk.responsible || risk.responsible.length === 0">
+                                    <span class="cetered-text-span">?</span>
+                                </v-list-tile-avatar>
+
+                                <v-list-tile-avatar v-else v-for="user in getResponsible(risk)">
                                     <v-img class="elevation-6"
                                            :src="user.userpic">
                                     </v-img>
@@ -310,6 +314,7 @@
         line-height: 250%;
         display: inline-block;
         text-align: center;
+        color: white;
     }
 
 </style>

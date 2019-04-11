@@ -414,7 +414,6 @@
             }
         },
         created () {
-//            console.log(this.risk)
             if (!this.readonly) {
                 if (this.risk) {
                     this.newRisk = new Risk(this.risk)
@@ -430,7 +429,6 @@
                 this.newRisk.responsible = this.getResponsibleNames(this.risk.responsible)
                 this.currentStepper = Risk.convertStageToStep(this.risk.stage)
             }
-//            console.log(this.currentStepper)
         },
         mounted () {
             this.$emit('newRisk', this.newRisk)
@@ -438,10 +436,8 @@
         },
         watch: {
             currentStepper (val) {
-                console.log(this.currentStepper)
                 if (!this.readonly && this.newRisk && this.currentStepper > 0) {
                     this.newRisk.stage = this.stages.find(stage => stage.key === val).value
-//                    console.log(this.newRisk.stage)
                 }
             }
         },
@@ -466,7 +462,8 @@
             isPlanningStage() {
                 if (!this.isEvaluationStage) { return false; }
                 let risk = this.newRisk
-                return risk.responsible || risk.strategy || risk.actionStartDate || risk.actionEndDate || risk.strategyInfo
+                // risk.responsible temporarily excluded from this list
+                return risk.strategy || risk.actionStartDate || risk.actionEndDate || risk.strategyInfo
             },
             isMonitoringStage() {
                 if (!this.isPlanningStage) { return false; }
