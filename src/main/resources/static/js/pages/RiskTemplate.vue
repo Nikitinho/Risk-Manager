@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <v-container v-if="validation" fluid>
         <v-stepper v-model="currentStepper">
             <v-stepper-header>
@@ -212,6 +212,89 @@
                                               :rules="validation.strategy"
                                               required>
                                         ></v-select>
+                                </v-flex>
+                                <v-flex xs12>
+                                    <v-divider></v-divider>
+                                </v-flex>
+                                <v-flex xs4>
+                                    <v-subheader>Start date</v-subheader>
+                                </v-flex>
+                                <v-flex xs8>
+                                    <td v-if="readonly">{{ risk.actionStartDate }}</td>
+                                    <slot v-else>
+                                    <v-menu :close-on-content-click="true"
+                                            :nudge-right="40"
+                                            lazy
+                                            transition="scale-transition"
+                                            offset-y
+                                            full-width
+                                            min-width="290px">
+                                        <template v-slot:activator="{ on }">
+                                            <v-text-field
+                                                    v-model="newRisk.actionStartDate"
+                                                    placeholder="Start date"
+                                                    prepend-icon="event"
+                                                    :rules="validation.actionStartDate"
+                                                    required
+                                                    readonly
+                                                    v-on="on">
+                                            </v-text-field>
+                                        </template>
+                                        <v-date-picker
+                                                v-model="newRisk.actionStartDate"
+                                                min="1950-01-01"
+                                        ></v-date-picker>
+                                    </v-menu>
+                                    </slot>
+                                </v-flex>
+                                <v-flex xs12>
+                                    <v-divider></v-divider>
+                                </v-flex>
+                                <v-flex xs4>
+                                    <v-subheader>End date</v-subheader>
+                                </v-flex>
+                                <v-flex xs8>
+                                    <td v-if="readonly">{{ risk.actionEndDate }}</td>
+                                    <slot v-else>
+                                        <v-menu :close-on-content-click="true"
+                                                :nudge-right="40"
+                                                lazy
+                                                transition="scale-transition"
+                                                offset-y
+                                                full-width
+                                                min-width="290px">
+                                            <template v-slot:activator="{ on }">
+                                                <v-text-field
+                                                        v-model="newRisk.actionEndDate"
+                                                        placeholder="End date"
+                                                        prepend-icon="event"
+                                                        :rules="validation.actionEndDate"
+                                                        required
+                                                        readonly
+                                                        v-on="on">
+                                                </v-text-field>
+                                            </template>
+                                            <v-date-picker
+                                                    v-model="newRisk.actionEndDate"
+                                                    min="1950-01-01"
+                                            ></v-date-picker>
+                                        </v-menu>
+                                    </slot>
+                                </v-flex>
+                                <v-flex xs12>
+                                    <v-divider></v-divider>
+                                </v-flex>
+                                <v-flex xs4>
+                                    <v-subheader>Additional info</v-subheader>
+                                </v-flex>
+                                <v-flex xs8>
+                                    <td v-if="readonly">{{ risk.strategyInfo }}</td>
+                                    <v-text-field v-else
+                                                  placeholder="Additional info"
+                                                  v-model="newRisk.strategyInfo"
+                                                  :rules="validation.strategyInfo"
+                                                  required>
+                                    </v-text-field>
                                 </v-flex>
                                 <v-flex xs12>
                                     <v-divider></v-divider>

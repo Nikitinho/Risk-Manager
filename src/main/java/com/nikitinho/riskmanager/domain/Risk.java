@@ -10,7 +10,9 @@ import lombok.ToString;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,6 +84,18 @@ public class Risk {
     @JsonView(Views.FullRisk.class)
     private RiskActionStrategyType strategy;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+    @JsonView(Views.FullRisk.class)
+    private LocalDateTime actionStartDate;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+    @JsonView(Views.FullRisk.class)
+    private LocalDateTime actionEndDate;
+
+    @JsonView(Views.FullRisk.class)
+    @Column(columnDefinition = "TEXT")
+    private String strategyInfo;
+
     @OneToMany(orphanRemoval = true, cascade = {CascadeType.ALL}, mappedBy = "risk")
     @JsonIgnoreProperties("risk")
     @JsonView(Views.FullRisk.class)
@@ -105,6 +119,16 @@ public class Risk {
 
     public void setStrategy(String strategy) {
         this.strategy = RiskActionStrategyType.fromString(strategy);
+    }
+
+    public void setActionStartDate(String date) {
+        LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE);
+        this.actionStartDate = localDate.atTime(23, 59, 59);
+    }
+
+    public void setActionEndDate(String date) {
+        LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE);
+        this.actionEndDate = localDate.atTime(23, 59, 59);
     }
 
     public void setComments(List<RiskComment> comments) {

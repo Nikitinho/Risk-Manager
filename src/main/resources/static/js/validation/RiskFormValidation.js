@@ -30,5 +30,13 @@ export default {
     ],
     strategy: [
         v => !!v || 'Strategy is required'
+    ],
+    actionStartDate: [
+        v => !!v || 'Start date is required'
+    ],
+    actionEndDate: [
+        v => !!v || 'End date is required'
+    ],
+    strategyInfo: [
     ]
 }
