@@ -96,6 +96,10 @@ public class Risk {
     @Column(columnDefinition = "TEXT")
     private String strategyInfo;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+    @JsonView(Views.FullRisk.class)
+    private LocalDateTime actualActionEndDate;
+
     @OneToMany(orphanRemoval = true, cascade = {CascadeType.ALL}, mappedBy = "risk")
     @JsonIgnoreProperties("risk")
     @JsonView(Views.FullRisk.class)
@@ -122,13 +126,30 @@ public class Risk {
     }
 
     public void setActionStartDate(String date) {
-        LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE);
-        this.actionStartDate = localDate.atTime(23, 59, 59);
+        if (date == null || date.isEmpty()) {
+            this.actionStartDate = null;
+        } else {
+            LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE);
+            this.actionStartDate = localDate.atTime(23, 59, 59);
+        }
     }
 
     public void setActionEndDate(String date) {
-        LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE);
-        this.actionEndDate = localDate.atTime(23, 59, 59);
+        if (date == null || date.isEmpty()) {
+            this.actionEndDate = null;
+        } else {
+            LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE);
+            this.actionEndDate = localDate.atTime(23, 59, 59);
+        }
+    }
+
+    public void setActualActionEndDate(String date) {
+        if (date == null || date.isEmpty()) {
+            this.actualActionEndDate = null;
+        } else {
+            LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE);
+            this.actualActionEndDate = localDate.atTime(23, 59, 59);
+        }
     }
 
     public void setComments(List<RiskComment> comments) {

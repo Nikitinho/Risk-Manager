@@ -20,9 +20,10 @@ export default class Risk {
             this.riskRate = risk.riskRate
             this.riskLevel = Risk.convertRiskLevel(risk.riskLevel)
             this.strategy = Risk.convertStrategy(risk.strategy)
-            this.actionStartDate = risk.actionStartDate.substr(0, 10)
-            this.actionEndDate = risk.actionEndDate.substr(0, 10)
+            this.actionStartDate = risk.actionStartDate ? risk.actionStartDate.substr(0, 10) : null
+            this.actionEndDate = risk.actionEndDate ? risk.actionEndDate.substr(0, 10) : null
             this.strategyInfo = risk.strategyInfo
+            this.actualActionEndDate = risk.actualActionEndDate ? risk.actualActionEndDate.substr(0, 10) : null
             this.comments = risk.comments || []
         } else {
             this.text = ''
@@ -42,6 +43,7 @@ export default class Risk {
             this.actionStartDate = null
             this.actionEndDate = null
             this.strategyInfo = ''
+            this.actualActionEndDate = null
             this.comments = []
         }
     }
