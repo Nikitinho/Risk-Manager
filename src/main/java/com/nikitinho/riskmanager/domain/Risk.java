@@ -48,7 +48,7 @@ public class Risk {
     private String consequences;
 
     @JsonView(Views.FullRisk.class)
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "risk_user",
             joinColumns = {@JoinColumn(name = "risk_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")})

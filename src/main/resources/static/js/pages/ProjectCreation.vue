@@ -1,5 +1,5 @@
 <template>
-    <v-container grid-list-md text-xs-center>
+    <v-container v-if="validation" grid-list-md text-xs-center>
             <v-card class="py-2 px-2">
                     <v-card-title>
                         <v-list-tile-avatar color="grey darken-3">
@@ -10,7 +10,7 @@
                         <span class="headline font-weight-light">{{ newProject.name || 'New project' }}</span>
                     </v-card-title>
 
-                <v-form lazy-validation>
+                <v-form ref="form" lazy-validation>
                     <v-layout row wrap align-center>
                         <v-flex xs12>
                             <v-divider></v-divider>
@@ -20,7 +20,9 @@
                         </v-flex>
                         <v-flex xs8>
                             <v-text-field placeholder="Name"
-                                          v-model="newProject.name">
+                                          v-model="newProject.name"
+                                          :rules="validation.name"
+                                          required>
                             </v-text-field>
                         </v-flex>
                         <v-flex xs12>
@@ -31,7 +33,9 @@
                         </v-flex>
                         <v-flex xs8>
                             <v-textarea placeholder="Description"
-                                          v-model="newProject.description">
+                                        v-model="newProject.description"
+                                        :rules="validation.description"
+                                        required>
                             </v-textarea>
                         </v-flex>
                         <v-flex xs12>
@@ -45,8 +49,10 @@
                                       v-model="newProject.responsible"
                                       :items="responsibleUsers"
                                       placeholder="Responsible people"
-                                      multiple
-                            ></v-select>
+                                      :rules="validation.responsible"
+                                      required
+                                      multiple>
+                            </v-select>
                         </v-flex>
                         <v-flex xs12>
                             <v-divider></v-divider>
@@ -67,6 +73,7 @@
     import { mapActions } from 'vuex'
     import { mapGetters } from 'vuex'
     import Project from 'domain/Project'
+    import validation from 'validation/ProjectFormValidation'
 
     export default {
         name: 'ProjectCreation',
@@ -87,6 +94,7 @@
             }
         },
         created () {
+            this.validation = validation
             this.newProject = new Project()
         },
         methods: {
@@ -99,6 +107,7 @@
                 return users
             },
             async save() {
+                if (!this.$refs.form.validate()) { return; }
                 this.newProject.responsible = this.newProject.responsible.map(x => this.getUserByEmail(x))
 
                 this.newProject["id"] = this.id
