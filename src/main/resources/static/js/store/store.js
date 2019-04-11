@@ -94,6 +94,30 @@ export default new Vuex.Store({
                 ]
             }
         },
+        addBoardMutation(state, board) {
+            state.boards = [
+                ...state.boards,
+                board
+            ]
+        },
+        updateBoardMutation(state, board) {
+            const updateIndex = state.boards.findIndex(item => item.id === board.id)
+            state.boards = [
+                ...state.boards.slice(0, updateIndex),
+                board,
+                ...state.boards.slice(updateIndex + 1)
+            ]
+        },
+        removeBoardMutation(state, board) {
+            const deletionIndex = state.boards.findIndex(item => item.id === board.id)
+
+            if (deletionIndex > -1) {
+                state.boards = [
+                    ...state.boards.slice(0, deletionIndex),
+                    ...state.boards.slice(deletionIndex + 1)
+                ]
+            }
+        }
     },
     actions: {
         async addRiskAction({commit, state}, risk) {
@@ -152,11 +176,24 @@ export default new Vuex.Store({
         async addBoardAction({commit, state}, board) {
             await boardsApi.add(board)
         },
+        async addBoardRefresh({commit, state}, board) {
+            const result = await boardsApi.get(board.id)
+            const data = await result.json()
+            commit('addBoardMutation', data)
+        },
         async updateBoardAction({commit}, board) {
             await boardsApi.update(board)
         },
+        async updateBoardRefresh({commit, state}, board) {
+            const result = await boardsApi.get(board.id)
+            const data = await result.json()
+            commit('updateBoardMutation', data)
+        },
         async removeBoardAction({commit}, board) {
             await boardsApi.remove(board.id)
+        },
+        async removeBoardRefresh({commit, state}, board) {
+            commit('removeBoardMutation', board)
         },
         async addBoardItemAction({commit, state}, item) {
             await boarditemsApi.add(item)

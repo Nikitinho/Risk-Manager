@@ -1,15 +1,16 @@
 <template>
     <v-container fluid>
         <v-layout align-space-around justify-start wrap>
-            <slot v-for="(board, index) in boards">
+            <slot v-for="(board, index) in getBoards">
             <v-flex :xs4="!$vuetify.breakpoint.mdAndDown" :xs12="$vuetify.breakpoint.mdAndDown">
                 <v-card class="my-1 mx-1">
-                    <v-card-title primary class="headline">{{ board.name }}
+                    <v-card-title primary class="headline">
+                        <span style="display:block; width: 100%; word-wrap:break-word;">{{ board.name }}</span>
                         <v-spacer></v-spacer>
-                    <v-btn flat icon @click="() => openBoards.splice(index, 1, !openBoards[index])">
+                    <v-btn flat icon @click="() => showContent(index)">
                         <v-icon>arrow_drop_down</v-icon>
                     </v-btn></v-card-title>
-                    <slot v-if="openBoards[index]">
+                    <slot v-if="openBoards[index].isShown">
                         <v-divider></v-divider>
                     <v-card-text>
                         <span>text will be here</span>
@@ -44,16 +45,24 @@
             return {
                 newBoard: { name: '' },
                 boards: [],
-                openBoards: []
+                openBoards: [],
             }
         },
         computed: {
             ...mapGetters(['getBoards'])
         },
         created () {
-            this.boards = this.getBoards
-            if (this.boards && this.boards.length > 0) {
-                this.openBoards = new Array(this.boards.length).fill(false)
+            this.getBoards.forEach(board => this.openBoards.push({id: board.id, isShown: false}))
+        },
+        watch: {
+            getBoards(newValue, oldValue) {
+                if (newValue.length > oldValue.length) {
+                    console.log('value has increased')
+                    const value = newValue[newValue.length - 1]
+                    this.openBoards.push({id: value.id, isShown: false})
+                } else if (newValue.length < oldValue.length) {
+                    console.log('value has decreased')
+                }
             }
         },
         methods: {
@@ -62,6 +71,9 @@
                 if (!this.newBoard.name) { return; }
                 this.addBoardAction(this.newBoard)
                 this.newBoard.name = ''
+            },
+            showContent(index) {
+                this.openBoards[index].isShown = !this.openBoards[index].isShown
             }
         }
     }

@@ -21,13 +21,17 @@ public class Board {
     @JsonView(Views.Id.class)
     private Long id;
 
+    @JsonView(Views.IdName.class)
+    @Column(columnDefinition = "TEXT")
     private String name;
 
     @Column(updatable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+    @JsonView(Views.FullBoard.class)
     private LocalDateTime creationDate;
 
     @OneToMany(orphanRemoval = true, cascade = {CascadeType.ALL}, mappedBy = "board")
+    @JsonView(Views.FullBoard.class)
     @JsonIgnoreProperties("board")
     private List<BoardItem> items;
 }

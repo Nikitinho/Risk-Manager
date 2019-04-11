@@ -10,4 +10,6 @@ public final class Views {
     public interface FullRisk extends IdName {}
 
     public interface FullRiskComment extends IdName {}
+
+    public interface FullBoard extends IdName {}
 }

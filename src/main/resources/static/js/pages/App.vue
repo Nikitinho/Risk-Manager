@@ -96,7 +96,8 @@
         },
         methods: {
             ...mapMutations(['addProjectMutation', 'updateProjectMutation', 'removeProjectMutation']),
-            ...mapActions(['addRiskRefresh', 'updateRiskRefresh', 'removeRiskRefresh']),
+            ...mapActions(['addRiskRefresh', 'updateRiskRefresh', 'removeRiskRefresh',
+                'addBoardRefresh', 'updateBoardRefresh', 'removeBoardRefresh']),
             showDiscussion() {
                 this.$router.push({ name: 'Discussion' })
             },
@@ -136,6 +137,20 @@
                             break
                         case 'REMOVE':
                             this.removeProjectMutation(data.body)
+                            break
+                        default:
+                            console.error(`Event type ${data.eventType} is unknown`)
+                    }
+                } else if (data.objectType === 'BOARD') {
+                    switch (data.eventType) {
+                        case 'CREATE':
+                            this.addBoardRefresh(data.body)
+                            break
+                        case 'UPDATE':
+                            this.updateBoardRefresh(data.body)
+                            break
+                        case 'REMOVE':
+                            this.removeBoardRefresh(data.body)
                             break
                         default:
                             console.error(`Event type ${data.eventType} is unknown`)

@@ -1,5 +1,5 @@
 package com.nikitinho.riskmanager.dto;
 
 public enum ObjectType {
-    RISK, PROJECT
+    RISK, PROJECT, BOARD
 }
