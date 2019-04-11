@@ -25,7 +25,7 @@
                                     <v-subheader>Risk title</v-subheader>
                                 </v-flex>
                                 <v-flex xs8>
-                                    <td v-if="readonly">{{ risk.text }}</td>
+                                    <td v-if="readonly">{{ newRisk.text }}</td>
                                     <v-text-field v-else
                                                   placeholder="Title"
                                                   v-model="newRisk.text"
@@ -40,7 +40,7 @@
                                     <v-subheader>Risk description</v-subheader>
                                 </v-flex>
                                 <v-flex xs8>
-                                    <td v-if="readonly">{{ risk.description }}</td>
+                                    <td v-if="readonly">{{ newRisk.description }}</td>
                                     <v-textarea v-else
                                                 placeholder="Description"
                                                 v-model="newRisk.description"
@@ -55,7 +55,7 @@
                                     <v-subheader>Risk category</v-subheader>
                                 </v-flex>
                                 <v-flex xs8>
-                                    <td v-if="readonly">{{ risk.category }}</td>
+                                    <td v-if="readonly">{{ newRisk.category }}</td>
                                     <v-select v-else
                                               :items="riskCategories"
                                               placeholder="Risk Category"
@@ -71,7 +71,7 @@
                                     <v-subheader>Risk causes</v-subheader>
                                 </v-flex>
                                 <v-flex xs8>
-                                    <td v-if="readonly">{{ risk.causes }}</td>
+                                    <td v-if="readonly">{{ newRisk.causes }}</td>
                                     <v-textarea v-else
                                                 placeholder="Causes of"
                                                 v-model="newRisk.causes"
@@ -86,7 +86,7 @@
                                     <v-subheader>Description of the consequences</v-subheader>
                                 </v-flex>
                                 <v-flex xs8>
-                                    <td v-if="readonly">{{ risk.consequences }}</td>
+                                    <td v-if="readonly">{{ newRisk.consequences }}</td>
                                     <v-textarea v-else
                                                 placeholder="Description of the consequences"
                                                 v-model="newRisk.consequences"
@@ -101,7 +101,7 @@
                                     <v-subheader>Risk status</v-subheader>
                                 </v-flex>
                                 <v-flex xs8 v-if="readonly">
-                                    <td>{{ risk.status }}</td>
+                                    <td>{{ newRisk.status }}</td>
                                 </v-flex>
                                 <v-flex xs12>
                                     <v-divider></v-divider>
@@ -123,7 +123,7 @@
                                     <v-subheader>Probability</v-subheader>
                                 </v-flex>
                                 <v-flex xs8>
-                                    <td v-if="readonly">{{ risk.probability }}</td>
+                                    <td v-if="readonly">{{ newRisk.probability }}</td>
                                     <v-text-field v-else
                                                   placeholder="Probability"
                                                   v-model="newRisk.probability"
@@ -139,7 +139,7 @@
                                     <v-subheader>Impact</v-subheader>
                                 </v-flex>
                                 <v-flex xs8>
-                                    <td v-if="readonly">{{ risk.impact }}</td>
+                                    <td v-if="readonly">{{ newRisk.impact }}</td>
                                     <v-text-field v-else
                                                   placeholder="Impact"
                                                   v-model="newRisk.impact"
@@ -155,7 +155,7 @@
                                     <v-subheader>Risk rate</v-subheader>
                                 </v-flex>
                                 <v-flex xs8 v-if="readonly">
-                                    <td>{{ risk.riskRate }}</td>
+                                    <td>{{ newRisk.riskRate }}</td>
                                 </v-flex>
                                 <v-flex xs12 v-if="readonly">
                                     <v-divider></v-divider>
@@ -164,7 +164,7 @@
                                     <v-subheader>Risk level</v-subheader>
                                 </v-flex>
                                 <v-flex xs8 v-if="readonly">
-                                    <td>{{ risk.riskLevel }}</td>
+                                    <td>{{ newRisk.riskLevel }}</td>
                                 </v-flex>
                                 <v-flex xs12>
                                     <v-divider></v-divider>
@@ -186,7 +186,7 @@
                                     <v-subheader>Responsible people</v-subheader>
                                 </v-flex>
                                 <v-flex xs8>
-                                    <td v-if="readonly">{{ risk.responsible }}</td>
+                                    <td v-if="readonly">{{ newRisk.responsible }}</td>
                                     <v-select v-else
                                               chips
                                               v-model="newRisk.responsible"
@@ -204,7 +204,7 @@
                                     <v-subheader>Action strategy</v-subheader>
                                 </v-flex>
                                 <v-flex xs8>
-                                    <td v-if="readonly">{{ risk.strategy }}</td>
+                                    <td v-if="readonly">{{ newRisk.strategy }}</td>
                                     <v-select v-else
                                               :items="actionStrategies"
                                               placeholder="Risk Strategy"
@@ -220,7 +220,7 @@
                                     <v-subheader>Start date</v-subheader>
                                 </v-flex>
                                 <v-flex xs8>
-                                    <td v-if="readonly">{{ risk.actionStartDate }}</td>
+                                    <td v-if="readonly">{{ newRisk.actionStartDate }}</td>
                                     <slot v-else>
                                     <v-menu :close-on-content-click="true"
                                             :nudge-right="40"
@@ -254,7 +254,7 @@
                                     <v-subheader>End date</v-subheader>
                                 </v-flex>
                                 <v-flex xs8>
-                                    <td v-if="readonly">{{ risk.actionEndDate }}</td>
+                                    <td v-if="readonly">{{ newRisk.actionEndDate }}</td>
                                     <slot v-else>
                                         <v-menu :close-on-content-click="true"
                                                 :nudge-right="40"
@@ -288,7 +288,7 @@
                                     <v-subheader>Additional info</v-subheader>
                                 </v-flex>
                                 <v-flex xs8>
-                                    <td v-if="readonly">{{ risk.strategyInfo }}</td>
+                                    <td v-if="readonly">{{ newRisk.strategyInfo || 'No info provided' }}</td>
                                     <v-text-field v-else
                                                   placeholder="Additional info"
                                                   v-model="newRisk.strategyInfo"
@@ -339,32 +339,36 @@
             }
         },
         created () {
-//            console.log(this.risk.stage)
+//            console.log(this.risk)
             if (!this.readonly) {
                 if (this.risk) {
                     this.newRisk = new Risk(this.risk)
                     this.newRisk.responsible = this.getResponsibleNames(this.risk.responsible)
-                    this.currentStepper = Risk.convertStageToStep(this.risk.stage) + 1
+                    this.currentStepper = Risk.convertStageToStep(this.risk.stage)
                 } else {
                     this.newRisk = new Risk()
                     this.newRisk.responsible = []
                     this.newRisk.responsible.push(this.getProfile.email)
                 }
             } else {
+                this.newRisk = new Risk(this.risk)
+                this.newRisk.responsible = this.getResponsibleNames(this.risk.responsible)
                 this.currentStepper = Risk.convertStageToStep(this.risk.stage)
             }
-//            console.log(this.risk)
+//            console.log(this.currentStepper)
         },
         mounted () {
             this.$emit('newRisk', this.newRisk)
             this.$emit('validationForm', this.$refs)
         },
         watch: {
-            steps (val) {
-                if (this.e1 > val) {
-                    this.e1 = val
-                }
-            }
+//            currentStepper (val) {
+////                console.log(this.currentStepper)
+//                if (!this.readonly && this.newRisk) {
+//                    this.newRisk.stage = this.stages.find(stage => stage.key === val).value
+////                    console.log(this.newRisk.stage)
+//                }
+//            }
         },
         computed: {
             ...mapGetters(['riskCategories', 'riskStatuses', 'actionStrategies', 'activeUsers', 'getUserByEmail', 'getRiskById', 'getProfile', 'getProjectById']),

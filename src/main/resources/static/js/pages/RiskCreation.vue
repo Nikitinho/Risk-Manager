@@ -45,6 +45,7 @@
             } else {
                 this.risk = undefined
             }
+            console.log(this.risk)
         },
         methods: {
             ...mapActions(['addRiskAction', 'updateRiskAction', 'removeRiskAction']),

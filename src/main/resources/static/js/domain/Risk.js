@@ -33,7 +33,7 @@ export default class Risk {
             this.consequences = ''
             this.responsible = []
             this.status = null
-            this.stage = 'Идентификация'
+            this.stage = null
             this.probability = ''
             this.impact = ''
             this.riskRate = ''

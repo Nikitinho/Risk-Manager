@@ -102,9 +102,8 @@
         },
         created () {
             this.validation = validation
-            this.risk = new Risk(this.getProjectById((Number)(this.projectId))
-                .risks.find(x => (Number)(x.id) === (Number)(this.riskId)))
-            this.risk.responsible = this.getResponsibleNames(this.risk.responsible)
+            this.risk = this.getProjectById((Number)(this.projectId))
+                .risks.find(x => (Number)(x.id) === (Number)(this.riskId))
         },
         methods: {
             ...mapActions(['addRiskAction', 'updateRiskAction', 'removeRiskAction']),
