@@ -109,20 +109,40 @@ public class Risk {
         this.category = RiskCategoryType.fromString(category);
     }
 
+    public void setCategory(RiskCategoryType category) {
+        this.category = category;
+    }
+
     public void setStatus(String status) {
         this.status = RiskStatusType.fromString(status);
+    }
+
+    public void setStatus(RiskStatusType status) {
+        this.status = status;
     }
 
     public void setRiskLevel(String riskLevel) {
         this.riskLevel = RiskLevelType.fromString(riskLevel);
     }
 
+    public void setRiskLevel(RiskLevelType riskLevel) {
+        this.riskLevel = riskLevel;
+    }
+
     public void setStage(String stage) {
         this.stage = RiskStageType.fromString(stage);
     }
 
+    public void setStage(RiskStageType stage) {
+        this.stage = stage;
+    }
+
     public void setStrategy(String strategy) {
         this.strategy = RiskActionStrategyType.fromString(strategy);
+    }
+
+    public void setStrategy(RiskActionStrategyType strategy) {
+        this.strategy = strategy;
     }
 
     public void setActionStartDate(String date) {
@@ -134,6 +154,10 @@ public class Risk {
         }
     }
 
+    public void setActionStartDate(LocalDateTime date) {
+        this.actionStartDate = date;
+    }
+
     public void setActionEndDate(String date) {
         if (date == null || date.isEmpty()) {
             this.actionEndDate = null;
@@ -143,6 +167,10 @@ public class Risk {
         }
     }
 
+    public void setActionEndDate(LocalDateTime date) {
+        this.actionEndDate = date;
+    }
+
     public void setActualActionEndDate(String date) {
         if (date == null || date.isEmpty()) {
             this.actualActionEndDate = null;
@@ -150,6 +178,10 @@ public class Risk {
             LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE);
             this.actualActionEndDate = localDate.atTime(23, 59, 59);
         }
+    }
+
+    public void setActualActionEndDate(LocalDateTime date) {
+        this.actualActionEndDate = date;
     }
 
     public void setComments(List<RiskComment> comments) {

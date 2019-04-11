@@ -38,5 +38,8 @@ export default {
         v => !!v || 'End date is required'
     ],
     strategyInfo: [
+    ],
+    actualActionEndDate: [
+        v => !!v || 'Actual end date is required'
     ]
 }

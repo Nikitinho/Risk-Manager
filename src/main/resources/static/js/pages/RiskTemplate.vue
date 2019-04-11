@@ -117,7 +117,7 @@
                         :step="stages[1].key">
                     <v-card class="py-2 px-2">
                         <v-form ref="form1"
-                                lazy-validation>
+                                lazy-validation v-if="!readonly || isEvaluationStage">
                             <v-layout row wrap align-center>
                                 <v-flex xs4>
                                     <v-subheader>Probability</v-subheader>
@@ -128,7 +128,7 @@
                                                   placeholder="Probability"
                                                   v-model="newRisk.probability"
                                                   @input="updateRiskLevel"
-                                                  :rules="validation.probability"
+                                                  :rules="isEvaluationStage ? validation.probability : []"
                                                   required>
                                     </v-text-field>
                                 </v-flex>
@@ -144,7 +144,7 @@
                                                   placeholder="Impact"
                                                   v-model="newRisk.impact"
                                                   @input="updateRiskLevel"
-                                                  :rules="validation.impact"
+                                                  :rules="isEvaluationStage ? validation.impact: []"
                                                   required>
                                     </v-text-field>
                                 </v-flex>
@@ -173,6 +173,9 @@
                                 </slot>
                             </v-layout>
                         </v-form>
+                        <v-card-text v-else>
+                            <span>No info provided yet.</span>
+                        </v-card-text>
                     </v-card>
                 </v-stepper-content>
                 <v-stepper-content
@@ -180,7 +183,7 @@
                         :step="stages[2].key">
                     <v-card class="py-2 px-2">
                         <v-form ref="form2"
-                                lazy-validation>
+                                lazy-validation v-if="!readonly || isPlanningStage">
                             <v-layout row wrap align-center>
                                 <v-flex xs4>
                                     <v-subheader>Responsible people</v-subheader>
@@ -193,7 +196,7 @@
                                               :items="responsibleUsers"
                                               placeholder="Responsible people"
                                               multiple
-                                              :rules="validation.responsible"
+                                              :rules="isPlanningStage ? validation.responsible : []"
                                               required
                                     ></v-select>
                                 </v-flex>
@@ -209,7 +212,7 @@
                                               :items="actionStrategies"
                                               placeholder="Risk Strategy"
                                               v-model="newRisk.strategy"
-                                              :rules="validation.strategy"
+                                              :rules="isPlanningStage ? validation.strategy : []"
                                               required>
                                         ></v-select>
                                 </v-flex>
@@ -234,7 +237,7 @@
                                                     v-model="newRisk.actionStartDate"
                                                     placeholder="Start date"
                                                     prepend-icon="event"
-                                                    :rules="validation.actionStartDate"
+                                                    :rules="isPlanningStage ? validation.actionStartDate : []"
                                                     required
                                                     readonly
                                                     v-on="on">
@@ -268,7 +271,7 @@
                                                         v-model="newRisk.actionEndDate"
                                                         placeholder="End date"
                                                         prepend-icon="event"
-                                                        :rules="validation.actionEndDate"
+                                                        :rules="isPlanningStage ? validation.actionEndDate : []"
                                                         required
                                                         readonly
                                                         v-on="on">
@@ -289,12 +292,12 @@
                                 </v-flex>
                                 <v-flex xs8>
                                     <td v-if="readonly">{{ newRisk.strategyInfo || 'No info provided' }}</td>
-                                    <v-text-field v-else
+                                    <v-textarea v-else
                                                   placeholder="Additional info"
                                                   v-model="newRisk.strategyInfo"
-                                                  :rules="validation.strategyInfo"
+                                                  :rules="isPlanningStage ? validation.strategyInfo : []"
                                                   required>
-                                    </v-text-field>
+                                    </v-textarea>
                                 </v-flex>
                                 <v-flex xs12>
                                     <v-divider></v-divider>
@@ -303,6 +306,9 @@
                                 </slot>
                             </v-layout>
                         </v-form>
+                        <v-card-text v-else>
+                            <span>No info provided yet.</span>
+                        </v-card-text>
                     </v-card>
                 </v-stepper-content>
                 <v-stepper-content
@@ -310,7 +316,7 @@
                         :step="stages[3].key">
                     <v-card class="py-2 px-2">
                         <v-form ref="form3"
-                                lazy-validation>
+                                lazy-validation v-if="!readonly || isMonitoringStage">
                             <v-layout row wrap align-center>
                                 <v-flex xs4>
                                     <v-subheader>Planned action start date</v-subheader>
@@ -340,6 +346,8 @@
                                                         v-model="newRisk.actualActionEndDate"
                                                         placeholder="End date"
                                                         prepend-icon="event"
+                                                        :rules="isMonitoringStage ? validation.actualActionEndDate : []"
+                                                        required
                                                         readonly
                                                         v-on="on">
                                                 </v-text-field>
@@ -367,6 +375,9 @@
                                 </slot>
                             </v-layout>
                         </v-form>
+                        <v-card-text v-else>
+                            <span>No info provided yet.</span>
+                        </v-card-text>
                     </v-card>
                 </v-stepper-content>
             </v-stepper-items>
@@ -427,8 +438,8 @@
         },
         watch: {
             currentStepper (val) {
-//                console.log(this.currentStepper)
-                if (!this.readonly && this.newRisk) {
+                console.log(this.currentStepper)
+                if (!this.readonly && this.newRisk && this.currentStepper > 0) {
                     this.newRisk.stage = this.stages.find(stage => stage.key === val).value
 //                    console.log(this.newRisk.stage)
                 }
@@ -442,6 +453,25 @@
                     users.push(user.email)
                 )
                 return users
+            },
+            isIdentificationStage() {
+                let risk = this.newRisk
+                return risk.text || risk.description || risk.causes || risk.consequences || risk.category
+            },
+            isEvaluationStage() {
+                if (!this.isIdentificationStage) { return false; }
+                let risk = this.newRisk
+                return risk.probability || risk.impact || risk.riskRate || risk.riskLevel
+            },
+            isPlanningStage() {
+                if (!this.isEvaluationStage) { return false; }
+                let risk = this.newRisk
+                return risk.responsible || risk.strategy || risk.actionStartDate || risk.actionEndDate || risk.strategyInfo
+            },
+            isMonitoringStage() {
+                if (!this.isPlanningStage) { return false; }
+                let risk = this.newRisk
+                return !!risk.actualActionEndDate
             }
         },
         methods: {
