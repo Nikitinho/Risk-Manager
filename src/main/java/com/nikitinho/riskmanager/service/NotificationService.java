@@ -54,7 +54,8 @@ public class NotificationService {
         result = result.replace("[SUBHEADER_PLACEHOLDER]", "Risk " + documentStatus);
         result = result.replace("[PARAGRAPH_PLACEHOLDER]", risk.getDescription());
         // temporary solution for absolute path in email
-        String absolutePath = "http://localhost:9000/viewRisk/" + risk.getId();
+        String absolutePath = "http://localhost:9000/projects/" +
+                risk.getProject().getId() + "/viewRisk/" + risk.getId();
         result = result.replace("[BUTTON_LINK_PLACEHOLDER1]", absolutePath);
         result = result.replace("[BUTTON_LINK_PLACEHOLDER2]", absolutePath);
 

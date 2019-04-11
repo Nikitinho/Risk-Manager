@@ -2,6 +2,9 @@
     <v-app>
         <v-navigation-drawer style="width: 100%" v-if="sideNav" v-model="sideNav">
             <v-list>
+                <v-list-tile :to="{ name: 'Discussion' }">
+                    <v-list-tile-content>Discussion</v-list-tile-content>
+                </v-list-tile>
                 <v-list-tile :to="{ name: 'ProjectsList' }">
                     <v-list-tile-content>Projects</v-list-tile-content>
                 </v-list-tile>

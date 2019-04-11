@@ -5,7 +5,7 @@
             <v-flex :xs4="!$vuetify.breakpoint.mdAndDown" :xs12="$vuetify.breakpoint.mdAndDown">
                 <v-card class="my-1 mx-1">
                     <v-card-title primary class="headline">
-                        <span style="display:block; width: 100%; word-wrap:break-word;">{{ board.name }}</span>
+                        <span style="display:block; width: 80%; word-wrap:break-word;">{{ board.name }}</span>
                         <v-spacer></v-spacer>
                     <v-btn flat icon @click="() => showContent(index)">
                         <v-icon>arrow_drop_down</v-icon>
