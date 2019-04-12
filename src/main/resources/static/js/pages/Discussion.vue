@@ -64,46 +64,48 @@
                                 </v-btn>
                             </v-flex>
                         </slot>
-                        <!--<slot v-else-if="newItem.type === 'Изображение'">-->
-                            <!--<v-flex xs12>-->
-                            <!--<input type="file" @onchange="previewFile"><br>-->
-                                <!--<img src="" height="200" alt="Image preview...">-->
-                            <!--</v-flex>-->
-                        <!--</slot>-->
                     </slot>
                     <slot v-if="openBoards[index].isShown">
-                        <v-flex xs12>
-                            <v-list v-if="board.items && board.items.length > 0">
-                                <template v-for="item in board.items">
-                                    <v-divider></v-divider>
-                                    <v-list-tile avatar
-                                                 @click="">
+                        <slot v-if="board.items && board.items.length > 0">
+                            <template v-for="item in board.items">
+                            <v-card flat>
+                                <v-card-actions><v-divider></v-divider></v-card-actions>
+                                <span>
+                                    <v-list-tile class="grow">
                                         <v-list-tile-avatar v-if="item.author">
                                         <v-img class="elevation-6"
                                                :src="item.author.userpic">
                                         </v-img>
                                         </v-list-tile-avatar>
-
                                         <v-list-tile-content>
-                                            <slot v-if="item.type === 'MESSAGE'">
-                                            <v-list-tile-title v-html="`${item.messageText}`"></v-list-tile-title>
-                                            </slot>
-                                            <slot v-else-if="item.type === 'IMAGE'">
-                                                <v-img width="100%"
-                                                       :src="`data:image/png;base64,${item.image}`">
-                                                </v-img>
-                                            </slot>
+                                            <v-list-tile-title>{{ item.author.name }}</v-list-tile-title>
                                         </v-list-tile-content>
                                     </v-list-tile>
-                                </template>
-                            </v-list>
-                            <slot v-else>
+                                </span>
+                                <v-card-text>
+                                <slot v-if="item.type === 'MESSAGE'">
+                                    <span style="display: block; word-wrap: break-word">{{item.messageText}}</span>
+                                </slot>
+                                <slot v-if="item.type === 'IMAGE'">
+                                    <v-img width="100%" height="100%"
+                                           :src="`data:image/png;base64,${item.image}`">
+                                    </v-img>
+                                </slot>
+                                </v-card-text>
+                            </v-card>
+                            </template>
+                        </slot>
+
+                        <slot v-else>
+                        <v-flex xs12>
+
                                 <v-divider></v-divider>
                                 <v-card-text>
                                     <span>Nothing to show here</span>
                                 </v-card-text>
-                            </slot>
+
                         </v-flex>
+                        </slot>
                     </slot>
                 </v-card>
             </v-flex>
