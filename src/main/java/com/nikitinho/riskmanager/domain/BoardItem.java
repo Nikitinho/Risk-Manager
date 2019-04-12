@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import java.io.File;
 import java.time.LocalDateTime;
 
 @Entity
@@ -29,6 +30,10 @@ public class BoardItem {
     private User author;
 
     private String messageText;
+
+    @Lob
+    @Column(length=100000)
+    private byte[] image;
 
     private BoardItemType type;
 

@@ -58,6 +58,11 @@
                                        accept="image/*"
                                        @change="onFilePicked">
                             </v-flex>
+                            <v-flex xs12 text-xs-center>
+                                <v-btn color="success" @click="saveItem">
+                                    <v-icon>save</v-icon>
+                                </v-btn>
+                            </v-flex>
                         </slot>
                         <!--<slot v-else-if="newItem.type === 'Изображение'">-->
                             <!--<v-flex xs12>-->
@@ -82,6 +87,11 @@
                                         <v-list-tile-content>
                                             <slot v-if="item.type === 'MESSAGE'">
                                             <v-list-tile-title v-html="`${item.messageText}`"></v-list-tile-title>
+                                            </slot>
+                                            <slot v-else-if="item.type === 'IMAGE'">
+                                                <v-img width="100%"
+                                                       :src="`data:image/png;base64,${item.image}`">
+                                                </v-img>
                                             </slot>
                                         </v-list-tile-content>
                                     </v-list-tile>
@@ -182,12 +192,27 @@
                         return
                     }
                     const fr = new FileReader ()
-                    fr.readAsDataURL(files[0])
+//                    fr.readAsDataURL(files[0])
+//                    fr.addEventListener('load', () => {
+//                        this.newImageItem.imageUrl = fr.result
+//                        console.log(files[0])
+//                        this.newImageItem.imageFile = files[0]// this is an image file that can be sent to server...
+//                        this.newItem.image = fr.result
+//                    })
+                    fr.readAsArrayBuffer(files[0])
                     fr.addEventListener('load', () => {
-                        this.newImageItem.imageUrl = fr.result
-                        console.log(files[0])
-                        this.newImageItem.imageFile = files[0] // this is an image file that can be sent to server...
+                        let fileByteArray = []
+//                        console.log(fr.result)
+//                        console.log(new Uint8Array(fr.result))
+                        let arrayBuffer = fr.result
+                        let array = new Uint8Array(arrayBuffer)
+                        for (let i = 0; i < array.length; i++) {
+                            fileByteArray.push(array[i]);
+                        }
+//                        console.log(fileByteArray)
+                        this.newItem.image = fileByteArray
                     })
+
                 } else {
                     this.newImageItem.imageName = ''
                     this.newImageItem.imageFile = ''

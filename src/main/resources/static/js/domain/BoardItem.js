@@ -4,11 +4,13 @@ export default class BoardItem {
             this.id = item.id
             this.creationDate = item.creationDate
             this.messageText = item.messageText
+            this.image = item.image
             this.type = BoardItem.convertBoardItem(item.type)
         } else {
             this.id = ''
             this.creationDate = null
             this.messageText = ''
+            this.image = null
             this.type = null
         }
 
