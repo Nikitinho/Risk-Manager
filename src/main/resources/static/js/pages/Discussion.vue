@@ -113,8 +113,6 @@
                                             <v-btn outline color="indigo" @click="() =>
                                             saveFile(item.file, item.fileName, item.fileType)">
                                                 Downolad file</v-btn>
-                                            <!--<v-btn outline color="indigo" :to="`data/${item.fileType};base64,${item.file}`">-->
-                                                <!--Downolad file</v-btn>-->
                                         </div>
                                     </slot>
                                 </v-card-text>

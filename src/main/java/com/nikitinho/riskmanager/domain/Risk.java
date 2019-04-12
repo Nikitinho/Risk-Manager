@@ -70,10 +70,10 @@ public class Risk {
     private Project project;
 
     @JsonView(Views.FullRisk.class)
-    private Integer probability;
+    private Double probability;
 
     @JsonView(Views.FullRisk.class)
-    private Integer impact;
+    private Double impact;
 
     @JsonView(Views.FullRisk.class)
     private Integer riskRate;

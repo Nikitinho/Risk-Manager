@@ -5,10 +5,8 @@ export default {
         saveFile(bytes, name, type) {
             // convert base64 to raw binary data held in a string
             // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
-            let dataURI = "data:"+type+";base64,"+bytes
+            let dataURI = "data:" + type + ";base64," + bytes
 
-
-            console.log(dataURI)
             let byteString = atob(dataURI.split(',')[1]);
 
             // separate out the mime component

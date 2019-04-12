@@ -22,11 +22,11 @@ export default {
     ],
     probability: [
         v => !!v || 'Probability is required',
-        v => (v >= 0 &&  v <= 10) || 'Value must be between 0 and 10'
+        v => (v >= 0 &&  v <= 1) || 'Value must be between 0 and 1'
     ],
     impact: [
         v => !!v || 'Impact rate is required',
-        v => (v >= 0 &&  v <= 10) || 'Value must be between 0 and 10'
+        v => (v >= 0 &&  v <= 1) || 'Value must be between 0 and 1'
     ],
     strategy: [
         v => !!v || 'Strategy is required'

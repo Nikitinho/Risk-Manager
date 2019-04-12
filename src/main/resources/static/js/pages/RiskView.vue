@@ -118,7 +118,7 @@
                 this.$router.push({ name: 'RiskEdition', params: { projectId: this.projectId, riskId: risk.id } })
             },
             async del (risk) {
-                awthis.removeRiskAction(risk)
+                await this.removeRiskAction(risk)
                 this.$router.push({ name: 'ProjectView', params: { projectId: this.projectId } })
             },
             exportDocument(risk, DocumentType) {

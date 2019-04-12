@@ -20,15 +20,30 @@
                     scales: {
                         yAxes: [{
                             ticks: {
-                                beginAtZero: true
+                                min: 0,
+                                max: 1,
+                                stepSize: 0.1
                             },
                             gridLines: {
                                 display: true
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Impact'
                             }
                         }],
                         xAxes: [ {
+                            ticks: {
+                                min: 0,
+                                max: 1,
+                                stepSize: 0.1
+                            },
                             gridLines: {
                                 display: false
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Probability'
                             }
                         }]
                     },
@@ -43,7 +58,7 @@
                         }
                     },
                     legend: {
-                        display: true
+                        display: false
                     },
                     responsive: true,
                     maintainAspectRatio: false
@@ -63,7 +78,6 @@
                     if (!element.probability || !element.impact) { continue; }
                     this.addNewBubble(element)
                 }
-                this.addGraphPerimeter(10, 10)
             },
             addNewBubble(element) {
                 let newBubble = {
@@ -81,29 +95,6 @@
                     ]
                 }
                 this.datacollection.datasets.push(newBubble)
-            },
-            addGraphPerimeter(xMax, yMax){
-                let newPerimeter = {
-                    label: 'End of graph',
-                    backgroundColor: 'white',
-                    pointBackgroundColor: 'white',
-                    borderWidth: 1,
-                    pointBorderColor: '#464949',
-                    //Data to be represented on y-axis
-                    data: [
-                        {
-                            x: xMax,
-                            y: 0,
-                            r: 0
-                        },
-                        {
-                            x: 0,
-                            y: yMax,
-                            r: 0
-                        }
-                    ]
-                }
-                this.datacollection.datasets.push(newPerimeter)
             }
         }
     }
