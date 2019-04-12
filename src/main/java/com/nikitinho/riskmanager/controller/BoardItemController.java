@@ -1,8 +1,10 @@
 package com.nikitinho.riskmanager.controller;
 
 import com.nikitinho.riskmanager.domain.BoardItem;
+import com.nikitinho.riskmanager.domain.User;
 import com.nikitinho.riskmanager.service.BoardItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -29,8 +31,8 @@ public class BoardItemController {
     }
 
     @PostMapping
-    public BoardItem create(@RequestBody BoardItem boardItem) throws IOException {
-        return boardItemService.create(boardItem);
+    public BoardItem create(@RequestBody BoardItem boardItem, @AuthenticationPrincipal User user) throws IOException {
+        return boardItemService.create(boardItem, user);
     }
 
     @PutMapping("{id}")

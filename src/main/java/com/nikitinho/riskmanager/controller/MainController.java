@@ -48,6 +48,7 @@ public class MainController {
             data.put("statuses", Stream.of(RiskStatusType.values()).map(RiskStatusType::toString).toArray());
             data.put("strategies", Stream.of(RiskActionStrategyType.values()).map(RiskActionStrategyType::toString)
                     .toArray());
+            data.put("boarditems", Stream.of(BoardItemType.values()).map(BoardItemType::toString).toArray());
             data.put("projects", projectRepo.findAll().stream().filter(project -> project.getResponsible().stream()
                     .anyMatch(usr -> usr.getId().equals(user.getId()))).toArray());
 

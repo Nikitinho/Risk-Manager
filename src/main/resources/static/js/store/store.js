@@ -16,13 +16,15 @@ export default new Vuex.Store({
         statuses: frontendData.statuses,
         strategies: frontendData.strategies,
         users: frontendData.users,
-        boards: frontendData.boards
+        boards: frontendData.boards,
+        boarditems: frontendData.boarditems
     },
     getters: {
         sortedProjects: state => (state.projects || []).sort((a, b) => -(a.id - b.id)),
         riskCategories: state => state.categories,
         actionStrategies: state => state.strategies,
         getBoards: state => state.boards,
+        boardItems: state => state.boarditems,
         riskStatuses: state => state.statuses,
         activeUsers: state => state.users,
         getUserByEmail: state => name => {

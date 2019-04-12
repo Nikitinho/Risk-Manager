@@ -1,6 +1,7 @@
 package com.nikitinho.riskmanager.service;
 
 import com.nikitinho.riskmanager.domain.BoardItem;
+import com.nikitinho.riskmanager.domain.User;
 import com.nikitinho.riskmanager.repo.BoardItemRepo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,9 @@ public class BoardItemService {
         return updatedBoardItem;
     }
 
-    public BoardItem create(BoardItem boardItem) throws IOException {
+    public BoardItem create(BoardItem boardItem, User user) throws IOException {
         boardItem.setCreationDate(LocalDateTime.now());
+        boardItem.setAuthor(user);
         BoardItem updatedBoardItem = boardItemRepo.save(boardItem);
 
         return updatedBoardItem;
