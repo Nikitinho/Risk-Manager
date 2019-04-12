@@ -110,8 +110,11 @@
                                 </slot>
                                     <slot v-else-if="item.type === 'ATTACHMENT'" >
                                         <div class="text-xs-center">
-                                            <v-btn outline color="indigo" @click="() => saveFile(item.file)">
+                                            <v-btn outline color="indigo" @click="() =>
+                                            saveFile(item.file, item.fileName, item.fileType)">
                                                 Downolad file</v-btn>
+                                            <!--<v-btn outline color="indigo" :to="`data/${item.fileType};base64,${item.file}`">-->
+                                                <!--Downolad file</v-btn>-->
                                         </div>
                                     </slot>
                                 </v-card-text>
@@ -268,6 +271,7 @@
                         }
                         this.newItem.file = fileByteArray
                         this.newItem.fileName = this.newFileItem.fileName
+                        this.newItem.fileType = files[0].type
                     })
                 } else {
                     this.newFileItem.fileName = ''

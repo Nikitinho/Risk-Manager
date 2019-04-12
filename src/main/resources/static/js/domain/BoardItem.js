@@ -7,6 +7,7 @@ export default class BoardItem {
             this.image = item.image
             this.file = item.file
             this.fileName = item.fileName
+            this.fileType = item.fileType
             this.type = BoardItem.convertBoardItem(item.type)
         } else {
             this.id = ''
@@ -16,6 +17,7 @@ export default class BoardItem {
             this.type = null
             this.file = null
             this.fileName = ''
+            this.fileType = ''
         }
 
         if (boardId) {

@@ -48,6 +48,9 @@ public class BoardItem {
     private String fileName;
 
     @JsonView(Views.FullBoardItem.class)
+    private String fileType;
+
+    @JsonView(Views.FullBoardItem.class)
     private BoardItemType type;
 
     @ManyToOne
