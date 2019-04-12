@@ -38,6 +38,33 @@
                             </v-btn>
                             </v-flex>
                         </slot>
+                        <slot v-else-if="newItem.type === 'Изображение'">
+                            <slot v-if="newImageItem.imageUrl">
+                            <v-flex xs12>
+                                <v-divider></v-divider>
+                            </v-flex>
+                            <v-flex xs12 class="text-xs-center text-sm-center text-md-center text-lg-center pt-1">
+                                <img :src="newImageItem.imageUrl" width="100%"/>
+                            </v-flex>
+                            </slot>
+                            <v-flex xs12>
+                                <v-divider></v-divider>
+                            </v-flex>
+                            <v-flex xs12 class="text-xs-center text-sm-center text-md-center text-lg-center">
+                                <v-text-field placeholder="Select Image" @click='pickFile' v-model='newImageItem.imageName' prepend-icon='attach_file'></v-text-field>
+                                <input type="file"
+                                       style="display: none"
+                                       ref="image"
+                                       accept="image/*"
+                                       @change="onFilePicked">
+                            </v-flex>
+                        </slot>
+                        <!--<slot v-else-if="newItem.type === 'Изображение'">-->
+                            <!--<v-flex xs12>-->
+                            <!--<input type="file" @onchange="previewFile"><br>-->
+                                <!--<img src="" height="200" alt="Image preview...">-->
+                            <!--</v-flex>-->
+                        <!--</slot>-->
                     </slot>
                     <slot v-if="openBoards[index].isShown">
                         <v-flex xs12>
@@ -53,7 +80,7 @@
                                         </v-list-tile-avatar>
 
                                         <v-list-tile-content>
-                                            <slot v-if="item.type = 'MESSAGE'">
+                                            <slot v-if="item.type === 'MESSAGE'">
                                             <v-list-tile-title v-html="`${item.messageText}`"></v-list-tile-title>
                                             </slot>
                                         </v-list-tile-content>
@@ -99,7 +126,14 @@
                 newBoard: { name: '' },
                 boards: [],
                 openBoards: [],
-                newItem: {}
+                newItem: {},
+                newImageItem: {
+                    title: "Image Upload",
+                    dialog: false,
+                    imageName: '',
+                    imageUrl: '',
+                    imageFile: ''
+                }
             }
         },
         computed: {
@@ -135,6 +169,30 @@
             saveItem() {
                 this.addBoardItemAction(this.newItem)
                 this.newItem = new BoardItem()
+            },
+            pickFile () {
+                console.log(this.$refs)
+                this.$refs.image[0].click()
+            },
+            onFilePicked (e) {
+                const files = e.target.files
+                if(files[0] !== undefined) {
+                    this.newImageItem.imageName = files[0].name
+                    if(this.newImageItem.imageName.lastIndexOf('.') <= 0) {
+                        return
+                    }
+                    const fr = new FileReader ()
+                    fr.readAsDataURL(files[0])
+                    fr.addEventListener('load', () => {
+                        this.newImageItem.imageUrl = fr.result
+                        console.log(files[0])
+                        this.newImageItem.imageFile = files[0] // this is an image file that can be sent to server...
+                    })
+                } else {
+                    this.newImageItem.imageName = ''
+                    this.newImageItem.imageFile = ''
+                    this.newImageItem.imageUrl = ''
+                }
             }
         }
     }
