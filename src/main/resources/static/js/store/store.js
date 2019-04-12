@@ -119,6 +119,36 @@ export default new Vuex.Store({
                     ...state.boards.slice(deletionIndex + 1)
                 ]
             }
+        },
+        addBoardItemMutation(state, boardItem) {
+            let index = this.state.boards.findIndex(board => board.id === boardItem.board.id)
+            let item = this.state.boards.find(board => board.id === boardItem.board.id)
+
+            if (index > -1) {
+                if (!item.items) { item.items = [] }
+                item.items.splice(0, 0, boardItem)
+                state.boards.splice(index, 1, item)
+            }
+        },
+        updateBoardItemMutation(state, boardItem) {
+            let index = this.state.boards.findIndex(board => board.id === boardItem.board.id)
+            let item = this.state.boards.find(board => board.id === boardItem.board.id)
+
+            let bIndex = item ? item.items.findIndex(x => x.id = boardItem.id) : undefined
+            if (bIndex > -1) {
+                item.items.splice(bIndex, 1, boardItem)
+                state.boards.splice(index, 1, item)
+            }
+        },
+        removeBoardItemMutation(state, boardItem) {
+            let index = this.state.boards.findIndex(board => board.id === boardItem.board.id)
+            let item = this.state.boards.find(board => board.id === boardItem.board.id)
+
+            let bIndex = item ? item.items.findIndex(x => x.id = boardItem.id) : undefined
+            if (bIndex > -1) {
+                item.items.splice(bIndex, 1)
+                state.boards.splice(index, 1, item)
+            }
         }
     },
     actions: {
@@ -200,11 +230,25 @@ export default new Vuex.Store({
         async addBoardItemAction({commit, state}, item) {
             await boarditemsApi.add(item)
         },
+        async addBoardItemRefresh({commit, state}, item) {
+            console.log('smthing_here')
+            const result = await boarditemsApi.get(item.id)
+            const data = await result.json()
+            commit('addBoardItemMutation', data)
+        },
         async updateBoardItemAction({commit}, item) {
             await boarditemsApi.update(item)
         },
+        async updateBoardItemRefresh({commit, state}, item) {
+            const result = await boarditemsApi.get(item.id)
+            const data = await result.json()
+            commit('updateBoardItemMutation', data)
+        },
         async removeBoardItemAction({commit}, item) {
             await boarditemsApi.remove(item.id)
+        },
+        async removeBoardItemRefresh({commit, state}, item) {
+            commit('removeBoardItemMutation', item)
         }
     }
 })

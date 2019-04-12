@@ -5,6 +5,8 @@ export default class BoardItem {
             this.creationDate = item.creationDate
             this.messageText = item.messageText
             this.image = item.image
+            this.file = item.file
+            this.fileName = item.fileName
             this.type = BoardItem.convertBoardItem(item.type)
         } else {
             this.id = ''
@@ -12,6 +14,8 @@ export default class BoardItem {
             this.messageText = ''
             this.image = null
             this.type = null
+            this.file = null
+            this.fileName = ''
         }
 
         if (boardId) {

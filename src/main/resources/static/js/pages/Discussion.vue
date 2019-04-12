@@ -51,11 +51,28 @@
                                 <v-divider></v-divider>
                             </v-flex>
                             <v-flex xs12 class="text-xs-center text-sm-center text-md-center text-lg-center">
-                                <v-text-field placeholder="Select Image" @click='pickFile' v-model='newImageItem.imageName' prepend-icon='attach_file'></v-text-field>
+                                <v-text-field placeholder="Select Image" @click='pickImage' v-model='newImageItem.imageName' prepend-icon='attach_file'></v-text-field>
                                 <input type="file"
                                        style="display: none"
                                        ref="image"
                                        accept="image/*"
+                                       @change="onImagePicked">
+                            </v-flex>
+                            <v-flex xs12 text-xs-center>
+                                <v-btn color="success" @click="saveItem">
+                                    <v-icon>save</v-icon>
+                                </v-btn>
+                            </v-flex>
+                        </slot>
+                        <slot v-else-if="newItem.type === 'Вложение'">
+                            <v-flex xs12>
+                                <v-divider></v-divider>
+                            </v-flex>
+                            <v-flex xs12 class="text-xs-center text-sm-center text-md-center text-lg-center">
+                                <v-text-field placeholder="Select File" @click='pickFile' v-model='newFileItem.fileName' prepend-icon='attach_file'></v-text-field>
+                                <input type="file"
+                                       style="display: none"
+                                       ref="file"
                                        @change="onFilePicked">
                             </v-flex>
                             <v-flex xs12 text-xs-center>
@@ -86,24 +103,27 @@
                                 <slot v-if="item.type === 'MESSAGE'">
                                     <span style="display: block; word-wrap: break-word">{{item.messageText}}</span>
                                 </slot>
-                                <slot v-if="item.type === 'IMAGE'">
+                                <slot v-else-if="item.type === 'IMAGE'">
                                     <v-img width="100%" height="100%"
                                            :src="`data:image/png;base64,${item.image}`">
                                     </v-img>
                                 </slot>
+                                    <slot v-else-if="item.type === 'ATTACHMENT'" >
+                                        <div class="text-xs-center">
+                                            <v-btn outline color="indigo" @click="() => saveFile(item.file)">
+                                                Downolad file</v-btn>
+                                        </div>
+                                    </slot>
                                 </v-card-text>
                             </v-card>
                             </template>
                         </slot>
-
                         <slot v-else>
                         <v-flex xs12>
-
-                                <v-divider></v-divider>
-                                <v-card-text>
-                                    <span>Nothing to show here</span>
-                                </v-card-text>
-
+                            <v-divider></v-divider>
+                            <v-card-text>
+                                <span>Nothing to show here</span>
+                            </v-card-text>
                         </v-flex>
                         </slot>
                     </slot>
@@ -132,7 +152,9 @@
 <script>
     import { mapActions, mapGetters } from 'vuex'
     import BoardItem from 'domain/BoardItem'
+    import savingFileMixin from 'mixin/savingFileMixin'
     export default {
+        mixins: [ savingFileMixin ],
         data() {
             return {
                 newBoard: { name: '' },
@@ -145,6 +167,12 @@
                     imageName: '',
                     imageUrl: '',
                     imageFile: ''
+                },
+                newFileItem: {
+                    title: "File Upload",
+                    dialog: false,
+                    fileName: '',
+                    fileUrl: ''
                 }
             }
         },
@@ -182,11 +210,11 @@
                 this.addBoardItemAction(this.newItem)
                 this.newItem = new BoardItem()
             },
-            pickFile () {
+            pickImage () {
                 console.log(this.$refs)
                 this.$refs.image[0].click()
             },
-            onFilePicked (e) {
+            onImagePicked (e) {
                 const files = e.target.files
                 if(files[0] !== undefined) {
                     this.newImageItem.imageName = files[0].name
@@ -214,11 +242,36 @@
 //                        console.log(fileByteArray)
                         this.newItem.image = fileByteArray
                     })
-
-                } else {
+                }
+                else {
                     this.newImageItem.imageName = ''
                     this.newImageItem.imageFile = ''
                     this.newImageItem.imageUrl = ''
+                }
+            },
+            pickFile () {
+                console.log(this.$refs)
+                this.$refs.file[0].click()
+            },
+            onFilePicked (e) {
+                const files = e.target.files
+                if(files[0] !== undefined) {
+                    this.newFileItem.fileName = files[0].name
+                    const fr = new FileReader ()
+                    fr.readAsArrayBuffer(files[0])
+                    fr.addEventListener('load', () => {
+                        let fileByteArray = []
+                        let arrayBuffer = fr.result
+                        let array = new Uint8Array(arrayBuffer)
+                        for (let i = 0; i < array.length; i++) {
+                            fileByteArray.push(array[i]);
+                        }
+                        this.newItem.file = fileByteArray
+                        this.newItem.fileName = this.newFileItem.fileName
+                    })
+                } else {
+                    this.newFileItem.fileName = ''
+                    this.newFileItem.fileUrl = ''
                 }
             }
         }
