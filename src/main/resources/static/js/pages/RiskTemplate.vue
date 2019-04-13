@@ -127,7 +127,6 @@
                                     <v-text-field v-else
                                                   placeholder="Probability"
                                                   v-model="newRisk.probability"
-                                                  @input="updateRiskLevel"
                                                   :rules="isEvaluationStage ? validation.probability : []"
                                                   required>
                                     </v-text-field>
@@ -143,7 +142,6 @@
                                     <v-text-field v-else
                                                   placeholder="Impact"
                                                   v-model="newRisk.impact"
-                                                  @input="updateRiskLevel"
                                                   :rules="isEvaluationStage ? validation.impact: []"
                                                   required>
                                     </v-text-field>
@@ -478,13 +476,6 @@
                     users.push(user.email)
                 )
                 return users
-            },
-            updateRiskLevel() {
-                if (!this.newRisk.probability || !this.newRisk.impact) {
-                    return
-                }
-                this.newRisk.riskRate = this.newRisk.probability * this.newRisk.impact
-                this.newRisk.riskLevel = Risk.convertRiskRateToLevel(this.newRisk.riskRate)
             }
         },
         components: {

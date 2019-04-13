@@ -56,6 +56,7 @@
                 if (!Object.keys(this.validator).every(i => this.validator[i].validate())) { return; }
 
                 this.newRisk.responsible = this.newRisk.responsible.map(x => this.getUserByEmail(x))
+                this.updateRiskLevel()
                 this.newRisk.project = {
                     id: this.projectId
                 }
@@ -68,6 +69,16 @@
                 }
 
                 this.$router.push({ name: 'ProjectView', props: { projectId: this.projectId } })
+            },
+            updateRiskLevel() {
+                if (!this.newRisk.probability || !this.newRisk.impact) {
+                    return
+                }
+                this.newRisk.probability = parseFloat(this.newRisk.probability).toFixed(1)
+                this.newRisk.impact = parseFloat(this.newRisk.impact).toFixed(1)
+                let riskRate = this.newRisk.probability * this.newRisk.impact
+                this.newRisk.riskRate = parseFloat(riskRate).toFixed(2)
+                this.newRisk.riskLevel = Risk.convertRiskRateToLevel(this.newRisk.riskRate)
             }
         },
         components: {
