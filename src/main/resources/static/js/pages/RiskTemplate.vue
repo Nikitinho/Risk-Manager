@@ -1,5 +1,10 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <v-container v-if="validation" fluid>
+        <v-card class="py-2 px-2 mb-1">
+            <v-card-title>
+                <span class="headline font-weight-light">{{ newRisk.text || 'Title' }}</span>
+            </v-card-title>
+        </v-card>
         <v-stepper v-model="currentStepper">
             <v-stepper-header>
                 <template v-for="stage in stages">

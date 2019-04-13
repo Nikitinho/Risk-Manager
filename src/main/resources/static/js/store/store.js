@@ -231,7 +231,6 @@ export default new Vuex.Store({
             await boarditemsApi.add(item)
         },
         async addBoardItemRefresh({commit, state}, item) {
-            console.log('smthing_here')
             const result = await boarditemsApi.get(item.id)
             const data = await result.json()
             commit('addBoardItemMutation', data)

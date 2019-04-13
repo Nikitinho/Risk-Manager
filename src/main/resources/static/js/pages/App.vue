@@ -51,24 +51,24 @@
         <v-footer height="auto" style="width: 100%">
             <v-card class="text-xs-center" dark color="#455A64" width="100%">
 
-                <v-card-text>
-                    <v-btn class="mx-3"
-                           large icon
-                           :href="icons.github.link">
-                        <v-avatar>
-                            <v-img style="height: 100%;" :src="icons.github.img" />
-                        </v-avatar>
-                    </v-btn>
-                    <v-btn class="mx-3"
-                           large icon
-                           :href="icons.tg.link">
-                        <v-avatar>
-                            <v-img style="height: 100%;" :src="icons.tg.img" />
-                        </v-avatar>
-                    </v-btn>
-                </v-card-text>
+                <!--<v-card-text>-->
+                    <!--<v-btn class="mx-3"-->
+                           <!--large icon-->
+                           <!--:href="icons.github.link">-->
+                        <!--<v-avatar>-->
+                            <!--<v-img style="height: 100%;" :src="icons.github.img" />-->
+                        <!--</v-avatar>-->
+                    <!--</v-btn>-->
+                    <!--<v-btn class="mx-3"-->
+                           <!--large icon-->
+                           <!--:href="icons.tg.link">-->
+                        <!--<v-avatar>-->
+                            <!--<v-img style="height: 100%;" :src="icons.tg.img" />-->
+                        <!--</v-avatar>-->
+                    <!--</v-btn>-->
+                <!--</v-card-text>-->
 
-                <v-divider></v-divider>
+                <!--<v-divider></v-divider>-->
 
                 <v-card-text>
                     &copy;2019 — <strong>Nikitinho</strong>
