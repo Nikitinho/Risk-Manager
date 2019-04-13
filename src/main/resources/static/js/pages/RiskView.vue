@@ -11,30 +11,6 @@
                 >
                     <template v-slot:activator="{ on }">
                         <v-btn
-                                color="primary"
-                                dark
-                                v-on="on"
-                        >
-                            Change status
-                        </v-btn>
-                    </template>
-
-                    <v-list>
-                        <v-list-tile
-                                v-for="status in riskStatuses"
-                                :key="status"
-                                @click="() => changeStatus(status)">
-                            <v-list-tile-title>{{ status }}</v-list-tile-title>
-                        </v-list-tile>
-                    </v-list>
-                </v-menu>
-                <v-menu
-                        bottom
-                        origin="center center"
-                        transition="scale-transition"
-                >
-                    <template v-slot:activator="{ on }">
-                        <v-btn
                                 color="warning"
                                 dark
                                 v-on="on"
@@ -127,17 +103,6 @@
                 } else if (DocumentType === 'XML') {
                     this.saveXML(risk)
                 }
-            },
-            async changeStatus(status) {
-                let newRisk = new Risk(this.risk)
-                newRisk.status = status
-                newRisk.responsible = newRisk.responsible.map(x => this.getUserByEmail(x))
-                newRisk.project = {
-                    id: (Number)(this.projectId)
-                }
-                newRisk["id"] = this.riskId
-                await this.updateRiskAction(newRisk)
-                this.$router.go()
             }
         },
         components: {

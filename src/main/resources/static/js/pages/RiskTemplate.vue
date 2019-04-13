@@ -420,7 +420,6 @@
                 } else {
                     this.newRisk = new Risk()
                     this.newRisk.responsible = []
-                    this.newRisk.responsible.push(this.getProfile.email)
                 }
             } else {
                 this.newRisk = new Risk(this.risk)
