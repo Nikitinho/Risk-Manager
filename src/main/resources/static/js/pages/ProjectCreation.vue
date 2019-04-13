@@ -105,6 +105,22 @@
                         <v-flex xs12>
                             <v-divider></v-divider>
                         </v-flex>
+                        <v-flex xs4>
+                            <v-subheader>Others</v-subheader>
+                        </v-flex>
+                        <v-flex xs8>
+                            <v-select chips
+                                      v-model="newProject.others"
+                                      :items="users"
+                                      placeholder="Others"
+                                      :rules="validation.others"
+                                      required
+                                      multiple>
+                            </v-select>
+                        </v-flex>
+                        <v-flex xs12>
+                            <v-divider></v-divider>
+                        </v-flex>
                         <v-flex xs12 slot="footer-buttons">
                             <v-btn color="success"
                                    @click="save">
@@ -153,6 +169,7 @@
                 this.newProject.analytics = this.newProject.analytics.map(x => this.getUserByEmail(x))
                 this.newProject.developers = this.newProject.developers.map(x => this.getUserByEmail(x))
                 this.newProject.testers = this.newProject.testers.map(x => this.getUserByEmail(x))
+                this.newProject.others = this.newProject.others.map(x => this.getUserByEmail(x))
 
                 this.newProject["id"] = this.id
                 await this.addProjectAction(this.newProject)

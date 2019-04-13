@@ -12,5 +12,7 @@ export default {
     developers: [
     ],
     testers: [
+    ],
+    others: [
     ]
 }

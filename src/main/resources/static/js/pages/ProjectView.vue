@@ -155,22 +155,46 @@
                         </v-btn>
                     </v-card-title>
                     <v-list v-if="isTeamShown">
-                        <template v-for="user in project.managers" :v-key="user.id">
-
+                        <template v-for="role in roles">
                             <v-divider></v-divider>
 
-                            <v-list-tile avatar
-                                         @click="() => showProfile(user.id)">
-                                <v-list-tile-avatar v-if="user.userpic">
-                                    <v-img class="elevation-6"
-                                           :src="user.userpic">
-                                    </v-img>
+                            <v-list-tile style="background: #F5F5F5" @click="() => role.isShown = !role.isShown">
+                                <v-list-tile-avatar>
+                                    <v-icon>person</v-icon>
                                 </v-list-tile-avatar>
-
                                 <v-list-tile-content>
-                                    <v-list-tile-title v-html="user.name"></v-list-tile-title>
+                                    <v-list-tile-title v-html="role.label"></v-list-tile-title>
                                 </v-list-tile-content>
                             </v-list-tile>
+
+                            <slot v-if="role.isShown">
+
+                                <template v-if="!project[role.value] || project[role.value].length === 0">
+                                    <v-divider></v-divider>
+                                    <v-list-tile>
+                                        <v-list-tile-content>
+                                            <v-list-tile-title v-html="`Nothing to show here`"></v-list-tile-title>
+                                        </v-list-tile-content>
+                                    </v-list-tile>
+                                </template>
+                                <template v-else
+                                          v-for="user in project[role.value]">
+                                    <v-divider></v-divider>
+
+                                    <v-list-tile avatar
+                                                 @click="() => showProfile(user.id)">
+                                        <v-list-tile-avatar v-if="user.userpic">
+                                            <v-img class="elevation-6"
+                                                   :src="user.userpic">
+                                            </v-img>
+                                        </v-list-tile-avatar>
+
+                                        <v-list-tile-content>
+                                            <v-list-tile-title v-html="user.name"></v-list-tile-title>
+                                        </v-list-tile-content>
+                                    </v-list-tile>
+                                </template>
+                            </slot>
                         </template>
                     </v-list>
                 </v-card>
@@ -311,6 +335,13 @@
                     {label: 'Средний', value: 'MEDIUM'},
                     {label: 'Высокий', value: 'HIGH'},
                     {label: 'Уровень', value: null}
+                ],
+                roles: [
+                    {label: 'Менеджеры', value: 'managers', isShown: false},
+                    {label: 'Аналитики', value: 'analytics', isShown: false},
+                    {label: 'Разработчики', value: 'developers', isShown: false},
+                    {label: 'Тестировщики', value: 'testers', isShown: false},
+                    {label: 'Роли не установлены', value: 'others', isShown: false}
                 ],
                 chosenLevel: {label: 'Уровень', value: null},
                 searchField: '',
