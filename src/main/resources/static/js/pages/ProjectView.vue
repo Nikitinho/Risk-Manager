@@ -255,7 +255,6 @@
                             <v-card-text>
                                 <v-slider
                                         persistent-hint
-                                        always-dirty
                                         thumb-label="always"
                                         v-model="highRiskValue"
                                 ></v-slider>
@@ -342,6 +341,11 @@
         },
         created () {
             this.project = this.getProjectById((Number)(this.projectId))
+            if (this.project.risks && this.project.risks.length > 0)  {
+                this.project.risks.sort((a, b) => -(a.riskRate - b.riskRate))
+            } else {
+                this.project.risks = []
+            }
         },
         methods: {
             createRisk() {
