@@ -76,7 +76,7 @@
                         </template>
                     </v-toolbar>
                     <v-list>
-                        <template v-for="category in categories.filter(x => x.value)">
+                        <template v-for="category in categories">
                             <v-divider></v-divider>
 
                             <v-list-tile style="background: #F5F5F5" @click="() => category.isShown = !category.isShown">
@@ -88,7 +88,18 @@
                             </v-list-tile-content>
                             </v-list-tile>
 
-                        <template v-if="category.isShown"
+                            <slot v-if="category.isShown">
+
+                            <template v-if="filteredRisksList.filter(x => x.category === category.value).length === 0">
+                                <v-divider></v-divider>
+                                <v-list-tile>
+                                <v-list-tile-content>
+                                    <v-list-tile-title v-html="`Nothing to show here`"></v-list-tile-title>
+                                </v-list-tile-content>
+                                </v-list-tile>
+                            </template>
+
+                        <template v-else
                                   v-for="risk in filteredRisksList.filter(x => x.category === category.value)"
                                   :v-key="risk.id">
 
@@ -128,6 +139,7 @@
 
                             </v-list-tile>
                         </template>
+                            </slot>
                         </template>
                     </v-list>
                 </v-card>
@@ -242,6 +254,9 @@
                             <doughnut-chart v-else :data="project.risks"></doughnut-chart>
                             <v-card-text>
                                 <v-slider
+                                        persistent-hint
+                                        always-dirty
+                                        thumb-label="always"
                                         v-model="highRiskValue"
                                 ></v-slider>
                             </v-card-text>
@@ -283,23 +298,22 @@
                     {label: 'Риски персонала', value: 'PERSONNEL', isShown: false},
                     {label: 'Коммуникационные риски', value: 'COMMUNICATION', isShown: false},
                     {label: 'Риски поставщиков', value: 'VENDOR', isShown: false},
-                    {label: 'Риски несоответствия качеству', value: 'LACK_OF_QUALITY', isShown: false},
-                    {label: 'Выберите категорию', value: null, isShown: false}
+                    {label: 'Риски несоответствия качеству', value: 'LACK_OF_QUALITY', isShown: false}
                 ],
                 statuses: [
                     {label: 'Новый', value: 'CREATED'},
                     {label: 'Открыт', value: 'OPENED'},
                     {label: 'Закрыт', value: 'CLOSED'},
-                    {label: 'Выберите статус', value: null}
+                    {label: 'Статус', value: null}
                 ],
-                chosenStatus: {label: 'Выберите статус', value: null},
+                chosenStatus: {label: 'Статус', value: null},
                 levels: [
                     {label: 'Низкий', value: 'LOW'},
                     {label: 'Средний', value: 'MEDIUM'},
                     {label: 'Высокий', value: 'HIGH'},
-                    {label: 'Выберите уровень', value: null}
+                    {label: 'Уровень', value: null}
                 ],
-                chosenLevel: {label: 'Выберите уровень', value: null},
+                chosenLevel: {label: 'Уровень', value: null},
                 searchField: '',
                 highRiskValue: 68
             }
