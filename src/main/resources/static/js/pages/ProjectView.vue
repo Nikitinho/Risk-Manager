@@ -94,7 +94,22 @@
                         </template>
                     </v-toolbar>
                     <v-list>
-                        <template v-for="risk in filteredRisksList" :v-key="risk.id">
+
+                        <template v-for="category in categories.filter(x => x.value)">
+                            <v-divider></v-divider>
+
+                            <v-list-tile @click="() => category.isShown = !category.isShown">
+                                <v-list-tile-avatar>
+                                    <v-icon>list</v-icon>
+                                </v-list-tile-avatar>
+                            <v-list-tile-content>
+                                <v-list-tile-title v-html="category.label"></v-list-tile-title>
+                            </v-list-tile-content>
+                            </v-list-tile>
+
+                        <template v-if="category.isShown"
+                                  v-for="risk in filteredRisksList.filter(x => x.category === category.value)"
+                                  :v-key="risk.id">
 
                             <v-divider></v-divider>
 
@@ -131,6 +146,7 @@
                                 </v-list-tile-avatar>
 
                             </v-list-tile>
+                        </template>
                         </template>
                     </v-list>
                 </v-card>
@@ -213,14 +229,14 @@
                 maxRiskUsersAmount: 3,
                 showFilters: false,
                 categories: [
-                    {label: 'Риск интеграции', value: 'INTEGRATION'},
-                    {label: 'Финансовые риски', value: 'FINANCIAL'},
-                    {label: 'Временные риски', value: 'TEMPORARY'},
-                    {label: 'Риски персонала', value: 'PERSONNEL'},
-                    {label: 'Коммуникационные риски', value: 'COMMUNICATION'},
-                    {label: 'Риски поставщиков', value: 'VENDOR'},
-                    {label: 'Риски несоответствия качеству', value: 'LACK_OF_QUALITY'},
-                    {label: 'Выберите категорию', value: null}
+                    {label: 'Риск интеграции', value: 'INTEGRATION', isShown: false},
+                    {label: 'Финансовые риски', value: 'FINANCIAL', isShown: false},
+                    {label: 'Временные риски', value: 'TEMPORARY', isShown: false},
+                    {label: 'Риски персонала', value: 'PERSONNEL', isShown: false},
+                    {label: 'Коммуникационные риски', value: 'COMMUNICATION', isShown: false},
+                    {label: 'Риски поставщиков', value: 'VENDOR', isShown: false},
+                    {label: 'Риски несоответствия качеству', value: 'LACK_OF_QUALITY', isShown: false},
+                    {label: 'Выберите категорию', value: null, isShown: false}
                 ],
                 chosenCategory: {label: 'Выберите категорию', value: null},
                 statuses: [

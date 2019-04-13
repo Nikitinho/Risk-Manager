@@ -45,7 +45,6 @@ public class NotificationService {
         File file;
         try {
             file = ResourceUtils.getFile("classpath:templates/email.html");
-            System.out.print(file.exists());
             result = new String(Files.readAllBytes(file.toPath()));
         } catch (Exception e) {
             e.printStackTrace();

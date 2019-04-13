@@ -147,7 +147,9 @@ export default class Risk {
     }
 
     static convertRiskRateToColor(level) {
-        if (level >= 0.0 && level < 0.34) {
+        if (level === 0.0) {
+            return 'grey'
+        } else if (level > 0.0 && level < 0.34) {
             return 'green'
         } else if (level >= 0.34 && level < 0.68) {
             return 'yellow'
