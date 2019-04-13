@@ -40,24 +40,6 @@
                                     <v-menu>
                                         <template v-slot:activator="{ on }">
                                             <v-toolbar-title v-on="on">
-                                                <span style="font-size: 75%; white-space:pre-wrap;">{{ chosenCategory.label }}</span>
-                                            </v-toolbar-title>
-                                        </template>
-
-                                        <v-list>
-                                            <v-list-tile
-                                                    v-for="(item, index) in categories"
-                                                    @click="() => chosenCategory = item">
-                                                <v-list-tile-title>{{ item.label }}</v-list-tile-title>
-                                            </v-list-tile>
-                                        </v-list>
-                                    </v-menu>
-                                </v-tab>
-
-                                <v-tab>
-                                    <v-menu>
-                                        <template v-slot:activator="{ on }">
-                                            <v-toolbar-title v-on="on">
                                                 <span style="font-size: 75%; white-space:pre-wrap;">{{ chosenStatus.label }}</span>
                                             </v-toolbar-title>
                                         </template>
@@ -97,7 +79,7 @@
                         <template v-for="category in categories.filter(x => x.value)">
                             <v-divider></v-divider>
 
-                            <v-list-tile @click="() => category.isShown = !category.isShown">
+                            <v-list-tile style="background: #F5F5F5" @click="() => category.isShown = !category.isShown">
                                 <v-list-tile-avatar>
                                     <v-icon>list</v-icon>
                                 </v-list-tile-avatar>
@@ -253,8 +235,16 @@
                     <v-divider></v-divider>
                     <slot v-if="isGraphShown">
                         <slot v-if="project.risks && project.risks.length > 0">
-                            <bubble-chart v-if="isBubbleChartShown" :data="project.risks"></bubble-chart>
+                            <bubble-chart v-if="isBubbleChartShown"
+                                          :data="project.risks"
+                                          :highRiskValue="highRiskValue/100.00">
+                            </bubble-chart>
                             <doughnut-chart v-else :data="project.risks"></doughnut-chart>
+                            <v-card-text>
+                                <v-slider
+                                        v-model="highRiskValue"
+                                ></v-slider>
+                            </v-card-text>
                         </slot>
                         <slot v-else>
                             <v-card-text>
@@ -296,7 +286,6 @@
                     {label: 'Риски несоответствия качеству', value: 'LACK_OF_QUALITY', isShown: false},
                     {label: 'Выберите категорию', value: null, isShown: false}
                 ],
-                chosenCategory: {label: 'Выберите категорию', value: null},
                 statuses: [
                     {label: 'Новый', value: 'CREATED'},
                     {label: 'Открыт', value: 'OPENED'},
@@ -311,7 +300,8 @@
                     {label: 'Выберите уровень', value: null}
                 ],
                 chosenLevel: {label: 'Выберите уровень', value: null},
-                searchField: ''
+                searchField: '',
+                highRiskValue: 68
             }
         },
         computed: {
@@ -320,9 +310,6 @@
                 let list = this.project.risks.sort((a, b) => -(a.riskRate - b.riskRate))
                 if (this.searchField.length > 0) {
                     list = list.filter(risk => risk.text.toLowerCase().includes(this.searchField.toLowerCase()))
-                }
-                if (this.chosenCategory.value !== null) {
-                    list = list.filter(risk => risk.category === this.chosenCategory.value)
                 }
                 if (this.chosenLevel.value !== null) {
                     list = list.filter(risk => risk.riskLevel === this.chosenLevel.value)
@@ -333,8 +320,9 @@
                 return list
             },
             top10RisksList() {
-                if (this.project.risks && this.project.risks.length > 0)
+                if (this.project.risks && this.project.risks.length > 0) {
                     return this.project.risks.slice(0, 10)
+                }
                 return []
             }
         },

@@ -68,6 +68,31 @@
         created () {
             this.addData(this.data)
         },
+        watch: {
+            highRiskValue: {
+                // the callback will be called immediately after the start of the observation
+                immediate: true,
+                handler (val, oldVal) {
+                    if (this.$data._chart) {
+                        console.log('chart is defined')
+                        this.$data._chart.destroy()
+                        let newData = []
+                        let line = this.datacollection.datasets.find(x => x.type === 'line')
+                        for(let i = 0.0; i <= 1.0; i += 0.01) {
+                            let newDot = {
+                                x: i,
+                                y: val/i
+                            }
+                            newData.push(newDot)
+                        }
+                        this.datacollection.datasets.find(x => x.type === 'line').data = newData
+                        this.renderChart(this.datacollection, this.options)
+                    } else {
+                        console.log('chart is not defined')
+                    }
+                }
+            }
+        },
         mounted () {
             //renderChart function renders the chart with the datacollection and options object.
             this.renderChart(this.datacollection, this.options)

@@ -12,7 +12,7 @@ import Discussion from 'pages/Discussion.vue'
 Vue.use(VueRouter)
 
 const routes = [
-    { path: '/', name: 'ProjectsList', component: ProjectsList},
+    { path: '/', name: 'ProjectsList', component: ProjectsList },
     { path: '/newProject', name: 'ProjectCreation', component: ProjectCreation },
     { path: '/projects/:projectId', name: 'ProjectView', component: ProjectView, props: true },
     { path: '/projects/:projectId/newRisk', name: 'RiskCreation', component: RiskCreation, props: true },
