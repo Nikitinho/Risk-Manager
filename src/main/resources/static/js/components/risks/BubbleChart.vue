@@ -6,12 +6,12 @@
     //Exporting this so it can be used in other components
     export default {
         extends: Bubble,
-        props: ['data'],
+        props: ['data', 'highRiskValue'],
         data () {
             return {
                 datacollection: {
                     //Data to be represented on x-axis
-                    labels: 'Threats',
+                    label: 'Threats',
                     datasets: [
                     ]
                 },
@@ -58,7 +58,7 @@
                         }
                     },
                     legend: {
-                        display: false
+                        display: true
                     },
                     responsive: true,
                     maintainAspectRatio: false
@@ -78,6 +78,7 @@
                     if (!element.probability || !element.impact) { continue; }
                     this.addNewBubble(element)
                 }
+                this.drawCurvedLine(this.highRiskValue ? this.highRiskValue : 0.68)
             },
             addNewBubble(element) {
                 let newBubble = {
@@ -90,12 +91,38 @@
                         {
                             x: element.probability,
                             y: element.impact,
-                            r: 25
+                            r: 10
                         }
                     ]
                 }
                 this.datacollection.datasets.push(newBubble)
+            },
+            drawCurvedLine(highRiskValue) {
+                let curvedLine = {
+                    data: [
+                    ],
+                    label: 'Curved line',
+                    borderColor: 'black',
+                    borderWidth: 1,
+                    pointBackgroundColor: '#000',
+                    pointBorderColor: '#000',
+                    pointRadius: 0,
+                    pointHoverRadius: 0,
+                    fill: false,
+                    showLine: true,
+                    type: 'line',
+                    cubicInterpolationMode: 'monotone'
+                }
+                for(let i = 0.0; i <= 1.0; i += 0.01) {
+                    let newDot = {
+                        x: i,
+                        y: highRiskValue/i
+                    }
+                    curvedLine.data.push(newDot)
+                }
+                this.datacollection.datasets.push(curvedLine)
             }
+
         }
     }
 </script>

@@ -147,21 +147,21 @@ export default class Risk {
     }
 
     static convertRiskRateToColor(level) {
-        if (level >= 0 && level < 34) {
+        if (level >= 0.0 && level < 0.34) {
             return 'green'
-        } else if (level >= 34 && level < 68) {
+        } else if (level >= 0.34 && level < 0.68) {
             return 'yellow'
-        } else if (level >= 68 && level <= 100) {
+        } else if (level >= 0.68 && level <= 1.0) {
             return 'red'
         }
     }
 
     static convertRiskRateToLevel(rate) {
-        if (rate >= 0 && rate < 34) {
+        if (rate >= 0.0 && rate < 0.34) {
             return 'Низкий'
-        } else if (rate >= 34 && rate < 68) {
+        } else if (rate >= 0.34 && rate < 0.68) {
             return 'Средний'
-        } else if (rate >= 68 && rate <= 100) {
+        } else if (rate >= 0.68 && rate <= 1.0) {
             return 'Высокий'
         }
     }
