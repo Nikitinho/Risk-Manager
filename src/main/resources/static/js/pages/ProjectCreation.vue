@@ -42,14 +42,62 @@
                             <v-divider></v-divider>
                         </v-flex>
                         <v-flex xs4>
-                            <v-subheader>Responsible people</v-subheader>
+                            <v-subheader>Managers</v-subheader>
                         </v-flex>
                         <v-flex xs8>
                             <v-select chips
-                                      v-model="newProject.responsible"
-                                      :items="responsibleUsers"
-                                      placeholder="Responsible people"
-                                      :rules="validation.responsible"
+                                      v-model="newProject.managers"
+                                      :items="users"
+                                      placeholder="Managers"
+                                      :rules="validation.managers"
+                                      required
+                                      multiple>
+                            </v-select>
+                        </v-flex>
+                        <v-flex xs12>
+                            <v-divider></v-divider>
+                        </v-flex>
+                        <v-flex xs4>
+                            <v-subheader>Analytics</v-subheader>
+                        </v-flex>
+                        <v-flex xs8>
+                            <v-select chips
+                                      v-model="newProject.analytics"
+                                      :items="users"
+                                      placeholder="Analytics"
+                                      :rules="validation.analytics"
+                                      required
+                                      multiple>
+                            </v-select>
+                        </v-flex>
+                        <v-flex xs12>
+                            <v-divider></v-divider>
+                        </v-flex>
+                        <v-flex xs4>
+                            <v-subheader>Developers</v-subheader>
+                        </v-flex>
+                        <v-flex xs8>
+                            <v-select chips
+                                      v-model="newProject.developers"
+                                      :items="users"
+                                      placeholder="Developers"
+                                      :rules="validation.developers"
+                                      required
+                                      multiple>
+                            </v-select>
+                        </v-flex>
+                        <v-flex xs12>
+                            <v-divider></v-divider>
+                        </v-flex>
+                        <v-flex xs4>
+                            <v-subheader>Testers</v-subheader>
+                        </v-flex>
+                        <v-flex xs8>
+                            <v-select chips
+                                      v-model="newProject.testers"
+                                      :items="users"
+                                      placeholder="Testers"
+                                      :rules="validation.testers"
                                       required
                                       multiple>
                             </v-select>
@@ -85,7 +133,7 @@
         },
         computed: {
             ...mapGetters(['activeUsers', 'getUserByEmail', 'getProjectById', 'getProfile']),
-            responsibleUsers() {
+            users() {
                 let users = []
                 Array.from(this.activeUsers).forEach(user =>
                     users.push(user.email)
@@ -99,16 +147,12 @@
         },
         methods: {
             ...mapActions(['addProjectAction', 'updateProjectAction', 'removeProjectAction']),
-            getResponsibleNames(people) {
-                let users = []
-                Array.from(people).forEach(user =>
-                    users.push(user.email)
-                )
-                return users
-            },
             async save() {
                 if (!this.$refs.form.validate()) { return; }
-                this.newProject.responsible = this.newProject.responsible.map(x => this.getUserByEmail(x))
+                this.newProject.managers = this.newProject.managers.map(x => this.getUserByEmail(x))
+                this.newProject.analytics = this.newProject.analytics.map(x => this.getUserByEmail(x))
+                this.newProject.developers = this.newProject.developers.map(x => this.getUserByEmail(x))
+                this.newProject.testers = this.newProject.testers.map(x => this.getUserByEmail(x))
 
                 this.newProject["id"] = this.id
                 await this.addProjectAction(this.newProject)

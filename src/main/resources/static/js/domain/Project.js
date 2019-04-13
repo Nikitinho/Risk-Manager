@@ -5,13 +5,19 @@ export default class Project {
             this.name = project.name
             this.creationDate = project.creationDate
             this.description = project.description
-            this.responsible = project.responsible
+            this.managers = project.managers
+            this.analytics = project.analytics
+            this.developers = project.developers
+            this.testers = project.testers
         } else {
             this.id = ''
             this.name = ''
             this.creationDate = ''
             this.description = ''
-            this.responsible = []
+            this.managers = []
+            this.analytics = []
+            this.developers = []
+            this.testers = []
         }
     }
 }

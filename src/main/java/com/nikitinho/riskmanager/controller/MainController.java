@@ -49,8 +49,9 @@ public class MainController {
             data.put("strategies", Stream.of(RiskActionStrategyType.values()).map(RiskActionStrategyType::toString)
                     .toArray());
             data.put("boarditems", Stream.of(BoardItemType.values()).map(BoardItemType::toString).toArray());
-            data.put("projects", projectRepo.findAll().stream().filter(project -> project.getResponsible().stream()
-                    .anyMatch(usr -> usr.getId().equals(user.getId()))).toArray());
+//            data.put("projects", projectRepo.findAll().stream().filter(project -> project.getResponsible().stream()
+//                    .anyMatch(usr -> usr.getId().equals(user.getId()))).toArray());
+            data.put("projects", projectRepo.findAll());
 
             // Only load risks where the user is one of responsible people
 //            Arrays.stream(riskRepo.findAll().stream().filter(risk -> risk.getResponsible().stream().anyMatch(usr ->

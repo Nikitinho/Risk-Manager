@@ -155,7 +155,7 @@
                         </v-btn>
                     </v-card-title>
                     <v-list v-if="isTeamShown">
-                        <template v-for="user in project.responsible" :v-key="user.id">
+                        <template v-for="user in project.managers" :v-key="user.id">
 
                             <v-divider></v-divider>
 

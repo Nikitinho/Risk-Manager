@@ -47,8 +47,36 @@ public class Project {
 
     @JsonView(Views.FullProject.class)
     @ManyToMany
-    @JoinTable(name = "project_user",
+    @JoinTable(name = "project_manager",
             joinColumns = {@JoinColumn(name = "project_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")})
-    private List<User> responsible;
+    private List<User> managers;
+
+    @JsonView(Views.FullProject.class)
+    @ManyToMany
+    @JoinTable(name = "project_analytic",
+            joinColumns = {@JoinColumn(name = "project_id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id")})
+    private List<User> analytics;
+
+    @JsonView(Views.FullProject.class)
+    @ManyToMany
+    @JoinTable(name = "project_developer",
+            joinColumns = {@JoinColumn(name = "project_id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id")})
+    private List<User> developers;
+
+    @JsonView(Views.FullProject.class)
+    @ManyToMany
+    @JoinTable(name = "project_tester",
+            joinColumns = {@JoinColumn(name = "project_id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id")})
+    private List<User> testers;
+
+    @JsonView(Views.FullProject.class)
+    @ManyToMany
+    @JoinTable(name = "project_others",
+            joinColumns = {@JoinColumn(name = "project_id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id")})
+    private List<User> others;
 }

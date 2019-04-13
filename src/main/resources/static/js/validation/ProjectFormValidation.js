@@ -5,7 +5,12 @@ export default {
     description: [
         v => !!v || 'Description is required'
     ],
-    responsible: [
-        v => (!!v && v.length > 0) || 'Responsible users are required'
+    managers: [
+    ],
+    analytics: [
+    ],
+    developers: [
+    ],
+    testers: [
     ]
 }
