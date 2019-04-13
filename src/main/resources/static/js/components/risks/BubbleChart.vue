@@ -51,7 +51,7 @@
                         callbacks: {
                             label(tooltipItem, data) {
                                 const label = data.datasets[tooltipItem.datasetIndex].label
-                                const value = Number(tooltipItem.yLabel) * Number(tooltipItem.xLabel)
+                                const value = parseFloat(Number(tooltipItem.yLabel) * Number(tooltipItem.xLabel)).toFixed(2)
 
                                 return `${label} ${value}`
                             }
@@ -83,7 +83,7 @@
             addNewBubble(element) {
                 let newBubble = {
                     label: element.text,
-                    backgroundColor: Risk.convertRiskRateToColor(element.probability * element.impact),
+                    backgroundColor: Risk.convertRiskRateToColor(element.riskRate),
                     pointBackgroundColor: 'white',
                     borderWidth: 2,
                     pointBorderColor: '#000000',

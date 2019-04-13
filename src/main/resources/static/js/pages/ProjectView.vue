@@ -94,7 +94,6 @@
                         </template>
                     </v-toolbar>
                     <v-list>
-
                         <template v-for="category in categories.filter(x => x.value)">
                             <v-divider></v-divider>
 
@@ -181,6 +180,64 @@
                         </template>
                     </v-list>
                 </v-card>
+                <v-card class="mb-1">
+                    <v-card-title>
+                        <span class="headline font-weight-light">Top 10 risks</span>
+                        <v-spacer></v-spacer>
+                        <v-btn color="success"
+                               @click="() => { this.isTopShown = !this.isTopShown }">
+                            {{ isTopShown ? 'Hide' : 'Show' }}
+                        </v-btn>
+                    </v-card-title>
+                    <slot v-if="isTopShown">
+                    <v-list v-if="top10RisksList && top10RisksList.length > 0">
+                            <template v-for="risk in top10RisksList"
+                                      :v-key="risk.id">
+                                <v-divider></v-divider>
+
+                                <v-list-tile avatar
+                                             @click="() => { showRisk(risk) }">
+                                    <v-list-tile-avatar>
+                                        <v-icon :color="getColor(risk.riskRate)">report</v-icon>
+                                    </v-list-tile-avatar>
+
+                                    <v-list-tile-content>
+                                        <v-list-tile-title v-html="risk.text"></v-list-tile-title>
+                                    </v-list-tile-content>
+
+                                    <v-spacer></v-spacer>
+
+                                    <div class="text-xs-center">
+                                        <v-chip>{{getRiskStatus(risk)}}</v-chip>
+                                    </div>
+
+                                    <v-divider vertical></v-divider>
+
+                                    <v-list-tile-avatar v-if="!risk.responsible || risk.responsible.length === 0">
+                                        <span class="cetered-text-span">?</span>
+                                    </v-list-tile-avatar>
+
+                                    <v-list-tile-avatar v-else v-for="user in getResponsible(risk)">
+                                        <v-img class="elevation-6"
+                                               :src="user.userpic">
+                                        </v-img>
+                                    </v-list-tile-avatar>
+
+                                    <v-list-tile-avatar v-if="getExtraRiskUsersAmount(risk) > 0">
+                                        <span class="cetered-text-span">+{{getExtraRiskUsersAmount(risk)}}</span>
+                                    </v-list-tile-avatar>
+
+                                </v-list-tile>
+                            </template>
+                    </v-list>
+                    <slot v-else>
+                        <v-divider></v-divider>
+                        <v-card-text>
+                            Nothing to show here
+                        </v-card-text>
+                    </slot>
+                    </slot>
+                </v-card>
                 <v-card>
                     <v-card-title>
                         <span class="headline font-weight-light">Graph</span>
@@ -226,6 +283,7 @@
                 isTeamShown: true,
                 isGraphShown: true,
                 isBubbleChartShown: true,
+                isTopShown: true,
                 maxRiskUsersAmount: 3,
                 showFilters: false,
                 categories: [
@@ -259,7 +317,7 @@
         computed: {
             ...mapGetters(['getProjectById']),
             filteredRisksList() {
-                let list = this.project.risks
+                let list = this.project.risks.sort((a, b) => -(a.riskRate - b.riskRate))
                 if (this.searchField.length > 0) {
                     list = list.filter(risk => risk.text.toLowerCase().includes(this.searchField.toLowerCase()))
                 }
@@ -273,6 +331,11 @@
                     list = list.filter(risk => risk.status === this.chosenStatus.value)
                 }
                 return list
+            },
+            top10RisksList() {
+                if (this.project.risks && this.project.risks.length > 0)
+                    return this.project.risks.slice(0, 10)
+                return []
             }
         },
         created () {
