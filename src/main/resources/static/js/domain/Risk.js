@@ -52,9 +52,9 @@ export default class Risk {
     static convertStatus(status) {
         switch (status) {
             case 'CREATED':
+                return 'Новый'
+            case 'OPENED':
                 return 'Открыт'
-            case 'IN_THE_WORK':
-                return 'В работе'
             case 'CLOSED':
                 return 'Закрыт'
             default:

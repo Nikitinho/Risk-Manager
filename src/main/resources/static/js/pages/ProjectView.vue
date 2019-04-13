@@ -224,8 +224,8 @@
                 ],
                 chosenCategory: {label: 'Выберите категорию', value: null},
                 statuses: [
-                    {label: 'Открыт', value: 'CREATED'},
-                    {label: 'В работе', value: 'IN_THE_WORK'},
+                    {label: 'Новый', value: 'CREATED'},
+                    {label: 'Открыт', value: 'OPENED'},
                     {label: 'Закрыт', value: 'CLOSED'},
                     {label: 'Выберите статус', value: null}
                 ],

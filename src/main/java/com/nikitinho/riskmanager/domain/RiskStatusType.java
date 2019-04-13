@@ -1,8 +1,8 @@
 package com.nikitinho.riskmanager.domain;
 
 public enum RiskStatusType {
-    CREATED("Открыт"),
-    IN_THE_WORK("В работе"),
+    CREATED("Новый"),
+    OPENED("Открыт"),
     CLOSED("Закрыт");
 
     private String description;

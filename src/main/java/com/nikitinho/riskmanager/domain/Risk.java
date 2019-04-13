@@ -76,7 +76,7 @@ public class Risk {
     private Double impact;
 
     @JsonView(Views.FullRisk.class)
-    private Integer riskRate;
+    private Double riskRate;
 
     @JsonView(Views.FullRisk.class)
     private RiskLevelType riskLevel;
