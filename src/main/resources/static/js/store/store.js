@@ -143,6 +143,9 @@ export default new Vuex.Store({
             }
         },
         updateUserRisksMutation(state, risks) {
+            while (this.state.profileRisks.length > 0) {
+                this.state.profileRisks.pop()
+            }
             risks.forEach(risk => this.state.profileRisks.push(risk))
         },
         removeBoardItemMutation(state, boardItem) {
