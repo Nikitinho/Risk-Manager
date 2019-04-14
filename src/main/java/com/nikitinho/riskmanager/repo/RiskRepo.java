@@ -9,4 +9,6 @@ import java.util.List;
 public interface RiskRepo extends JpaRepository<Risk, Long> {
     @EntityGraph(attributePaths = { "comments" })
     List<Risk> findAll();
+
+    List<Risk> findRiskByResponsibleId(String id);
 }

@@ -1,10 +1,7 @@
 package com.nikitinho.riskmanager.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.nikitinho.riskmanager.domain.Project;
-import com.nikitinho.riskmanager.domain.Risk;
-import com.nikitinho.riskmanager.domain.RiskStatusType;
-import com.nikitinho.riskmanager.domain.Views;
+import com.nikitinho.riskmanager.domain.*;
 import com.nikitinho.riskmanager.dto.EventType;
 import com.nikitinho.riskmanager.dto.ObjectType;
 import com.nikitinho.riskmanager.repo.RiskRepo;
@@ -15,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
 
@@ -61,6 +59,13 @@ public class RiskController {
         thread.start();
 
         return uploadedRisk;
+    }
+
+    @GetMapping("user-risks/{userId}")
+    public List<Risk> getUserRisks(
+            @PathVariable("userId") User user
+    ) {
+        return riskRepo.findRiskByResponsibleId(user.getId());
     }
 
     @PutMapping("{id}")

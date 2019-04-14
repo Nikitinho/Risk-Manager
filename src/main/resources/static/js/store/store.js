@@ -17,7 +17,8 @@ export default new Vuex.Store({
         strategies: frontendData.strategies,
         users: frontendData.users,
         boards: frontendData.boards,
-        boarditems: frontendData.boarditems
+        boarditems: frontendData.boarditems,
+        profileRisks: []
     },
     getters: {
         sortedProjects: state => (state.projects || []).sort((a, b) => -(a.id - b.id)),
@@ -39,7 +40,8 @@ export default new Vuex.Store({
         getProjectById: state => id => {
             return state.projects.find(project => project.id === id)
         },
-        getProfile: state => state.profile
+        getProfile: state => state.profile,
+        getProfileRisks: state => state.profileRisks
     },
     mutations: {
         addRiskMutation(state, risk) {
@@ -139,6 +141,9 @@ export default new Vuex.Store({
                 item.items.splice(bIndex, 1, boardItem)
                 state.boards.splice(index, 1, item)
             }
+        },
+        updateUserRisksMutation(state, risks) {
+            risks.forEach(risk => this.state.profileRisks.push(risk))
         },
         removeBoardItemMutation(state, boardItem) {
             let index = this.state.boards.findIndex(board => board.id === boardItem.board.id)
@@ -248,6 +253,11 @@ export default new Vuex.Store({
         },
         async removeBoardItemRefresh({commit, state}, item) {
             commit('removeBoardItemMutation', item)
+        },
+        async fetchUserRisks({commit}, userId) {
+            const result = await risksApi.getUserRisks(userId)
+            const data = await result.json()
+            commit('updateUserRisksMutation', data)
         }
     }
 })
