@@ -1,13 +1,16 @@
 <template>
-    <v-container text-xs-center>
-        <v-card class="my-2 py-2" max-width="100%" flat color="transparent">
-            <v-layout justify-space-around>
-            <v-flex :xs6="!$vuetify.breakpoint.xsOnly">
-                <v-layout row justify-space-between>
+    <v-container fluid>
+        <v-layout align-space-around justify-start wrap>
+            <v-flex :xs6="!$vuetify.breakpoint.mdAndDown" class="px-1 py-1">
+        <v-card class="mb-1 py-1 px-1">
+                <v-layout align-center justify-center row wrap>
                     <v-flex class="px-1" align-self-center>
-                        <v-img class="img-circle" :src="userProfile.userpic"></v-img>
+                        <v-img class="img-circle elevation-6"
+                               style="max-width: 200px; max-height: 200px"
+                               :src="userProfile.userpic">
+                        </v-img>
                     </v-flex>
-                    <v-flex align-self-center>
+                    <v-flex justify-start text-xs-center>
                         <v-layout class="px-1" column>
                             <v-divider></v-divider>
                             <v-flex>Name: {{ userProfile.name || 'Name is not provided' }}</v-flex>
@@ -23,17 +26,26 @@
                         </v-layout>
                     </v-flex>
                 </v-layout>
-            </v-flex>
-        </v-layout>
         </v-card>
-        <v-card class="my-2 py-2" max-width="100%" flat color="transparent">
+            </v-flex>
+            <v-flex :xs6="!$vuetify.breakpoint.mdAndDown" class="px-1 py-1">
+        <v-card class="mb-1">
+            <v-card-title>
+                <span class="headline font-weight-light">Top 10 risks</span>
+                <v-spacer></v-spacer>
+                <v-btn color="success"
+                       @click="() => { this.isTopShown = !this.isTopShown }">
+                    {{ isTopShown ? 'Hide' : 'Show' }}
+                </v-btn>
+            </v-card-title>
+            <slot v-if="isTopShown">
             <v-list v-if="getProfileRisks && getProfileRisks.length > 0">
-            <template v-for="risk in getProfileRisks"
+            <template v-for="risk in getProfileRisks.slice(0, 10)"
                       :v-key="risk.id">
                 <v-divider></v-divider>
 
                 <v-list-tile avatar
-                             @click="">
+                             @click="() => { showRisk(risk) }">
                     <v-list-tile-avatar>
                         <v-icon :color="getColor(risk.riskRate)">report</v-icon>
                     </v-list-tile-avatar>
@@ -67,7 +79,10 @@
                 </v-list-tile>
             </template>
             </v-list>
+            </slot>
         </v-card>
+            </v-flex>
+        </v-layout>
     </v-container>
 </template>
 
@@ -77,6 +92,11 @@
     export default {
         name: 'Profile',
         props: ['userId'],
+        data() {
+            return {
+                isTopShown: true
+            }
+        },
         computed: { 
             ...mapGetters(['getUserById', 'getProfileRisks']),
             userProfile() {
@@ -102,6 +122,9 @@
             },
             getExtraRiskUsersAmount(risk) {
                 return risk.responsible.length - this.getResponsible(risk).length
+            },
+            showRisk(risk) {
+                this.$router.push({ name: 'RiskView', params: { projectId: risk.project.id, riskId: risk.id } })
             }
         },
         created() {
