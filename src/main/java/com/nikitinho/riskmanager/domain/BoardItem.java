@@ -62,8 +62,4 @@ public class BoardItem {
     public void setType(BoardItemType type) {
         this.type = type;
     }
-
-    public void setType(String type) {
-        this.type = BoardItemType.fromString(type);
-    }
 }

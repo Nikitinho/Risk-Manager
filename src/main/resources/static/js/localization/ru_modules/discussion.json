@@ -1,0 +1,16 @@
+{
+  "boardItem": {
+    "typePlaceholder": "Тип сообщения",
+    "types": {
+      "message": "Текстовое сообщение",
+      "poll": "Опрос",
+      "image": "Изображение",
+      "attachment": "Вложение"
+    },
+    "placeholders": {
+      "message": "Сообщение",
+      "image": "Выберите изображение",
+      "attachment": "Выберите файл"
+    }
+  }
+}

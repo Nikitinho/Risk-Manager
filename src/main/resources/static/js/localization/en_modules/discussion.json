@@ -1,0 +1,16 @@
+{
+  "boardItem": {
+    "typePlaceholder": "Message Type",
+    "types": {
+      "message": "Text message",
+      "poll": "Poll",
+      "image": "Image",
+      "attachment": "Attachment"
+    },
+    "placeholders": {
+      "message": "Message",
+      "image": "Select image",
+      "attachment": "Select file"
+    }
+  }
+}

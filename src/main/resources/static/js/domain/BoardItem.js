@@ -8,7 +8,7 @@ export default class BoardItem {
             this.file = item.file
             this.fileName = item.fileName
             this.fileType = item.fileType
-            this.type = BoardItem.convertBoardItem(item.type)
+            this.type = item.type
         } else {
             this.id = ''
             this.creationDate = null
@@ -22,21 +22,6 @@ export default class BoardItem {
 
         if (boardId) {
             this.board = { id: boardId }
-        }
-    }
-
-    static convertBoardItem(item) {
-        switch (item) {
-            case 'MESSAGE':
-                return 'Текстовое сообщение'
-            case 'POLL':
-                return 'Опрос'
-            case 'IMAGE':
-                return 'Изображение'
-            case 'ATTACHMENT':
-                return 'Вложение'
-            default:
-                return null
         }
     }
 }

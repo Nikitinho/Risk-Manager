@@ -19,16 +19,22 @@
                         <v-flex xs12>
                             <v-select
                                     :items="boardItems"
-                                    placeholder="Message type"
+                                    :placeholder="$t('discussion.boardItem.typePlaceholder')"
                                     v-model="newItem.type">
+                                <template slot="item" slot-scope="data">
+                                    {{$t(`discussion.boardItem.types.${data.item.toLowerCase()}`)}}
+                                </template>
+                                <template slot="selection" slot-scope="data">
+                                    {{$t(`discussion.boardItem.types.${data.item.toLowerCase()}`)}}
+                                </template>
                             </v-select>
                         </v-flex>
-                        <slot v-if="newItem.type === 'Текстовое сообщение'">
+                        <slot v-if="newItem.type === 'MESSAGE'">
                             <v-flex xs12>
                                 <v-divider></v-divider>
                             </v-flex>
                             <v-flex xs12>
-                                <v-textarea placeholder="Message"
+                                <v-textarea :placeholder="$t('discussion.boardItem.placeholders.message')"
                                             v-model="newItem.messageText">
                                 </v-textarea>
                             </v-flex>
@@ -38,7 +44,7 @@
                             </v-btn>
                             </v-flex>
                         </slot>
-                        <slot v-else-if="newItem.type === 'Изображение'">
+                        <slot v-else-if="newItem.type === 'IMAGE'">
                             <slot v-if="newImageItem.imageUrl">
                             <v-flex xs12>
                                 <v-divider></v-divider>
@@ -51,7 +57,12 @@
                                 <v-divider></v-divider>
                             </v-flex>
                             <v-flex xs12 class="text-xs-center text-sm-center text-md-center text-lg-center">
-                                <v-text-field placeholder="Select Image" @click='pickImage' v-model='newImageItem.imageName' prepend-icon='attach_file'></v-text-field>
+                                <v-text-field
+                                        :placeholder="$t('discussion.boardItem.placeholders.image')"
+                                        @click='pickImage'
+                                        v-model='newImageItem.imageName'
+                                        prepend-icon='attach_file'>
+                                </v-text-field>
                                 <input type="file"
                                        style="display: none"
                                        ref="image"
@@ -64,12 +75,17 @@
                                 </v-btn>
                             </v-flex>
                         </slot>
-                        <slot v-else-if="newItem.type === 'Вложение'">
+                        <slot v-else-if="newItem.type === 'ATTACHMENT'">
                             <v-flex xs12>
                                 <v-divider></v-divider>
                             </v-flex>
                             <v-flex xs12 class="text-xs-center text-sm-center text-md-center text-lg-center">
-                                <v-text-field placeholder="Select File" @click='pickFile' v-model='newFileItem.fileName' prepend-icon='attach_file'></v-text-field>
+                                <v-text-field
+                                        :placeholder="$t('discussion.boardItem.placeholders.attachment')"
+                                        @click='pickFile'
+                                        v-model='newFileItem.fileName'
+                                        prepend-icon='attach_file'>
+                                </v-text-field>
                                 <input type="file"
                                        style="display: none"
                                        ref="file"
@@ -186,11 +202,9 @@
         watch: {
             getBoards(newValue, oldValue) {
                 if (newValue.length > oldValue.length) {
-                    console.log('value has increased')
                     const value = newValue[newValue.length - 1]
                     this.openBoards.push({id: value.id, isShown: false})
                 } else if (newValue.length < oldValue.length) {
-                    console.log('value has decreased')
                 }
             }
         },
