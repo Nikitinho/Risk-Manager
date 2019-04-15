@@ -1,4 +1,13 @@
 {
+  "fields": {
+    "name": "Project name",
+    "description": "Project description",
+    "managers": "Managers",
+    "analytics": "Analytics",
+    "developers": "Developers",
+    "testers": "Testers",
+    "others": "Roles are not defined"
+  },
   "risksList": {
     "title": "Risks List",
     "emptyField": "Nothing to show here"

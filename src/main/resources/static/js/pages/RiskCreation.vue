@@ -39,7 +39,6 @@
         },
         async created () {
             this.validation = require(`validation/${this.$i18n.locale}/RiskFormValidation`).default
-            console.log(this.validation)
             if (!this.isNewRisk) {
                 this.risk = this.getProjectById((Number)(this.projectId)).risks.find(x => x.id === this.riskId)
             } else {
