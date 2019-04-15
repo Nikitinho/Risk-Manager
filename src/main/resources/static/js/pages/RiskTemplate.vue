@@ -27,12 +27,12 @@
                                 lazy-validation>
                             <v-layout row wrap align-center>
                                 <v-flex xs4>
-                                    <v-subheader>Risk title</v-subheader>
+                                    <v-subheader>{{$t('risk.fields.title')}}</v-subheader>
                                 </v-flex>
                                 <v-flex xs8>
                                     <td v-if="readonly">{{ newRisk.text }}</td>
                                     <v-text-field v-else
-                                                  placeholder="Title"
+                                                  :placeholder="$t('risk.fields.title')"
                                                   v-model="newRisk.text"
                                                   :rules="validation.title"
                                                   required>
@@ -42,12 +42,12 @@
                                     <v-divider></v-divider>
                                 </v-flex>
                                 <v-flex xs4>
-                                    <v-subheader>Risk description</v-subheader>
+                                    <v-subheader>{{$t('risk.fields.description')}}</v-subheader>
                                 </v-flex>
                                 <v-flex xs8>
                                     <td v-if="readonly">{{ newRisk.description }}</td>
                                     <v-textarea v-else
-                                                placeholder="Description"
+                                                :placeholder="$t('risk.fields.description')"
                                                 v-model="newRisk.description"
                                                 :rules="validation.description"
                                                 required>
@@ -57,13 +57,13 @@
                                     <v-divider></v-divider>
                                 </v-flex>
                                 <v-flex xs4>
-                                    <v-subheader>Risk category</v-subheader>
+                                    <v-subheader>{{$t('risk.fields.category')}}</v-subheader>
                                 </v-flex>
                                 <v-flex xs8>
                                     <td v-if="readonly">{{ newRisk.category }}</td>
                                     <v-select v-else
                                               :items="riskCategories"
-                                              placeholder="Risk Category"
+                                              :placeholder="$t('risk.fields.category')"
                                               v-model="newRisk.category"
                                               :rules="validation.category"
                                               required>
@@ -73,12 +73,12 @@
                                     <v-divider></v-divider>
                                 </v-flex>
                                 <v-flex xs4>
-                                    <v-subheader>Risk causes</v-subheader>
+                                    <v-subheader>{{$t('risk.fields.causes')}}</v-subheader>
                                 </v-flex>
                                 <v-flex xs8>
                                     <td v-if="readonly">{{ newRisk.causes }}</td>
                                     <v-textarea v-else
-                                                placeholder="Causes of"
+                                                :placeholder="$t('risk.fields.causes')"
                                                 v-model="newRisk.causes"
                                                 :rules="validation.causes"
                                                 required>
@@ -88,12 +88,12 @@
                                     <v-divider></v-divider>
                                 </v-flex>
                                 <v-flex xs4>
-                                    <v-subheader>Description of the consequences</v-subheader>
+                                    <v-subheader>{{$t('risk.fields.consequences')}}</v-subheader>
                                 </v-flex>
                                 <v-flex xs8>
                                     <td v-if="readonly">{{ newRisk.consequences }}</td>
                                     <v-textarea v-else
-                                                placeholder="Description of the consequences"
+                                                :placeholder="$t('risk.fields.consequences')"
                                                 v-model="newRisk.consequences"
                                                 :rules="validation.consequences"
                                                 required>
@@ -103,7 +103,7 @@
                                     <v-divider></v-divider>
                                 </v-flex>
                                 <v-flex xs4 v-if="readonly">
-                                    <v-subheader>Risk status</v-subheader>
+                                    <v-subheader>{{$t('risk.fields.status')}}</v-subheader>
                                 </v-flex>
                                 <v-flex xs8 v-if="readonly">
                                     <td>{{ newRisk.status }}</td>
@@ -125,12 +125,12 @@
                                 lazy-validation v-if="!readonly || isEvaluationStage">
                             <v-layout row wrap align-center>
                                 <v-flex xs4>
-                                    <v-subheader>Probability</v-subheader>
+                                    <v-subheader>{{$t('risk.fields.probability')}}</v-subheader>
                                 </v-flex>
                                 <v-flex xs8>
                                     <td v-if="readonly">{{ newRisk.probability }}</td>
                                     <v-text-field v-else
-                                                  placeholder="Probability"
+                                                  :placeholder="$t('risk.fields.probability')"
                                                   v-model="newRisk.probability"
                                                   :rules="isEvaluationStage ? validation.probability : []"
                                                   required>
@@ -140,12 +140,12 @@
                                     <v-divider></v-divider>
                                 </v-flex>
                                 <v-flex xs4>
-                                    <v-subheader>Impact</v-subheader>
+                                    <v-subheader>{{$t('risk.fields.impact')}}</v-subheader>
                                 </v-flex>
                                 <v-flex xs8>
                                     <td v-if="readonly">{{ newRisk.impact }}</td>
                                     <v-text-field v-else
-                                                  placeholder="Impact"
+                                                  :placeholder="$t('risk.fields.impact')"
                                                   v-model="newRisk.impact"
                                                   :rules="isEvaluationStage ? validation.impact: []"
                                                   required>
@@ -155,7 +155,7 @@
                                     <v-divider></v-divider>
                                 </v-flex>
                                 <v-flex xs4 v-if="readonly">
-                                    <v-subheader>Risk rate</v-subheader>
+                                    <v-subheader>{{$t('risk.fields.rate')}}</v-subheader>
                                 </v-flex>
                                 <v-flex xs8 v-if="readonly">
                                     <td>{{ newRisk.riskRate }}</td>
@@ -164,7 +164,7 @@
                                     <v-divider></v-divider>
                                 </v-flex>
                                 <v-flex xs4 v-if="readonly">
-                                    <v-subheader>Risk level</v-subheader>
+                                    <v-subheader>{{$t('risk.fields.level')}}</v-subheader>
                                 </v-flex>
                                 <v-flex xs8 v-if="readonly">
                                     <td>{{ newRisk.riskLevel }}</td>
@@ -189,7 +189,7 @@
                                 lazy-validation v-if="!readonly || isPlanningStage">
                             <v-layout row wrap align-center>
                                 <v-flex xs4>
-                                    <v-subheader>Responsible people</v-subheader>
+                                    <v-subheader>{{$t('risk.fields.responsible')}}</v-subheader>
                                 </v-flex>
                                 <v-flex xs8>
                                     <td v-if="readonly">{{ newRisk.responsible }}</td>
@@ -197,7 +197,7 @@
                                               chips
                                               v-model="newRisk.responsible"
                                               :items="responsibleUsers"
-                                              placeholder="Responsible people"
+                                              :placeholder="$t('risk.fields.responsible')"
                                               multiple
                                               :rules="isPlanningStage ? validation.responsible : []"
                                               required
@@ -207,13 +207,13 @@
                                     <v-divider></v-divider>
                                 </v-flex>
                                 <v-flex xs4>
-                                    <v-subheader>Action strategy</v-subheader>
+                                    <v-subheader>{{$t('risk.fields.strategy')}}</v-subheader>
                                 </v-flex>
                                 <v-flex xs8>
                                     <td v-if="readonly">{{ newRisk.strategy }}</td>
                                     <v-select v-else
                                               :items="actionStrategies"
-                                              placeholder="Risk Strategy"
+                                              :placeholder="$t('risk.fields.strategy')"
                                               v-model="newRisk.strategy"
                                               :rules="isPlanningStage ? validation.strategy : []"
                                               required>
@@ -223,7 +223,7 @@
                                     <v-divider></v-divider>
                                 </v-flex>
                                 <v-flex xs4>
-                                    <v-subheader>Start date</v-subheader>
+                                    <v-subheader>{{$t('risk.fields.startDate')}}</v-subheader>
                                 </v-flex>
                                 <v-flex xs8>
                                     <td v-if="readonly">{{ newRisk.actionStartDate }}</td>
@@ -238,7 +238,7 @@
                                             <template v-slot:activator="{ on }">
                                                 <v-text-field
                                                         v-model="newRisk.actionStartDate"
-                                                        placeholder="Start date"
+                                                        :placeholder="$t('risk.fields.startDate')"
                                                         prepend-icon="event"
                                                         :rules="isPlanningStage ? validation.actionStartDate : []"
                                                         required
@@ -257,7 +257,7 @@
                                     <v-divider></v-divider>
                                 </v-flex>
                                 <v-flex xs4>
-                                    <v-subheader>End date</v-subheader>
+                                    <v-subheader>{{$t('risk.fields.endDate')}}</v-subheader>
                                 </v-flex>
                                 <v-flex xs8>
                                     <td v-if="readonly">{{ newRisk.actionEndDate }}</td>
@@ -272,7 +272,7 @@
                                             <template v-slot:activator="{ on }">
                                                 <v-text-field
                                                         v-model="newRisk.actionEndDate"
-                                                        placeholder="End date"
+                                                        :placeholder="$t('risk.fields.endDate')"
                                                         prepend-icon="event"
                                                         :rules="isPlanningStage ? validation.actionEndDate : []"
                                                         required
@@ -291,12 +291,12 @@
                                     <v-divider></v-divider>
                                 </v-flex>
                                 <v-flex xs4>
-                                    <v-subheader>Additional info</v-subheader>
+                                    <v-subheader>{{$t('risk.fields.additionalInfo')}}</v-subheader>
                                 </v-flex>
                                 <v-flex xs8>
                                     <td v-if="readonly">{{ newRisk.strategyInfo || 'No info provided' }}</td>
                                     <v-textarea v-else
-                                                placeholder="Additional info"
+                                                :placeholder="$t('risk.fields.additionalInfo')"
                                                 v-model="newRisk.strategyInfo"
                                                 :rules="isPlanningStage ? validation.strategyInfo : []"
                                                 required>
@@ -322,7 +322,7 @@
                                 lazy-validation v-if="!readonly || isMonitoringStage">
                             <v-layout row wrap align-center>
                                 <v-flex xs4>
-                                    <v-subheader>Planned action start date</v-subheader>
+                                    <v-subheader>{{$t('risk.fields.endDate')}}</v-subheader>
                                 </v-flex>
                                 <v-flex xs8>
                                     <td>{{ newRisk.actionEndDate }}</td>
@@ -332,7 +332,7 @@
                                         <v-divider></v-divider>
                                     </v-flex>
                                     <v-flex xs4>
-                                        <v-subheader>Actual end date</v-subheader>
+                                        <v-subheader>{{$t('risk.fields.actualEndDate')}}</v-subheader>
                                     </v-flex>
                                     <v-flex xs8>
                                         <td v-if="readonly">{{ newRisk.actualActionEndDate }}</td>
@@ -347,7 +347,7 @@
                                                 <template v-slot:activator="{ on }">
                                                     <v-text-field
                                                             v-model="newRisk.actualActionEndDate"
-                                                            placeholder="End date"
+                                                            :placeholder="$t('risk.fields.actualEndDate')"
                                                             prepend-icon="event"
                                                             :rules="isMonitoringStage ? validation.actualActionEndDate : []"
                                                             required

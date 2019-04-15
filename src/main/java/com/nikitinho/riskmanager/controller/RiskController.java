@@ -47,7 +47,7 @@ public class RiskController {
     public Risk create(@RequestBody Risk risk) {
 
         risk.setCreationDate(LocalDateTime.now());
-        risk.setStatus(RiskStatusType.CREATED.toString());
+        risk.setStatus(RiskStatusType.CREATED);
 
         Risk uploadedRisk = riskRepo.save(risk);
         Runnable runnable = () -> {
@@ -74,7 +74,7 @@ public class RiskController {
                                       @RequestBody Risk risk) {
 
         BeanUtils.copyProperties(risk, riskFromDb, "id");
-        riskFromDb.setStatus(RiskStatusType.fromString(risk.getStatus().toString()).toString());
+        riskFromDb.setStatus(risk.getStatus());
 
         Risk updatedRisk = riskRepo.save(riskFromDb);
 

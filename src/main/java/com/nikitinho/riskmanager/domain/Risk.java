@@ -105,22 +105,6 @@ public class Risk {
     @JsonView(Views.FullRisk.class)
     private List<RiskComment> comments;
 
-    public void setCategory(String category) {
-        this.category = RiskCategoryType.fromString(category);
-    }
-
-    public void setCategory(RiskCategoryType category) {
-        this.category = category;
-    }
-
-    public void setStatus(String status) {
-        this.status = RiskStatusType.fromString(status);
-    }
-
-    public void setStatus(RiskStatusType status) {
-        this.status = status;
-    }
-
     public void setRiskLevel(String riskLevel) {
         this.riskLevel = RiskLevelType.fromString(riskLevel);
     }
@@ -135,14 +119,6 @@ public class Risk {
 
     public void setStage(RiskStageType stage) {
         this.stage = stage;
-    }
-
-    public void setStrategy(String strategy) {
-        this.strategy = RiskActionStrategyType.fromString(strategy);
-    }
-
-    public void setStrategy(RiskActionStrategyType strategy) {
-        this.strategy = strategy;
     }
 
     public void setActionStartDate(String date) {

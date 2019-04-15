@@ -115,9 +115,6 @@
             getColor(riskRate) {
                 return Risk.convertRiskRateToColor(riskRate)
             },
-            getRiskStatus(risk) {
-                return Risk.convertStatus(risk.status)
-            },
             getResponsible(risk) {
                 if (risk.responsible) {
                     if (risk.responsible.length <= this.maxRiskUsersAmount) {

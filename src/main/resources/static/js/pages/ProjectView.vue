@@ -432,9 +432,6 @@
             },
             getExtraRiskUsersAmount(risk) {
                 return risk.responsible.length - this.getResponsible(risk).length
-            },
-            getRiskStatus(risk) {
-                return Risk.convertStatus(risk.status)
             }
         },
         components: {

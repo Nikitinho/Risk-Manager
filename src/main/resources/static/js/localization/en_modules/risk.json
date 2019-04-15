@@ -1,0 +1,20 @@
+{
+  "fields": {
+    "title": "Risk title",
+    "description": "Risk description",
+    "category": "Risk category",
+    "causes": "Risk causes",
+    "consequences": "Description of the consequences",
+    "status": "Risk status",
+    "probability": "Probability",
+    "impact": "Impact",
+    "rate": "Risk rate",
+    "level": "Risk level",
+    "responsible": "Responsible people",
+    "strategy": "Action strategy",
+    "startDate": "Start date",
+    "endDate": "End date",
+    "additionalInfo": "Additional info",
+    "actualEndDate": "Actual end date"
+  }
+}

@@ -9,17 +9,17 @@ export default class Risk {
             this.text = risk.text
             this.creationDate = risk.creationDate
             this.description = risk.description
-            this.category = Risk.convertCategory(risk.category)
+            this.category = risk.category
             this.causes = risk.causes
             this.consequences = risk.consequences
             this.responsible = risk.responsible
-            this.status = Risk.convertStatus(risk.status)
+            this.status = risk.status
             this.stage = Risk.convertStage(risk.stage)
             this.probability = risk.probability
             this.impact = risk.impact
             this.riskRate = risk.riskRate
             this.riskLevel = Risk.convertRiskLevel(risk.riskLevel)
-            this.strategy = Risk.convertStrategy(risk.strategy)
+            this.strategy = risk.strategy
             this.actionStartDate = risk.actionStartDate ? risk.actionStartDate.substr(0, 10) : null
             this.actionEndDate = risk.actionEndDate ? risk.actionEndDate.substr(0, 10) : null
             this.strategyInfo = risk.strategyInfo
@@ -45,42 +45,6 @@ export default class Risk {
             this.strategyInfo = ''
             this.actualActionEndDate = null
             this.comments = []
-        }
-    }
-
-    // RiskStatusType
-    static convertStatus(status) {
-        switch (status) {
-            case 'CREATED':
-                return 'Новый'
-            case 'OPENED':
-                return 'Открыт'
-            case 'CLOSED':
-                return 'Закрыт'
-            default:
-                return null
-        }
-    }
-
-    // RiskCategoryType
-    static convertCategory(category) {
-        switch (category) {
-            case 'INTEGRATION':
-                return 'Риск интеграции'
-            case 'FINANCIAL':
-                return 'Финансовые риски'
-            case 'TEMPORARY':
-                return 'Временные риски'
-            case 'PERSONNEL':
-                return 'Риски персонала'
-            case 'COMMUNICATION':
-                return 'Коммуникационные риски'
-            case 'VENDOR':
-                return 'Риски поставщиков'
-            case 'LACK_OF_QUALITY':
-                return 'Риски несоответствия качеству'
-            default:
-                return null
         }
     }
 
@@ -124,25 +88,6 @@ export default class Risk {
                 return 4
             default:
                 return 0
-        }
-    }
-
-    static convertStrategy(strategy) {
-        switch (strategy) {
-            case 'INVESTIGATION':
-                return 'Исследование'
-            case 'ACCEPTANCE':
-                return 'Принятие'
-            case 'AVOIDANCE':
-                return 'Избежание'
-            case 'TRANSMISSION':
-                return 'Передача'
-            case 'PREVENTION':
-                return 'Предотвращение'
-            case 'MINIMIZATION':
-                return 'Минимизация'
-            default:
-                return null
         }
     }
 

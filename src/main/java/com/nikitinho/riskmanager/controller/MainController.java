@@ -44,10 +44,9 @@ public class MainController {
 
         if (user != null) {
             data.put("profile", user);
-            data.put("categories", Stream.of(RiskCategoryType.values()).map(RiskCategoryType::toString).toArray());
-            data.put("statuses", Stream.of(RiskStatusType.values()).map(RiskStatusType::toString).toArray());
-            data.put("strategies", Stream.of(RiskActionStrategyType.values()).map(RiskActionStrategyType::toString)
-                    .toArray());
+            data.put("categories", RiskCategoryType.values());
+            data.put("statuses", RiskStatusType.values());
+            data.put("strategies", RiskActionStrategyType.values());
             data.put("boarditems", BoardItemType.values());
 //            data.put("projects", projectRepo.findAll().stream().filter(project -> project.getResponsible().stream()
 //                    .anyMatch(usr -> usr.getId().equals(user.getId()))).toArray());
