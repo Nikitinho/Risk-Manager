@@ -3,10 +3,10 @@
         <v-navigation-drawer style="width: 100%" v-if="sideNav" v-model="sideNav">
             <v-list>
                 <v-list-tile :to="{ name: 'Discussion' }">
-                    <v-list-tile-content>Discussion</v-list-tile-content>
+                    <v-list-tile-content>{{$t('menu.discussion')}}</v-list-tile-content>
                 </v-list-tile>
                 <v-list-tile :to="{ name: 'ProjectsList' }">
-                    <v-list-tile-content>Projects</v-list-tile-content>
+                    <v-list-tile-content>{{$t('menu.projects')}}</v-list-tile-content>
                 </v-list-tile>
                 <v-list-tile :to="{ name: 'Profile', params: { userId: this.profile.id } }">
                     <v-list-tile-content>{{ profile.name }}</v-list-tile-content>
@@ -28,17 +28,21 @@
                 <v-btn v-if="profile" flat
                        :disabled="$route.name === 'Discussion'"
                        @click="showDiscussion">
-                    Discussion
+                    {{$t('menu.discussion')}}
                 </v-btn>
                 <v-btn v-if="profile" flat
                        :disabled="$route.name === 'ProjectsList'"
                        @click="showProjects">
-                    Projects
+                    {{$t('menu.projects')}}
                 </v-btn>
                 <v-btn v-if="profile" flat
                        :disabled="$route.name === 'Profile'"
                        @click="showProfile">
                     {{profile.name}}
+                </v-btn>
+                <v-btn v-if="profile" icon
+                       @click="changeLocale">
+                    <v-icon>public</v-icon>
                 </v-btn>
                 <v-btn v-if="profile" icon href="/logout">
                     <v-icon>exit_to_app</v-icon>
@@ -50,25 +54,6 @@
         </main>
         <v-footer height="auto" style="width: 100%">
             <v-card class="text-xs-center" dark color="#455A64" width="100%">
-
-                <!--<v-card-text>-->
-                    <!--<v-btn class="mx-3"-->
-                           <!--large icon-->
-                           <!--:href="icons.github.link">-->
-                        <!--<v-avatar>-->
-                            <!--<v-img style="height: 100%;" :src="icons.github.img" />-->
-                        <!--</v-avatar>-->
-                    <!--</v-btn>-->
-                    <!--<v-btn class="mx-3"-->
-                           <!--large icon-->
-                           <!--:href="icons.tg.link">-->
-                        <!--<v-avatar>-->
-                            <!--<v-img style="height: 100%;" :src="icons.tg.img" />-->
-                        <!--</v-avatar>-->
-                    <!--</v-btn>-->
-                <!--</v-card-text>-->
-
-                <!--<v-divider></v-divider>-->
 
                 <v-card-text>
                     &copy;2019 — <strong>Nikitinho</strong>
@@ -113,6 +98,11 @@
             },
             createProject() {
                 this.$router.push({ name: 'ProjectCreation' })
+            },
+            changeLocale() {
+                console.log('Locale before: ' +  this.$i18n.locale)
+                this.$i18n.locale = this.$i18n.locale === 'en' ? 'ru' : 'en'
+                console.log('Locale after: ' +  this.$i18n.locale)
             }
         },
         created() {

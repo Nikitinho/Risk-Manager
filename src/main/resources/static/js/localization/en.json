@@ -1,0 +1,9 @@
+{
+  "menu": {
+    "discussion": "Discussion",
+    "projects": "Projects"
+  },
+  "projectsList": {
+    "title": "Projects List"
+  }
+}

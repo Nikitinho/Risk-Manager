@@ -1,0 +1,9 @@
+{
+  "menu": {
+    "discussion": "Обсуждение",
+    "projects": "Проекты"
+  },
+  "projectsList": {
+    "title": "Список проектов"
+  }
+}

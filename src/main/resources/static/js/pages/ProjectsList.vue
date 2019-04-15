@@ -3,7 +3,7 @@
     <v-layout align-space-around justify-start column>
         <v-card>
             <v-card-title>
-                <span class="headline font-weight-light">Projects List</span>
+                <span class="headline font-weight-light">{{$t('projectsList.title')}}</span>
                 <v-spacer></v-spacer>
                 <v-btn color="success" @click="createProject">
                     <v-icon dark>add</v-icon>
