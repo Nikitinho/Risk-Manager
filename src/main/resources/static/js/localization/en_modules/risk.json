@@ -16,5 +16,27 @@
     "endDate": "End date",
     "additionalInfo": "Additional info",
     "actualEndDate": "Actual end date"
+  },
+  "categories": {
+    "integration": "Integration",
+    "financial": "Financial",
+    "temporary": "Temporary",
+    "personnel": "Personnel",
+    "communication": "Communication",
+    "vendor": "Vendor",
+    "lack_of_quality": "Lack of quality"
+  },
+  "statuses": {
+    "created": "Created",
+    "opened": "Opened",
+    "closed": "Closed"
+  },
+  "strategies": {
+    "investigation": "Investigation",
+    "acceptance": "Acceptance",
+    "avoidance": "Avoidance",
+    "transmission": "Transmission",
+    "prevention": "Prevention",
+    "minimization": "Minimization"
   }
 }

@@ -16,5 +16,27 @@
     "endDate": "Дата окончания",
     "additionalInfo": "Дополнительная информация",
     "actualEndDate": "Реальная дата окончания"
+  },
+  "categories": {
+    "integration": "Риск интеграции",
+    "financial": "Финансовые риски",
+    "temporary": "Временные риски",
+    "personnel": "Риски персонала",
+    "communication": "Коммуникационные риски",
+    "vendor": "Риски поставщиков",
+    "lack_of_quality": "Риски несоответствия качеству"
+  },
+  "statuses": {
+    "created": "Новый",
+    "opened": "Открыт",
+    "closed": "Закрыт"
+  },
+  "strategies": {
+    "investigation": "Исследование",
+    "acceptance": "Принятие",
+    "avoidance": "Избежание",
+    "transmission": "Передача",
+    "prevention": "Предотвращение",
+    "minimization": "Минимизация"
   }
 }

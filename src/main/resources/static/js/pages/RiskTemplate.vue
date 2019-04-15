@@ -60,7 +60,9 @@
                                     <v-subheader>{{$t('risk.fields.category')}}</v-subheader>
                                 </v-flex>
                                 <v-flex xs8>
-                                    <td v-if="readonly">{{ newRisk.category }}</td>
+                                    <td v-if="readonly">
+                                        {{$t(`risk.categories.${newRisk.category.toLowerCase()}`)}}
+                                    </td>
                                     <v-select v-else
                                               :items="riskCategories"
                                               :placeholder="$t('risk.fields.category')"
@@ -106,7 +108,7 @@
                                     <v-subheader>{{$t('risk.fields.status')}}</v-subheader>
                                 </v-flex>
                                 <v-flex xs8 v-if="readonly">
-                                    <td>{{ newRisk.status }}</td>
+                                    <td>{{$t(`risk.statuses.${newRisk.status.toLowerCase()}`)}}</td>
                                 </v-flex>
                                 <v-flex xs12>
                                     <v-divider></v-divider>
@@ -210,7 +212,7 @@
                                     <v-subheader>{{$t('risk.fields.strategy')}}</v-subheader>
                                 </v-flex>
                                 <v-flex xs8>
-                                    <td v-if="readonly">{{ newRisk.strategy }}</td>
+                                    <td v-if="readonly">{{$t(`risk.strategies.${newRisk.strategy.toLowerCase()}`)}}</td>
                                     <v-select v-else
                                               :items="actionStrategies"
                                               :placeholder="$t('risk.fields.strategy')"
