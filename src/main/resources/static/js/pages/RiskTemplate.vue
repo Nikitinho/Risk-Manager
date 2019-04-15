@@ -2,7 +2,14 @@
     <v-container v-if="validation" fluid>
         <v-card class="py-2 px-2 mb-1">
             <v-card-title>
-                <span class="headline font-weight-light">{{ newRisk.text || $t('risk.fields.title') }}</span>
+                <span class="headline font-weight-light">{{ newRisk.text || $t('risk.fields.title') }}
+                </span>
+                <v-spacer></v-spacer>
+                <span>
+                    <v-checkbox v-model="newRisk.areNotificationSent"
+                                :label="$t('risk.fields.areNotificationSent')">
+                </v-checkbox>
+                </span>
             </v-card-title>
         </v-card>
         <v-stepper v-model="currentStepper">

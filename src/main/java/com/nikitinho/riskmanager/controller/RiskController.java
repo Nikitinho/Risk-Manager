@@ -51,7 +51,9 @@ public class RiskController {
 
         Risk uploadedRisk = riskRepo.save(risk);
         Runnable runnable = () -> {
-            notificationService.sendNotification(uploadedRisk, EventType.CREATE);
+            if(uploadedRisk.getAreNotificationSent()) {
+                notificationService.sendNotification(uploadedRisk, EventType.CREATE);
+            }
             wsSender.accept(EventType.CREATE, uploadedRisk);
         };
 
@@ -78,7 +80,9 @@ public class RiskController {
         Risk updatedRisk = riskRepo.save(riskFromDb);
 
         Runnable runnable = () -> {
-            notificationService.sendNotification(updatedRisk, EventType.UPDATE);
+            if(updatedRisk.getAreNotificationSent()) {
+                notificationService.sendNotification(updatedRisk, EventType.UPDATE);
+            }
             wsSender.accept(EventType.UPDATE, updatedRisk);
         };
 
@@ -92,7 +96,9 @@ public class RiskController {
     public void delete(@PathVariable("id") Risk risk) {
         wsSender.accept(EventType.REMOVE, risk);
         riskRepo.delete(risk);
+//        if (risk.getAreNotificationSent()) {
 //        notificationService.sendNotification(risk, EventType.REMOVE);
+//        }
     }
 
 }

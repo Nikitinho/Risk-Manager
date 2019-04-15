@@ -16,7 +16,8 @@
     "endDate": "End date",
     "additionalInfo": "Additional info",
     "actualEndDate": "Actual end date",
-    "hasWorked": "Risk has worked"
+    "hasWorked": "Risk has worked",
+    "areNotificationSent": "Send notifications"
   },
   "categories": {
     "integration": "Integration",

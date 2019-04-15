@@ -16,7 +16,8 @@
     "endDate": "Дата окончания",
     "additionalInfo": "Дополнительная информация",
     "actualEndDate": "Реальная дата окончания",
-    "hasWorked": "Риск сработал"
+    "hasWorked": "Риск сработал",
+    "areNotificationSent": "Оповестить ответственных"
   },
   "categories": {
     "integration": "Риск интеграции",

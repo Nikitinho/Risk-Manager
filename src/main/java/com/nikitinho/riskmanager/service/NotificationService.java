@@ -81,12 +81,14 @@ public class NotificationService {
             message.setContent(result, "text/html; charset=UTF-8");
 
             risk.getResponsible().forEach(user -> {
-                try {
-                    message.setRecipients(Message.RecipientType.TO,
-                            InternetAddress.parse(user.getEmail()));
-                    Transport.send(message);
-                } catch (MessagingException e) {
-                    e.printStackTrace();
+                // Sometimes user can be null
+                if (user != null) {
+                    try {
+                        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(user.getEmail()));
+                        Transport.send(message);
+                    } catch (MessagingException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
 

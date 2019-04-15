@@ -108,6 +108,9 @@ public class Risk {
     @JsonView(Views.FullRisk.class)
     private Boolean hasWorked;
 
+    @JsonView(Views.FullRisk.class)
+    private Boolean areNotificationSent;
+
     public void setActionStartDate(String date) {
         if (date == null || date.isEmpty()) {
             this.actionStartDate = null;
