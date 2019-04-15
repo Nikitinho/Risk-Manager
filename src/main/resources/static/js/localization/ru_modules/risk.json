@@ -50,5 +50,10 @@
     "planning": "Планирование",
     "monitoring": "Мониторинг",
     "emptyStage": "Данные отсутствуют"
+  },
+  "export": {
+    "title": "Экспортировать",
+    "pdf": "В PDF",
+    "xml": "В XML"
   }
 }

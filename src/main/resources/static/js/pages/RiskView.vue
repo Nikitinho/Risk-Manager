@@ -15,26 +15,25 @@
                                 dark
                                 v-on="on"
                         >
-                            Export document
+                            {{$t('risk.export.title')}}
                         </v-btn>
                     </template>
 
                     <v-list>
                         <v-list-tile
                                 v-for="item in exportOptions"
-                                :key="item.type"
-                                @click="() => exportDocument(risk, item.type)">
-                            <v-list-tile-title>{{item.title}}</v-list-tile-title>
+                                @click="() => exportDocument(risk, item)">
+                            <v-list-tile-title>{{$t(`risk.export.${item.toLowerCase()}`)}}</v-list-tile-title>
                         </v-list-tile>
                     </v-list>
                 </v-menu>
             <v-btn color="primary"
                    @click="() => this.edit(this.risk)">
-                Edit
+                <v-icon>create</v-icon>
             </v-btn>
             <v-btn color="error"
                    @click="() => this.del(this.risk)">
-                Delete
+                <v-icon>delete</v-icon>
             </v-btn>
             </v-layout>
         </v-flex>
@@ -70,8 +69,8 @@
             },
             exportOptions() {
                 let options = []
-                options.push({ title: 'В pdf', type: 'PDF' })
-                options.push({ title: 'В xml', type: 'XML' })
+                options.push('PDF')
+                options.push('XML')
                 return options
             }
         },

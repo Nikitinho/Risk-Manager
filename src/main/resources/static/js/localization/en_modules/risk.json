@@ -50,5 +50,10 @@
     "planning": "Planning",
     "monitoring": "Monitoring",
     "emptyStage": "No info provided yet"
+  },
+  "export": {
+    "title": "Export document",
+    "pdf": "to PDF",
+    "xml": "to XML"
   }
 }

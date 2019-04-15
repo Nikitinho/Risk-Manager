@@ -60,7 +60,7 @@
             },
             calculateDoughnuts(element) {
                 let level = element.riskRate
-                if (level >= 0.0 && level < 0.34) {
+                if (level > 0.0 && level < 0.34) {
                     this.lowCount += 1
                 } else if (level >= 0.34 && level < 0.68) {
                     this.mediumCount += 1
