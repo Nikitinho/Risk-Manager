@@ -29,7 +29,7 @@
                             },
                             scaleLabel: {
                                 display: true,
-                                labelString: 'Impact'
+                                labelString: this.$t('project.graph.bubbleChart.impact')
                             }
                         }],
                         xAxes: [ {
@@ -43,7 +43,7 @@
                             },
                             scaleLabel: {
                                 display: true,
-                                labelString: 'Probability'
+                                labelString: this.$t('project.graph.bubbleChart.probability')
                             }
                         }]
                     },
@@ -86,6 +86,18 @@
                         }
                         line.data.push(newDot)
                     }
+                    this.renderChart(this.datacollection, this.options)
+                }
+            },
+            '$i18n.locale': {
+                immediate: true,
+                handler (val) {
+                    if (!this.$data._chart)  { return }
+                    this.$data._chart.destroy()
+                    this.options.scales.yAxes[0].scaleLabel.labelString =
+                        this.$t('project.graph.bubbleChart.impact')
+                    this.options.scales.xAxes[0].scaleLabel.labelString =
+                        this.$t('project.graph.bubbleChart.probability')
                     this.renderChart(this.datacollection, this.options)
                 }
             }

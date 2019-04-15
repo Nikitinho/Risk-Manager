@@ -28,6 +28,22 @@
             this.addData(this.data)
             this.addDoughnuts()
         },
+        watch: {
+            '$i18n.locale': {
+                immediate: true,
+                handler (val) {
+                    if (!this.$data._chart)  { return }
+                    this.$data._chart.destroy()
+                    this.datacollection.labels[0] =
+                        this.$t('project.graph.doughnutChart.low')
+                    this.datacollection.labels[1] =
+                        this.$t('project.graph.doughnutChart.medium')
+                    this.datacollection.labels[2] =
+                        this.$t('project.graph.doughnutChart.high')
+                    this.renderChart(this.datacollection, this.options)
+                }
+            }
+        },
         mounted () {
             //renderChart function renders the chart with the datacollection and options object.
             this.renderChart(this.datacollection, this.options)

@@ -13,7 +13,7 @@
             </v-card>
                 <v-card>
                     <v-card-title>
-                        <span class="headline font-weight-light">Risks List</span>
+                        <span class="headline font-weight-light">{{$t('project.risksList.title')}}</span>
                         <v-spacer></v-spacer>
                         <v-btn color="success" @click="createRisk">
                             <v-icon dark>add</v-icon>
@@ -40,7 +40,12 @@
                                     <v-menu>
                                         <template v-slot:activator="{ on }">
                                             <v-toolbar-title v-on="on">
-                                                <span style="font-size: 75%; white-space:pre-wrap;">{{ chosenStatus.label }}</span>
+                                                <span style="font-size: 75%;">
+                                                    {{ chosenStatus.value
+                                                    ? $t(`project.statuses.${chosenStatus.value.toLowerCase()}`)
+                                                    : $t('project.statuses.default')
+                                                    }}
+                                                </span>
                                             </v-toolbar-title>
                                         </template>
 
@@ -48,7 +53,12 @@
                                             <v-list-tile
                                                     v-for="(item, index) in statuses"
                                                     @click="() => chosenStatus = item">
-                                                <v-list-tile-title>{{ item.label }}</v-list-tile-title>
+                                                <v-list-tile-title>
+                                                    {{ item.value
+                                                    ? $t(`project.statuses.${item.value.toLowerCase()}`)
+                                                    : $t('project.statuses.default')
+                                                    }}
+                                                </v-list-tile-title>
                                             </v-list-tile>
                                         </v-list>
                                     </v-menu>
@@ -58,7 +68,12 @@
                                     <v-menu>
                                         <template v-slot:activator="{ on }">
                                             <v-toolbar-title v-on="on">
-                                                <span style="font-size: 75%; white-space:pre-wrap;">{{ chosenLevel.label }}</span>
+                                                <span style="font-size: 75%;">
+                                                    {{ chosenLevel.value
+                                                    ? $t(`project.levels.${chosenLevel.value.toLowerCase()}`)
+                                                    : $t('project.levels.default')
+                                                    }}
+                                                </span>
                                             </v-toolbar-title>
                                         </template>
 
@@ -66,7 +81,12 @@
                                             <v-list-tile
                                                     v-for="(item, index) in levels"
                                                     @click="() => chosenLevel = item">
-                                                <v-list-tile-title>{{ item.label }}</v-list-tile-title>
+                                                <v-list-tile-title>
+                                                    {{ item.value
+                                                    ? $t(`project.levels.${item.value.toLowerCase()}`)
+                                                    : $t('project.levels.default')
+                                                    }}
+                                                </v-list-tile-title>
                                             </v-list-tile>
                                         </v-list>
                                     </v-menu>
@@ -84,7 +104,7 @@
                                     <v-icon>list</v-icon>
                                 </v-list-tile-avatar>
                             <v-list-tile-content>
-                                <v-list-tile-title v-html="category.label"></v-list-tile-title>
+                                <v-list-tile-title>{{$t(`project.categories.${category.value.toLowerCase()}`)}}</v-list-tile-title>
                             </v-list-tile-content>
                             </v-list-tile>
 
@@ -94,7 +114,7 @@
                                 <v-divider></v-divider>
                                 <v-list-tile>
                                 <v-list-tile-content>
-                                    <v-list-tile-title v-html="`Nothing to show here`"></v-list-tile-title>
+                                    <v-list-tile-title>{{$t('project.risksList.emptyField')}}</v-list-tile-title>
                                 </v-list-tile-content>
                                 </v-list-tile>
                             </template>
@@ -118,7 +138,7 @@
                                 <v-spacer></v-spacer>
 
                                 <div class="text-xs-center">
-                                    <v-chip>{{getRiskStatus(risk)}}</v-chip>
+                                    <v-chip>{{$t(`project.statuses.${risk.status.toLowerCase()}`)}}</v-chip>
                                 </div>
 
                                 <v-divider vertical></v-divider>
@@ -147,11 +167,13 @@
             <v-flex :xs4="!$vuetify.breakpoint.mdAndDown" class="px-1 py-1">
                 <v-card class="mb-1">
                     <v-card-title>
-                        <span class="headline font-weight-light">Project team</span>
+                        <span class="headline font-weight-light">{{$t('project.projectTeam.title')}}</span>
                         <v-spacer></v-spacer>
                         <v-btn color="success"
                                @click="() => { this.isTeamShown = !this.isTeamShown }">
-                            {{ isTeamShown ? 'Hide team' : 'Show team' }}
+                            {{ isTeamShown
+                            ? $t('project.projectTeam.hideBtn')
+                            : $t('project.projectTeam.showBtn') }}
                         </v-btn>
                     </v-card-title>
                     <v-list v-if="isTeamShown">
@@ -163,7 +185,7 @@
                                     <v-icon>person</v-icon>
                                 </v-list-tile-avatar>
                                 <v-list-tile-content>
-                                    <v-list-tile-title v-html="role.label"></v-list-tile-title>
+                                    <v-list-tile-title>{{$t(`project.projectTeam.roles.${role.value.toLowerCase()}`)}}</v-list-tile-title>
                                 </v-list-tile-content>
                             </v-list-tile>
 
@@ -173,7 +195,9 @@
                                     <v-divider></v-divider>
                                     <v-list-tile>
                                         <v-list-tile-content>
-                                            <v-list-tile-title v-html="`Nothing to show here`"></v-list-tile-title>
+                                            <v-list-tile-title>
+                                                {{$t('project.projectTeam.emptyField')}}
+                                            </v-list-tile-title>
                                         </v-list-tile-content>
                                     </v-list-tile>
                                 </template>
@@ -200,11 +224,13 @@
                 </v-card>
                 <v-card class="mb-1">
                     <v-card-title>
-                        <span class="headline font-weight-light">Top 10 risks</span>
+                        <span class="headline font-weight-light">{{$t('project.top10Risks.title')}}</span>
                         <v-spacer></v-spacer>
                         <v-btn color="success"
                                @click="() => { this.isTopShown = !this.isTopShown }">
-                            {{ isTopShown ? 'Hide' : 'Show' }}
+                            {{ isTopShown
+                            ? $t('project.top10Risks.hideBtn')
+                            : $t('project.top10Risks.showBtn') }}
                         </v-btn>
                     </v-card-title>
                     <slot v-if="isTopShown">
@@ -226,7 +252,7 @@
                                     <v-spacer></v-spacer>
 
                                     <div class="text-xs-center">
-                                        <v-chip>{{getRiskStatus(risk)}}</v-chip>
+                                        <v-chip>{{$t(`project.statuses.${risk.status.toLowerCase()}`)}}</v-chip>
                                     </div>
 
                                     <v-divider vertical></v-divider>
@@ -251,21 +277,25 @@
                     <slot v-else>
                         <v-divider></v-divider>
                         <v-card-text>
-                            Nothing to show here
+                            {{$t('project.top10Risks.emptyField')}}
                         </v-card-text>
                     </slot>
                     </slot>
                 </v-card>
                 <v-card>
                     <v-card-title>
-                        <span class="headline font-weight-light">Graph</span>
+                        <span class="headline font-weight-light">
+                            {{$t('project.graph.title')}}
+                        </span>
                         <v-spacer></v-spacer>
                         <v-btn icon @click="() => this.isBubbleChartShown = !this.isBubbleChartShown">
                             <v-icon dark>loop</v-icon>
                         </v-btn>
                         <v-btn color="success"
                                @click="() => { this.isGraphShown = !this.isGraphShown }">
-                            {{ isGraphShown ? 'Hide' : 'Show' }}
+                            {{ isGraphShown
+                            ? $t('project.graph.hideBtn')
+                            : $t('project.graph.showBtn')}}
                         </v-btn>
                     </v-card-title>
                     <v-divider></v-divider>
@@ -286,7 +316,7 @@
                         </slot>
                         <slot v-else>
                             <v-card-text>
-                                Nothing to show here
+                                {{$t('project.graph.emptyField')}}
                             </v-card-text>
                         </slot>
                     </slot>
