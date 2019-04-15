@@ -43,5 +43,11 @@
     "low": "Low",
     "medium": "Medium",
     "high": "High"
+  },
+  "stages": {
+    "identification": "Identification",
+    "evaluation": "Evaluation",
+    "planning": "Planning",
+    "monitoring": "Monitoring"
   }
 }

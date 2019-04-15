@@ -14,7 +14,7 @@ export default class Risk {
             this.consequences = risk.consequences
             this.responsible = risk.responsible
             this.status = risk.status
-            this.stage = Risk.convertStage(risk.stage)
+            this.stage = risk.stage
             this.probability = risk.probability
             this.impact = risk.impact
             this.riskRate = risk.riskRate
@@ -45,21 +45,6 @@ export default class Risk {
             this.strategyInfo = ''
             this.actualActionEndDate = null
             this.comments = []
-        }
-    }
-
-    static convertStage(stage) {
-        switch (stage) {
-            case 'IDENTIFICATION':
-                return 'Идентификация'
-            case 'EVALUATION':
-                return 'Оценка'
-            case 'PLANNING':
-                return 'Планирование'
-            case 'MONITORING':
-                return 'Мониторинг'
-            default:
-                return null
         }
     }
 

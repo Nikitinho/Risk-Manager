@@ -105,14 +105,6 @@ public class Risk {
     @JsonView(Views.FullRisk.class)
     private List<RiskComment> comments;
 
-    public void setStage(String stage) {
-        this.stage = RiskStageType.fromString(stage);
-    }
-
-    public void setStage(RiskStageType stage) {
-        this.stage = stage;
-    }
-
     public void setActionStartDate(String date) {
         if (date == null || date.isEmpty()) {
             this.actionStartDate = null;

@@ -43,5 +43,11 @@
     "low": "Низкий",
     "medium": "Средний",
     "high": "Высокий"
+  },
+  "stages": {
+    "identification": "Идентификация",
+    "evaluation": "Оценка",
+    "planning": "Планирование",
+    "monitoring": "Мониторинг"
   }
 }

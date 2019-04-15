@@ -2,7 +2,7 @@
     <v-container v-if="validation" fluid>
         <v-card class="py-2 px-2 mb-1">
             <v-card-title>
-                <span class="headline font-weight-light">{{ newRisk.text || 'Title' }}</span>
+                <span class="headline font-weight-light">{{ newRisk.text || $t('risk.fields.title') }}</span>
             </v-card-title>
         </v-card>
         <v-stepper v-model="currentStepper">
@@ -13,7 +13,7 @@
                             :key="stage.key"
                             :step="stage.key"
                             :editable="true">
-                        {{ stage.value }}
+                        {{$t(`risk.stages.${stage.value.toLowerCase()}`)}}
                     </v-stepper-step>
                 </template>
             </v-stepper-header>
@@ -415,10 +415,10 @@
                 newRisk: null,
                 isInfoProvided: false,
                 stages: [
-                    { key: 1, value: 'Идентификация', dbValue: 'IDENTIFICATION' },
-                    { key: 2, value: 'Оценка', dbValue: 'EVALUATION' },
-                    { key: 3, value: 'Планирование' , dbValue: 'PLANNING' },
-                    { key: 4, value: 'Мониторинг', dbValue: 'MONITORING' }
+                    { key: 1, value: 'IDENTIFICATION' },
+                    { key: 2, value: 'EVALUATION' },
+                    { key: 3, value: 'PLANNING' },
+                    { key: 4, value: 'MONITORING' }
                 ]
             }
         },
