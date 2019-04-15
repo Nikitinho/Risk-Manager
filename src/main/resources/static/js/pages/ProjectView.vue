@@ -468,7 +468,7 @@
             },
             exportProject(DocumentType) {
                 if (DocumentType === 'PDF') {
-                    this.saveAllPDF(this.project.risks[0], this.project.id)
+                    this.saveAllPDF(this.project.risks, this.project.id)
                 } else if (DocumentType === 'XML') {
                     this.saveAllXML(this.project.risks, this.project.id)
                 }

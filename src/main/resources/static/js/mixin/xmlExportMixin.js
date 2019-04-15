@@ -21,9 +21,11 @@ export default {
                 let xml = builder.buildObject(risk);
 
                 let blob = new Blob([xml], {type: "text/xml"});
+                console.log(blob)
 
                 folder.file(`Risk${risk.id}`, blob)
             })
+
             zip.generateAsync({type:"blob"})
                 .then(function(content) {
                     saveAs(content, `Project${projectId}`);
