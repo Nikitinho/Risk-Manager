@@ -45,7 +45,6 @@
     import { mapActions } from 'vuex'
     import { mapGetters } from 'vuex'
     import RiskTemplate from 'pages/RiskTemplate.vue'
-    import validation from 'validation/RiskFormValidation'
     import printingRiskMixin from 'mixin/PrintingRiskMixin'
     import xmlExportMixin from 'mixin/xmlExportMixin'
     import Risk from 'domain/Risk'
@@ -77,7 +76,7 @@
             }
         },
         created () {
-            this.validation = validation
+            this.validation = require(`validation/${this.$i18n.locale}/RiskFormValidation`).default
             this.risk = this.getProjectById((Number)(this.projectId))
                 .risks.find(x => (Number)(x.id) === (Number)(this.riskId))
         },

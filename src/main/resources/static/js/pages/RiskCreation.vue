@@ -18,7 +18,6 @@
     import { mapActions } from 'vuex'
     import { mapGetters } from 'vuex'
     import RiskTemplate from 'pages/RiskTemplate.vue'
-    import validation from 'validation/RiskFormValidation'
     import Risk from 'domain/Risk'
 
     export default {
@@ -27,8 +26,8 @@
         data() {
             return {
                 validator: null,
-                risk: null,
                 validation: null,
+                risk: null,
                 newRisk: null
             }
         },
@@ -38,8 +37,9 @@
                 return !this.riskId
             }
         },
-        created () {
-            this.validation = validation
+        async created () {
+            this.validation = require(`validation/${this.$i18n.locale}/RiskFormValidation`).default
+            console.log(this.validation)
             if (!this.isNewRisk) {
                 this.risk = this.getProjectById((Number)(this.projectId)).risks.find(x => x.id === this.riskId)
             } else {

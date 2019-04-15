@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/polyfill": "^7.4.0",
     "@stomp/stompjs": "^5.2.0",
     "chart.js": "^2.8.0",
