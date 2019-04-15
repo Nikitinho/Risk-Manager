@@ -36,11 +36,13 @@
             <v-flex :xs6="!$vuetify.breakpoint.mdAndDown" class="px-1 py-1">
         <v-card class="mb-1">
             <v-card-title>
-                <span class="headline font-weight-light">Top 10 risks</span>
+                <span class="headline font-weight-light">{{$t('project.top10Risks.title')}}</span>
                 <v-spacer></v-spacer>
                 <v-btn color="success"
                        @click="() => { this.isTopShown = !this.isTopShown }">
-                    {{ isTopShown ? 'Hide' : 'Show' }}
+                    {{ isTopShown
+                    ? $t('project.top10Risks.hideBtn')
+                    : $t('project.top10Risks.showBtn') }}
                 </v-btn>
             </v-card-title>
             <slot v-if="isTopShown">
@@ -62,7 +64,7 @@
                     <v-spacer></v-spacer>
 
                     <div class="text-xs-center">
-                        <v-chip>{{getRiskStatus(risk)}}</v-chip>
+                        <v-chip>{{$t(`project.statuses.${risk.status.toLowerCase()}`)}}</v-chip>
                     </div>
 
                     <v-divider vertical></v-divider>

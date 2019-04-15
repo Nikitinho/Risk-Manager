@@ -6,11 +6,5 @@
     "email": "Email",
     "lastAction": "Last action",
     "emptyField": "No info provided yet"
-  },
-  "top10Risks": {
-    "title": "Top 10 Risks",
-    "hideBtn": "Hide",
-    "showBtn": "Show",
-    "emptyField": "Nothing to show here"
   }
 }
