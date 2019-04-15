@@ -69,7 +69,13 @@
                                               v-model="newRisk.category"
                                               :rules="validation.category"
                                               required>
-                                        ></v-select>
+                                        <template slot="item" slot-scope="data">
+                                            {{$t(`risk.categories.${data.item.toLowerCase()}`)}}
+                                        </template>
+                                        <template slot="selection" slot-scope="data">
+                                            {{$t(`risk.categories.${data.item.toLowerCase()}`)}}
+                                        </template>
+                                    </v-select>
                                 </v-flex>
                                 <v-flex xs12>
                                     <v-divider></v-divider>
@@ -219,7 +225,13 @@
                                               v-model="newRisk.strategy"
                                               :rules="isPlanningStage ? validation.strategy : []"
                                               required>
-                                        ></v-select>
+                                        <template slot="item" slot-scope="data">
+                                            {{$t(`risk.strategies.${data.item.toLowerCase()}`)}}
+                                        </template>
+                                        <template slot="selection" slot-scope="data">
+                                            {{$t(`risk.strategies.${data.item.toLowerCase()}`)}}
+                                        </template>
+                                    </v-select>
                                 </v-flex>
                                 <v-flex xs12>
                                     <v-divider></v-divider>
