@@ -5,7 +5,7 @@
                 <span class="headline font-weight-light">{{ newRisk.text || $t('risk.fields.title') }}
                 </span>
                 <v-spacer></v-spacer>
-                <span>
+                <span v-if="!readonly">
                     <v-checkbox v-model="newRisk.areNotificationSent"
                                 :label="$t('risk.fields.areNotificationSent')">
                 </v-checkbox>
@@ -391,7 +391,7 @@
                                     <v-subheader>{{$t('risk.fields.hasWorked')}}</v-subheader>
                                 </v-flex>
                                 <v-flex xs8>
-                                    <td v-if="readonly">{{ newRisk.hasWorked }}</td>
+                                    <td v-if="readonly">{{$t(`constants.${newRisk.hasWorked}`)}}</td>
                                     <v-switch v-else v-model="newRisk.hasWorked" color="success">
                                     </v-switch>
                                 </v-flex>

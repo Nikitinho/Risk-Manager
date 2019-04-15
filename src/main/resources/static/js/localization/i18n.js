@@ -7,6 +7,7 @@ import en_project from './en_modules/project.json'
 import en_profile from './en_modules/profile.json'
 import en_discussion from './en_modules/discussion.json'
 import en_risk from './en_modules/risk.json'
+import en_constants from './en_modules/constants.json'
 // import ru modules
 import ru_menu from './ru_modules/menu.json'
 import ru_projectsList from './ru_modules/projectsList.json'
@@ -14,6 +15,7 @@ import ru_project from './ru_modules/project.json'
 import ru_profile from './ru_modules/profile.json'
 import ru_discussion from './ru_modules/discussion.json'
 import ru_risk from './ru_modules/risk.json'
+import ru_constants from './ru_modules/constants.json'
 
 Vue.use(VueI18n)
 
@@ -23,6 +25,7 @@ export const i18n = new VueI18n({
     fallbackLocale: 'ru',
     messages: {
         en: {
+            constants: en_constants,
             menu: en_menu,
             projectsList: en_projectsList,
             project: en_project,
@@ -31,6 +34,7 @@ export const i18n = new VueI18n({
             risk: en_risk
         },
         ru: {
+            constants: ru_constants,
             menu: ru_menu,
             projectsList: ru_projectsList,
             project: ru_project,
