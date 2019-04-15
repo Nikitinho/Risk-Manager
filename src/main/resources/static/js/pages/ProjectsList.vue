@@ -10,7 +10,18 @@
                 </v-btn>
             </v-card-title>
 
-            <v-list v-if="sortedProjects.length > 0">
+            <v-divider></v-divider>
+            <v-toolbar dense flat>
+                <v-text-field
+                        class="elevation-0"
+                        prepend-icon="search"
+                        v-model="searchField"
+                        single-line
+                        flat>
+                </v-text-field>
+            </v-toolbar>
+
+            <v-list>
                 <template v-for="type in types">
                     <v-divider></v-divider>
 
@@ -26,7 +37,7 @@
 
                     <slot v-if="type.isShown">
 
-                        <template v-if="sortedProjects.filter(project => project.type === type.value).length === 0">
+                        <template v-if="filteredProjects.filter(project => project.type === type.value).length === 0">
                             <v-divider></v-divider>
                             <v-list-tile>
                                 <v-list-tile-content>
@@ -36,7 +47,7 @@
                         </template>
 
                 <template v-else
-                        v-for="(project, index) in sortedProjects.filter(project => project.type === type.value)"
+                        v-for="(project, index) in filteredProjects.filter(project => project.type === type.value)"
                           :v-key="project.id">
 
                     <v-divider></v-divider>
@@ -68,10 +79,20 @@
     export default {
         data() {
             return {
-                types:[]
+                types:[],
+                searchField: ''
             }
         },
-        computed: mapGetters(['sortedProjects', 'getProjectTypes']),
+        computed: {
+            ...mapGetters(['sortedProjects', 'getProjectTypes']),
+            filteredProjects() {
+                let list = this.sortedProjects
+                if (this.searchField) {
+                    list = list.filter(project => project.name.toLowerCase().includes(this.searchField.toLowerCase()))
+                }
+                return list
+            }
+        },
         created() {
             this.getProjectTypes.forEach(type => this.types.push({value: type, isShown: false}))
         },

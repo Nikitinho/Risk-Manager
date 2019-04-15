@@ -25,6 +25,9 @@
             </v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items class="hidden-sm-and-down">
+                <v-btn icon @click="() => this.$router.back()">
+                    <v-icon dark>chevron_left</v-icon>
+                </v-btn>
                 <v-btn v-if="profile" flat
                        :disabled="$route.name === 'Discussion'"
                        @click="showDiscussion">
