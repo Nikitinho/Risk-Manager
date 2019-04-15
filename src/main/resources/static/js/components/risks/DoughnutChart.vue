@@ -11,7 +11,11 @@
             return {
                 datacollection: {
                     //Data to be represented on x-axis
-                    labels: ['Low', 'Medium', 'High'],
+                    labels: [
+                        this.$t('project.graph.doughnutChart.low'),
+                        this.$t('project.graph.doughnutChart.medium'),
+                        this.$t('project.graph.doughnutChart.high')
+                    ],
                     datasets: [
                         {
                             backgroundColor: ['green', 'yellow', 'red'],
