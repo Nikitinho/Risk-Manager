@@ -24,6 +24,7 @@ export default class Risk {
             this.actionEndDate = risk.actionEndDate ? risk.actionEndDate.substr(0, 10) : null
             this.strategyInfo = risk.strategyInfo
             this.actualActionEndDate = risk.actualActionEndDate ? risk.actualActionEndDate.substr(0, 10) : null
+            this.hasWorked = risk.hasWorked
             this.comments = risk.comments || []
         } else {
             this.text = ''
@@ -44,6 +45,7 @@ export default class Risk {
             this.actionEndDate = null
             this.strategyInfo = ''
             this.actualActionEndDate = null
+            this.hasWorked = false
             this.comments = []
         }
     }

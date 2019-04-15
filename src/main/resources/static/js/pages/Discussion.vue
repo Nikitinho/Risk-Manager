@@ -126,9 +126,10 @@
                                 </slot>
                                     <slot v-else-if="item.type === 'ATTACHMENT'" >
                                         <div class="text-xs-center">
-                                            <v-btn outline color="indigo" @click="() =>
+                                            <v-btn block outline color="indigo" @click="() =>
                                             saveFile(item.file, item.fileName, item.fileType)">
-                                                Downolad file</v-btn>
+                                                <v-icon left>cloud_upload</v-icon>
+                                                {{item.fileName}}</v-btn>
                                         </div>
                                     </slot>
                                 </v-card-text>

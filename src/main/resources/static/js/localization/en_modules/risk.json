@@ -15,7 +15,8 @@
     "startDate": "Start date",
     "endDate": "End date",
     "additionalInfo": "Additional info",
-    "actualEndDate": "Actual end date"
+    "actualEndDate": "Actual end date",
+    "hasWorked": "Risk has worked"
   },
   "categories": {
     "integration": "Integration",

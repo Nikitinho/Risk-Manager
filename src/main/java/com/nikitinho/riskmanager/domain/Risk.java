@@ -105,6 +105,9 @@ public class Risk {
     @JsonView(Views.FullRisk.class)
     private List<RiskComment> comments;
 
+    @JsonView(Views.FullRisk.class)
+    private Boolean hasWorked;
+
     public void setActionStartDate(String date) {
         if (date == null || date.isEmpty()) {
             this.actionStartDate = null;
@@ -151,6 +154,16 @@ public class Risk {
         } else {
             this.comments.clear();
             this.comments.addAll(comments);
+        }
+    }
+
+    public RiskStatusType estimateStatus() {
+        if (this.hasWorked) {
+            return RiskStatusType.CLOSED;
+        } else if (this.responsible.size() > 0) {
+            return RiskStatusType.OPENED;
+        } else {
+            return RiskStatusType.CREATED;
         }
     }
 }

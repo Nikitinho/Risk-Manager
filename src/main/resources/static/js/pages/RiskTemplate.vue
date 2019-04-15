@@ -380,6 +380,17 @@
                                 <v-flex xs12>
                                     <v-divider></v-divider>
                                 </v-flex>
+                                <v-flex xs4>
+                                    <v-subheader>{{$t('risk.fields.hasWorked')}}</v-subheader>
+                                </v-flex>
+                                <v-flex xs8>
+                                    <td v-if="readonly">{{ newRisk.hasWorked }}</td>
+                                    <v-switch v-else v-model="newRisk.hasWorked" color="success">
+                                    </v-switch>
+                                </v-flex>
+                                <v-flex xs12>
+                                    <v-divider></v-divider>
+                                </v-flex>
                                 <slot name="footer-buttons">
                                 </slot>
                             </v-layout>
