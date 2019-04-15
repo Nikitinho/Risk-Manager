@@ -1,0 +1,16 @@
+{
+  "userInfo": {
+    "name": "Имя",
+    "locale": "Локаль",
+    "gender": "Пол",
+    "email": "Email",
+    "lastAction": "Последнее действие",
+    "emptyField": "Нет информации"
+  },
+  "top10Risks": {
+    "title": "Топ 10 рисков",
+    "hideBtn": "Свернуть",
+    "showBtn": "Развернуть",
+    "emptyField": "Риски отсутствуют"
+  }
+}

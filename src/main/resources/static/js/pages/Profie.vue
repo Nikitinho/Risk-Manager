@@ -13,15 +13,20 @@
                     <v-flex justify-start text-xs-center>
                         <v-layout class="px-1" column>
                             <v-divider></v-divider>
-                            <v-flex>Name: {{ userProfile.name || 'Name is not provided' }}</v-flex>
+                            <v-flex>{{$t('profile.userInfo.name')}}:
+                                {{ userProfile.name || $t('profile.userInfo.emptyField') }}</v-flex>
                             <v-divider></v-divider>
-                            <v-flex>Locale: {{ userProfile.locale || 'Locale is not provided' }}</v-flex>
+                            <v-flex>{{$t('profile.userInfo.locale')}}:
+                                {{ userProfile.locale || $t('profile.userInfo.emptyField') }}</v-flex>
                             <v-divider></v-divider>
-                            <v-flex>Gender: {{ userProfile.gender || 'Gender is not provided' }}</v-flex>
+                            <v-flex>{{$t('profile.userInfo.gender')}}:
+                                {{ userProfile.gender || $t('profile.userInfo.emptyField') }}</v-flex>
                             <v-divider></v-divider>
-                            <v-flex>Email: {{ userProfile.email || 'Email is not provided' }}</v-flex>
+                            <v-flex>{{$t('profile.userInfo.email')}}:
+                                {{ userProfile.email || $t('profile.userInfo.emptyField') }}</v-flex>
                             <v-divider></v-divider>
-                            <v-flex>Last action: {{ userProfile.lastVisit || 'Last action is not provided' }}</v-flex>
+                            <v-flex>{{$t('profile.userInfo.lastAction')}}:
+                                {{ userProfile.lastVisit || $t('profile.userInfo.emptyField') }}</v-flex>
                             <v-divider></v-divider>
                         </v-layout>
                     </v-flex>
