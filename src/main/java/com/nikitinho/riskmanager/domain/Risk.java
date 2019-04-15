@@ -105,14 +105,6 @@ public class Risk {
     @JsonView(Views.FullRisk.class)
     private List<RiskComment> comments;
 
-    public void setRiskLevel(String riskLevel) {
-        this.riskLevel = RiskLevelType.fromString(riskLevel);
-    }
-
-    public void setRiskLevel(RiskLevelType riskLevel) {
-        this.riskLevel = riskLevel;
-    }
-
     public void setStage(String stage) {
         this.stage = RiskStageType.fromString(stage);
     }

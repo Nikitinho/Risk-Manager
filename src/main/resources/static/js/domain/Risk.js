@@ -18,7 +18,7 @@ export default class Risk {
             this.probability = risk.probability
             this.impact = risk.impact
             this.riskRate = risk.riskRate
-            this.riskLevel = Risk.convertRiskLevel(risk.riskLevel)
+            this.riskLevel = risk.riskLevel
             this.strategy = risk.strategy
             this.actionStartDate = risk.actionStartDate ? risk.actionStartDate.substr(0, 10) : null
             this.actionEndDate = risk.actionEndDate ? risk.actionEndDate.substr(0, 10) : null
@@ -45,19 +45,6 @@ export default class Risk {
             this.strategyInfo = ''
             this.actualActionEndDate = null
             this.comments = []
-        }
-    }
-
-    static convertRiskLevel(level) {
-        switch (level) {
-            case 'LOW':
-                return 'Низкий'
-            case 'MEDIUM':
-                return 'Средний'
-            case 'HIGH':
-                return 'Высокий'
-            default:
-                return null
         }
     }
 
@@ -105,11 +92,11 @@ export default class Risk {
 
     static convertRiskRateToLevel(rate) {
         if (rate >= 0.0 && rate < 0.34) {
-            return 'Низкий'
+            return 'LOW'
         } else if (rate >= 0.34 && rate < 0.68) {
-            return 'Средний'
+            return 'MEDIUM'
         } else if (rate >= 0.68 && rate <= 1.0) {
-            return 'Высокий'
+            return 'HIGH'
         }
     }
 }

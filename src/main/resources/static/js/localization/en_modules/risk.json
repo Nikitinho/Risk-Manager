@@ -38,5 +38,10 @@
     "transmission": "Transmission",
     "prevention": "Prevention",
     "minimization": "Minimization"
+  },
+  "levels": {
+    "low": "Low",
+    "medium": "Medium",
+    "high": "High"
   }
 }

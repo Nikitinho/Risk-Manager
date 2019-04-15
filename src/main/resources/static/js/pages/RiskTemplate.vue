@@ -169,7 +169,7 @@
                                     <v-subheader>{{$t('risk.fields.level')}}</v-subheader>
                                 </v-flex>
                                 <v-flex xs8 v-if="readonly">
-                                    <td>{{ newRisk.riskLevel }}</td>
+                                    <td>{{$t(`risk.levels.${newRisk.riskLevel.toLowerCase()}`)}}</td>
                                 </v-flex>
                                 <v-flex xs12>
                                     <v-divider></v-divider>

@@ -38,5 +38,10 @@
     "transmission": "Передача",
     "prevention": "Предотвращение",
     "minimization": "Минимизация"
+  },
+  "levels": {
+    "low": "Низкий",
+    "medium": "Средний",
+    "high": "Высокий"
   }
 }
