@@ -5,6 +5,30 @@
             <v-card class="mb-1">
                 <v-card-title>
                     <span class="headline font-weight-light">{{ project.name }}</span>
+                    <v-spacer></v-spacer>
+                    <v-menu
+                            bottom
+                            origin="center center"
+                            transition="scale-transition"
+                    >
+                        <template v-slot:activator="{ on }">
+                            <v-btn
+                                    color="warning"
+                                    dark
+                                    v-on="on"
+                            >
+                                {{$t('risk.export.title')}}
+                            </v-btn>
+                        </template>
+
+                        <v-list>
+                            <v-list-tile
+                                    v-for="item in exportOptions"
+                                    @click="() => exportProject(item)">
+                                <v-list-tile-title>{{$t(`risk.export.${item.toLowerCase()}`)}}</v-list-tile-title>
+                            </v-list-tile>
+                        </v-list>
+                    </v-menu>
                 </v-card-title>
                 <v-divider></v-divider>
                 <v-card-text>
@@ -330,11 +354,14 @@
     import { mapGetters } from 'vuex'
     import BubbleChart from 'components/risks/BubbleChart.vue'
     import DoughnutChart from 'components/risks/DoughnutChart.vue'
+    import printingRiskMixin from 'mixin/PrintingRiskMixin'
+    import xmlExportMixin from 'mixin/xmlExportMixin'
     import Risk from 'domain/Risk'
 
     export default {
         name: 'ProjectView',
         props: ['projectId'],
+        mixins: [printingRiskMixin, xmlExportMixin],
         data() {
             return {
                 project: null,
@@ -398,6 +425,12 @@
                     return this.project.risks.slice(0, 10)
                 }
                 return []
+            },
+            exportOptions() {
+                let options = []
+                options.push('PDF')
+                options.push('XML')
+                return options
             }
         },
         created () {
@@ -432,6 +465,13 @@
             },
             getExtraRiskUsersAmount(risk) {
                 return risk.responsible.length - this.getResponsible(risk).length
+            },
+            exportProject(DocumentType) {
+                if (DocumentType === 'PDF') {
+                    this.saveAllPDF(this.project.risks[0], this.project.id)
+                } else if (DocumentType === 'XML') {
+                    this.saveAllXML(this.project.risks, this.project.id)
+                }
             }
         },
         components: {
