@@ -139,7 +139,7 @@
                         <v-flex xs12>
                             <v-divider></v-divider>
                             <v-card-text>
-                                <span>Nothing to show here</span>
+                                <span>{{$t('discussion.boardItem.emptyMessage')}}</span>
                             </v-card-text>
                         </v-flex>
                         </slot>
@@ -149,15 +149,16 @@
             </slot>
             <v-flex shrink :xs4="!$vuetify.breakpoint.mdAndDown" :xs12="$vuetify.breakpoint.mdAndDown" text-xs-center>
                 <v-card class="my-1 mx-1">
-                    <v-card-title primary class="headline">Create your own board
+                    <v-card-title primary class="headline">{{$t('discussion.boardItem.title')}}
                         <v-spacer></v-spacer>
                         <v-btn color="success" @click="addNewBoard">
                             <v-icon>add</v-icon>
                         </v-btn>
                     </v-card-title>
                     <v-card-text>
-                        <v-text-field placeholder="Type your board's name"
-                        v-model="newBoard.name">
+                        <v-text-field
+                                :placeholder="$t('discussion.boardItem.placeholders.title')"
+                                v-model="newBoard.name">
                         </v-text-field>
                     </v-card-text>
                 </v-card>

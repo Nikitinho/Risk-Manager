@@ -1,5 +1,6 @@
 {
   "boardItem": {
+    "title": "Создать новую доску",
     "typePlaceholder": "Тип сообщения",
     "types": {
       "message": "Текстовое сообщение",
@@ -7,7 +8,9 @@
       "image": "Изображение",
       "attachment": "Вложение"
     },
+    "emptyMessage": "Записи отсутствуют",
     "placeholders": {
+      "title": "Введите название доски",
       "message": "Сообщение",
       "image": "Выберите изображение",
       "attachment": "Выберите файл"

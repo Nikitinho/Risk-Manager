@@ -1,5 +1,6 @@
 {
   "boardItem": {
+    "title": "Create your own board",
     "typePlaceholder": "Message Type",
     "types": {
       "message": "Text message",
@@ -7,7 +8,9 @@
       "image": "Image",
       "attachment": "Attachment"
     },
+    "emptyMessage": "Nothing to show here",
     "placeholders": {
+      "title": "Type your board's name",
       "message": "Message",
       "image": "Select image",
       "attachment": "Select file"
