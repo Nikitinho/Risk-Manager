@@ -1,0 +1,61 @@
+{
+  "risksList": {
+    "title": "Список рисков",
+    "emptyField": "Риски отсутствуют"
+  },
+  "categories": {
+    "integration": "Риски интеграции",
+    "financial": "Финансовые риски",
+    "temporary": "Временные риски",
+    "personnel": "Риски персонала",
+    "communication": "Коммуникационные риски",
+    "vendor": "Риски поставщиков",
+    "lack_of_quality": "Риски несоответствия качеству"
+  },
+  "statuses": {
+    "created": "Новый",
+    "opened": "Открыт",
+    "closed": "Закрыт",
+    "default": "Статус"
+  },
+  "levels": {
+    "low": "Низкий",
+    "medium": "Средний",
+    "high": "Высокий",
+    "default": "Уровень"
+  },
+  "projectTeam": {
+    "title": "Проектная команда",
+    "hideBtn": "Свернуть",
+    "showBtn": "Развернуть",
+    "roles": {
+      "managers": "Менеджеры",
+      "analytics": "Аналитики",
+      "developers": "Разработчики",
+      "testers": "Тестировщики",
+      "others": "Роли не установлены"
+    },
+    "emptyField": "Пользователи отсутствуют"
+  },
+  "top10Risks": {
+    "title": "Топ 10 рисков",
+    "hideBtn": "Свернуть",
+    "showBtn": "Развернуть",
+    "emptyField": "Риски отсутствуют"
+  },
+  "graph": {
+    "title": "Диаграмма",
+    "bubbleChart": {
+      "impact": "Воздействие",
+      "probability": "Вероятность"
+    },
+    "doughnutChart": {
+      "high": "Высокие",
+      "medium": "Средние",
+      "low": "Низкие"
+    },
+    "hideBtn": "Свернуть",
+    "showBtn": "Развернуть",
+    "emptyField": "Данные для построения диаграмм отсутствуют"
+  }
+}

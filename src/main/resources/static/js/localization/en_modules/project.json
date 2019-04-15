@@ -1,0 +1,61 @@
+{
+  "risksList": {
+    "title": "Risks List",
+    "emptyField": "Nothing to show here"
+  },
+  "categories": {
+    "integration": "Integration risks",
+    "financial": "Financial risks",
+    "temporary": "Temporary risks",
+    "personnel": "Personnel risks",
+    "communication": "Communication risks",
+    "vendor": "Vendor risks",
+    "lack_of_quality": "Lack of quality risks"
+  },
+  "statuses": {
+    "created": "New",
+    "opened": "Opened",
+    "closed": "Closed",
+    "default": "Status"
+  },
+  "levels": {
+    "low": "Low",
+    "medium": "Medium",
+    "high": "High",
+    "default": "Level"
+  },
+  "projectTeam": {
+    "title": "Project team",
+    "hideBtn": "Hide team",
+    "showBtn": "Show team",
+    "roles": {
+      "managers": "Managers",
+      "analytics": "Analytics",
+      "developers": "Developers",
+      "testers": "Testers",
+      "others": "Roles are not defined"
+    },
+    "emptyField": "Nothing to show here"
+  },
+  "top10Risks": {
+    "title": "Top 10 Risks",
+    "hideBtn": "Hide",
+    "showBtn": "Show",
+    "emptyField": "Nothing to show here"
+  },
+  "graph": {
+    "title": "Graph",
+    "bubbleChart": {
+      "impact": "Impact",
+      "probability": "Probability"
+    },
+    "doughnutChart": {
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low"
+    },
+    "hideBtn": "Hide",
+    "showBtn": "Show",
+    "emptyField": "Nothing to show here"
+  }
+}
