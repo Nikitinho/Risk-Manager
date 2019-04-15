@@ -48,6 +48,7 @@
     "identification": "Identification",
     "evaluation": "Evaluation",
     "planning": "Planning",
-    "monitoring": "Monitoring"
+    "monitoring": "Monitoring",
+    "emptyStage": "No info provided yet"
   }
 }

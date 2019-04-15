@@ -48,6 +48,7 @@
     "identification": "Идентификация",
     "evaluation": "Оценка",
     "planning": "Планирование",
-    "monitoring": "Мониторинг"
+    "monitoring": "Мониторинг",
+    "emptyStage": "Данные отсутствуют"
   }
 }

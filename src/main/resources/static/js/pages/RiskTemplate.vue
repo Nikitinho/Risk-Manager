@@ -185,7 +185,7 @@
                             </v-layout>
                         </v-form>
                         <v-card-text v-else>
-                            <span>No info provided yet.</span>
+                            <span>{{$t('risk.stages.emptyStage')}}</span>
                         </v-card-text>
                     </v-card>
                 </v-stepper-content>
@@ -308,7 +308,7 @@
                                     <v-subheader>{{$t('risk.fields.additionalInfo')}}</v-subheader>
                                 </v-flex>
                                 <v-flex xs8>
-                                    <td v-if="readonly">{{ newRisk.strategyInfo || 'No info provided' }}</td>
+                                    <td v-if="readonly">{{ newRisk.strategyInfo }}</td>
                                     <v-textarea v-else
                                                 :placeholder="$t('risk.fields.additionalInfo')"
                                                 v-model="newRisk.strategyInfo"
@@ -324,7 +324,7 @@
                             </v-layout>
                         </v-form>
                         <v-card-text v-else>
-                            <span>No info provided yet.</span>
+                            <span>{{$t('risk.stages.emptyStage')}}</span>
                         </v-card-text>
                     </v-card>
                 </v-stepper-content>
@@ -385,7 +385,7 @@
                             </v-layout>
                         </v-form>
                         <v-card-text v-else>
-                            <span>No info provided yet.</span>
+                            <span>{{$t('risk.stages.emptyStage')}}</span>
                         </v-card-text>
                     </v-card>
                 </v-stepper-content>

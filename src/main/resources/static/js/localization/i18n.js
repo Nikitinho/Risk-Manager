@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueI18n from 'vue-i18n'
 // import en modules
 import en_menu from './en_modules/menu.json'
-import en_projectsList from './en_modules/projecsList.json'
+import en_projectsList from './en_modules/projectsList.json'
 import en_project from './en_modules/project.json'
 import en_profile from './en_modules/profile.json'
 import en_discussion from './en_modules/discussion.json'
