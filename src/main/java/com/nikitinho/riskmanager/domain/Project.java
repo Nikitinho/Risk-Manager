@@ -46,6 +46,9 @@ public class Project {
     private User author;
 
     @JsonView(Views.FullProject.class)
+    private ProjectType type;
+
+    @JsonView(Views.FullProject.class)
     @ManyToMany
     @JoinTable(name = "project_manager",
             joinColumns = {@JoinColumn(name = "project_id")},

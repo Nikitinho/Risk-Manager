@@ -5,6 +5,9 @@ export default {
     description: [
         v => !!v || 'Описание проекта - обязательное поле'
     ],
+    type:[
+        v => !!v || 'Вид проекта - обязательное поле'
+    ],
     managers: [
     ],
     analytics: [

@@ -50,6 +50,7 @@ public class MainController {
             data.put("boarditems", BoardItemType.values());
 //            data.put("projects", projectRepo.findAll().stream().filter(project -> project.getResponsible().stream()
 //                    .anyMatch(usr -> usr.getId().equals(user.getId()))).toArray());
+            data.put("projecttypes", ProjectType.values());
             data.put("projects", projectRepo.findAll());
 
             // Only load risks where the user is one of responsible people

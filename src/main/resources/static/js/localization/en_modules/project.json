@@ -2,6 +2,7 @@
   "fields": {
     "name": "Project name",
     "description": "Project description",
+    "type": "Project type",
     "managers": "Managers",
     "analytics": "Analytics",
     "developers": "Developers",
@@ -20,6 +21,20 @@
     "communication": "Communication risks",
     "vendor": "Vendor risks",
     "lack_of_quality": "Lack of quality risks"
+  },
+  "types": {
+    "web": "WEB",
+    "access_control_systems": "Access control systems",
+    "automation": "Automation",
+    "lan_and_hardware": "LAN & Hardware",
+    "electronic_document_management": "Electronic document management",
+    "erp": "ERP",
+    "telecommunication": "Telecommunication",
+    "crm": "CRM",
+    "information_security_system": "Information security system",
+    "software_development": "Software development",
+    "bi": "BI",
+    "software_installation": "Software installation"
   },
   "statuses": {
     "created": "New",

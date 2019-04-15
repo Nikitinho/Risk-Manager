@@ -42,6 +42,26 @@
                             <v-divider></v-divider>
                         </v-flex>
                         <v-flex xs4>
+                            <v-subheader>{{$t('project.fields.type')}}</v-subheader>
+                        </v-flex>
+                        <v-flex xs8>
+                            <v-select :items="getProjectTypes"
+                                      :placeholder="$t('project.fields.type')"
+                                      v-model="newProject.type"
+                                      :rules="validation.type"
+                                      required>
+                                <template slot="item" slot-scope="data">
+                                    {{$t(`project.types.${data.item.toLowerCase()}`)}}
+                                </template>
+                                <template slot="selection" slot-scope="data">
+                                    {{$t(`project.types.${data.item.toLowerCase()}`)}}
+                                </template>
+                            </v-select>
+                        </v-flex>
+                        <v-flex xs12>
+                            <v-divider></v-divider>
+                        </v-flex>
+                        <v-flex xs4>
                             <v-subheader>{{$t('project.fields.managers')}}</v-subheader>
                         </v-flex>
                         <v-flex xs8>
@@ -147,7 +167,7 @@
             }
         },
         computed: {
-            ...mapGetters(['activeUsers', 'getUserByEmail', 'getProjectById', 'getProfile']),
+            ...mapGetters(['activeUsers', 'getUserByEmail', 'getProjectById', 'getProfile', 'getProjectTypes']),
             users() {
                 let users = []
                 Array.from(this.activeUsers).forEach(user =>

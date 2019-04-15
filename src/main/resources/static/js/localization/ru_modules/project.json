@@ -2,6 +2,7 @@
   "fields": {
     "name": "Название проекта",
     "description": "Описание проекта",
+    "type": "Вид проекта",
     "managers": "Менеджеры",
     "analytics": "Аналитики",
     "developers": "Разработчики",
@@ -20,6 +21,20 @@
     "communication": "Коммуникационные риски",
     "vendor": "Риски поставщиков",
     "lack_of_quality": "Риски несоответствия качеству"
+  },
+  "types": {
+    "web": "WEB",
+    "access_control_systems": "Системы контроля и управления доступом",
+    "automation": "Автоматизация производства",
+    "lan_and_hardware": "LAN & Hardware",
+    "electronic_document_management": "Организация электронного документооборота",
+    "erp": "ERP",
+    "telecommunication": "Телекоммуникации",
+    "crm": "CRM",
+    "information_security_system": "Система информационной безопасности",
+    "software_development": "Разработка ПО",
+    "bi": "BI",
+    "software_installation": "Инсталляция ПО"
   },
   "statuses": {
     "created": "Новый",

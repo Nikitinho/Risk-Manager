@@ -5,6 +5,9 @@ export default {
     description: [
         v => !!v || 'Description is required'
     ],
+    type:[
+        v => !!v || 'Type is required'
+    ],
     managers: [
     ],
     analytics: [

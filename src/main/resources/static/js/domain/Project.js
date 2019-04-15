@@ -5,6 +5,7 @@ export default class Project {
             this.name = project.name
             this.creationDate = project.creationDate
             this.description = project.description
+            this.type = project.type
             this.managers = project.managers || []
             this.analytics = project.analytics || []
             this.developers = project.developers || []
@@ -15,6 +16,7 @@ export default class Project {
             this.name = ''
             this.creationDate = ''
             this.description = ''
+            this.type = null
             this.managers = []
             this.analytics = []
             this.developers = []

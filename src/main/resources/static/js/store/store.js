@@ -18,6 +18,7 @@ export default new Vuex.Store({
         users: frontendData.users,
         boards: frontendData.boards,
         boarditems: frontendData.boarditems,
+        projecttypes: frontendData.projecttypes,
         profileRisks: []
     },
     getters: {
@@ -26,6 +27,7 @@ export default new Vuex.Store({
         actionStrategies: state => state.strategies,
         getBoards: state => state.boards,
         boardItems: state => state.boarditems,
+        getProjectTypes: state => state.projecttypes,
         riskStatuses: state => state.statuses,
         activeUsers: state => state.users,
         getUserByEmail: state => name => {

@@ -1,0 +1,16 @@
+package com.nikitinho.riskmanager.domain;
+
+public enum ProjectType {
+    WEB,
+    ACCESS_CONTROL_SYSTEMS,
+    AUTOMATION,
+    LAN_AND_HARDWARE,
+    ELECTRONIC_DOCUMENT_MANAGEMENT,
+    ERP,
+    TELECOMMUNICATION,
+    CRM,
+    INFORMATION_SECURITY_SYSTEM,
+    SOFTWARE_DEVELOPMENT,
+    BI,
+    SOFTWARE_INSTALLATION
+}
