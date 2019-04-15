@@ -9,8 +9,35 @@
                     <v-icon dark>add</v-icon>
                 </v-btn>
             </v-card-title>
+
             <v-list v-if="sortedProjects.length > 0">
-                <template v-for="(project, index) in sortedProjects" :v-key="project.id">
+                <template v-for="type in types">
+                    <v-divider></v-divider>
+
+                    <v-list-tile style="background: #F5F5F5"
+                                 @click="() => type.isShown = !type.isShown">
+                        <v-list-tile-avatar>
+                            <v-icon>list</v-icon>
+                        </v-list-tile-avatar>
+                        <v-list-tile-content>
+                            <v-list-tile-title>{{$t(`project.types.${type.value.toLowerCase()}`)}}</v-list-tile-title>
+                        </v-list-tile-content>
+                    </v-list-tile>
+
+                    <slot v-if="type.isShown">
+
+                        <template v-if="sortedProjects.filter(project => project.type === type.value).length === 0">
+                            <v-divider></v-divider>
+                            <v-list-tile>
+                                <v-list-tile-content>
+                                    <v-list-tile-title>{{$t('projectsList.empty')}}</v-list-tile-title>
+                                </v-list-tile-content>
+                            </v-list-tile>
+                        </template>
+
+                <template v-else
+                        v-for="(project, index) in sortedProjects.filter(project => project.type === type.value)"
+                          :v-key="project.id">
 
                     <v-divider></v-divider>
 
@@ -27,6 +54,8 @@
                         </v-list-tile-content>
                     </v-list-tile>
                 </template>
+                    </slot>
+                </template>
             </v-list>
             </v-card>
     </v-layout>
@@ -39,9 +68,13 @@
     export default {
         data() {
             return {
+                types:[]
             }
         },
-        computed: mapGetters(['sortedProjects']),
+        computed: mapGetters(['sortedProjects', 'getProjectTypes']),
+        created() {
+            this.getProjectTypes.forEach(type => this.types.push({value: type, isShown: false}))
+        },
         methods: {
             createProject() {
                 this.$router.push({ name: 'ProjectCreation' })
