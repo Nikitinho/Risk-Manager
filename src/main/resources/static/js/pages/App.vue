@@ -100,9 +100,12 @@
                 this.$router.push({ name: 'ProjectCreation' })
             },
             changeLocale() {
-                console.log('Locale before: ' +  this.$i18n.locale)
+//                console.log('Locale before: ' + this.$i18n.locale)
                 this.$i18n.locale = this.$i18n.locale === 'en' ? 'ru' : 'en'
-                console.log('Locale after: ' +  this.$i18n.locale)
+//                console.log('Locale after: ' +  this.$i18n.locale)
+                if (localStorage) {
+                    localStorage.locale = this.$i18n.locale
+                }
             }
         },
         created() {
@@ -168,6 +171,11 @@
                     console.error(`Object type ${data.objectType} is unknown`)
                 }
             })
+        },
+        mounted() {
+            if (localStorage && localStorage.locale) {
+                this.$i18n.locale = localStorage.locale
+            }
         },
         beforeMount() {
             if (!this.profile) {
