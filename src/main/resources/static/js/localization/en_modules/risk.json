@@ -52,7 +52,7 @@
     "emptyStage": "No info provided yet"
   },
   "export": {
-    "title": "Export document",
+    "title": "Export",
     "pdf": "to PDF",
     "xml": "to XML"
   }

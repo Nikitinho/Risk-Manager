@@ -422,7 +422,8 @@
             },
             top10RisksList() {
                 if (this.project.risks && this.project.risks.length > 0) {
-                    return this.project.risks.slice(0, 10)
+                    let top10 = [...this.project.risks]
+                    return top10.sort((a, b) => -(a.riskRate - b.riskRate))
                 }
                 return []
             },
