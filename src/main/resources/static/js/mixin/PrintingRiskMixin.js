@@ -68,6 +68,7 @@ export default {
             pdfMake.vfs = pdfFonts.pdfMake.vfs
 
             let zip = new JSZip()
+            let folder = zip.folder(`Project${projectId}`);
 
             risks.forEach(function (risk, riskIndex) {
                 let content = [
@@ -129,7 +130,7 @@ export default {
 
                 pdfDocGenerator.getBlob((blob) => {
                     pdfBlob = blob
-                    zip.file(`Risk${risk.id}.pdf`, pdfBlob, {binary: true, compression: "DEFLATE"})
+                    folder.file(`Risk${risk.id}.pdf`, pdfBlob, {binary: true, compression: "DEFLATE"})
                     if (risks.length - 1 === riskIndex) {
                         zip.generateAsync({type: "blob"})
                             .then(function (content) {
