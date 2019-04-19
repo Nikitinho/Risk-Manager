@@ -19,6 +19,7 @@ public class User implements Serializable {
     private String name;
     @JsonView(Views.IdName.class)
     private String userpic;
+    @JsonView(Views.IdName.class)
     private String email;
     private String gender;
     private String locale;
