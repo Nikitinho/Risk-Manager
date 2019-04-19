@@ -6,7 +6,7 @@
     //Exporting this so it can be used in other components
     export default {
         extends: Doughnut,
-        props: ['data'],
+        props: ['data', 'highRiskValue'],
         data () {
             return {
                 datacollection: {
@@ -33,6 +33,23 @@
             this.addDoughnuts()
         },
         watch: {
+            highRiskValue: {
+                // the callback will be called immediately after the start of the observation
+                immediate: true,
+                handler (val) {
+                    if (!this.$data._chart)  { return }
+                    this.$data._chart.destroy()
+                    while (this.datacollection.datasets[0].data.length > 0) {
+                        this.datacollection.datasets[0].data.pop()
+                    }
+                    this.highCount = 0
+                    this.mediumCount = 0
+                    this.lowCount = 0
+                    this.addData(this.data)
+                    this.addDoughnuts()
+                    this.renderChart(this.datacollection, this.options)
+                }
+            },
             '$i18n.locale': {
                 immediate: true,
                 handler (val) {
@@ -59,12 +76,12 @@
                 }
             },
             calculateDoughnuts(element) {
-                let level = element.riskRate
-                if (level > 0.0 && level < 0.34) {
+                let color = Risk.convertRiskRateToColorCustomizable(element.riskRate, this.highRiskValue || 0.68)
+                if (color === 'green') {
                     this.lowCount += 1
-                } else if (level >= 0.34 && level < 0.68) {
+                } else if (color === 'yellow') {
                     this.mediumCount += 1
-                } else if (level >= 0.68 && level <= 1.0) {
+                } else if (color === 'red') {
                     this.highCount += 1
                 }
             },

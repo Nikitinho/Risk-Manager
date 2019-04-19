@@ -75,17 +75,10 @@
                 handler (val) {
                     if (!this.$data._chart)  { return }
                     this.$data._chart.destroy()
-                    let line = this.datacollection.datasets.find(x => x.type === 'line')
-                    while(line.data.length > 0) {
-                        line.data.pop()
+                    while (this.datacollection.datasets.length > 0) {
+                        this.datacollection.datasets.pop()
                     }
-                    for(let i = 0.0; i <= 1.0; i += 0.01) {
-                        let newDot = {
-                            x: i,
-                            y: val/i
-                        }
-                        line.data.push(newDot)
-                    }
+                    this.addData(this.data)
                     this.renderChart(this.datacollection, this.options)
                 }
             },
@@ -112,12 +105,12 @@
                     if (!element.probability || !element.impact) { continue; }
                     this.addNewBubble(element)
                 }
-                this.drawCurvedLine(this.highRiskValue ? this.highRiskValue : 0.68)
+                this.drawCurvedLine(this.highRiskValue || 0.68)
             },
             addNewBubble(element) {
                 let newBubble = {
                     label: element.text,
-                    backgroundColor: Risk.convertRiskRateToColor(element.riskRate),
+                    backgroundColor: Risk.convertRiskRateToColorCustomizable(element.riskRate, this.highRiskValue || 0.68),
                     pointBackgroundColor: 'white',
                     borderWidth: 2,
                     pointBorderColor: '#000000',

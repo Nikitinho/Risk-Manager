@@ -329,7 +329,8 @@
                                           :data="project.risks"
                                           :highRiskValue="highRiskValue">
                             </bubble-chart>
-                            <doughnut-chart v-else :data="project.risks"></doughnut-chart>
+                            <doughnut-chart v-else :data="project.risks"
+                                            :highRiskValue="highRiskValue"></doughnut-chart>
                             <v-card-text>
                                 <v-slider
                                         persistent-hint
