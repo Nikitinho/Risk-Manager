@@ -327,12 +327,14 @@
                         <slot v-if="project.risks && project.risks.length > 0">
                             <bubble-chart v-if="isBubbleChartShown"
                                           :data="project.risks"
-                                          :highRiskValue="highRiskValue/100.00">
+                                          :highRiskValue="highRiskValue">
                             </bubble-chart>
                             <doughnut-chart v-else :data="project.risks"></doughnut-chart>
                             <v-card-text>
                                 <v-slider
                                         persistent-hint
+                                        :max="1.00"
+                                        step="0.01"
                                         thumb-label="always"
                                         v-model="highRiskValue"
                                 ></v-slider>
@@ -402,7 +404,7 @@
                 ],
                 chosenLevel: {label: 'Уровень', value: null},
                 searchField: '',
-                highRiskValue: 68
+                highRiskValue: 0.68
             }
         },
         computed: {
