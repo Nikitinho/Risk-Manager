@@ -1,6 +1,8 @@
 // Risk
 // All fields coincide with .java class!
 // All enums coincide with .java enums!
+import {i18n} from 'localization/i18n'
+
 export default class Risk {
 
     constructor (risk) {
@@ -99,6 +101,21 @@ export default class Risk {
             return 'MEDIUM'
         } else if (rate >= 0.68 && rate <= 1.0) {
             return 'HIGH'
+        }
+    }
+
+    static convertEnumToValue(path, enumValue) {
+        switch (path) {
+            case 'category':
+                return i18n.tc(`risk.categories.${enumValue.toLowerCase()}`)
+            case 'status':
+                return i18n.tc(`risk.statuses.${enumValue.toLowerCase()}`)
+            case 'strategy':
+                return i18n.tc(`risk.strategies.${enumValue.toLowerCase()}`)
+            case 'riskLevel':
+                return i18n.tc(`risk.levels.${enumValue.toLowerCase()}`)
+            default:
+                return null
         }
     }
 }

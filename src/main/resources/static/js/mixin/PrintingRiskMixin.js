@@ -2,6 +2,7 @@ import pdfMake from 'pdfMake/build/pdfmake.min'
 import pdfFonts from 'pdfmake/build/vfs_fonts'
 import JSZip from 'jszip'
 import {i18n} from 'localization/i18n'
+import Risk from 'domain/Risk'
 
 export default {
     methods: {
@@ -35,9 +36,10 @@ export default {
                 if (risk[key] !== null && risk[key] !== undefined && risk[key] !== '') {
                     let text = String(key).replace( /([A-Z])/g, " $1" );
                     let sentenceCaseText = text.charAt(0).toUpperCase() + text.slice(1);
+                    let value = Risk.convertEnumToValue(key, risk[key]) || risk[key]
                     let textLabel = i18n.tc(`risk.fields.${key}`) || sentenceCaseText
                     content.push ({
-                        text: `${textLabel}: ${risk[key]}`,
+                        text: `${textLabel}: ${value}`,
                         style: 'default'
                     })
                 }
