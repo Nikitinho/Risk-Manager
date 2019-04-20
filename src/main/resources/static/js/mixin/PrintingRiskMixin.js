@@ -72,12 +72,22 @@ export default {
 
             pdfMake.createPdf(this.convertToPdf(risk)).download(`Risk${risk.id}`)
         },
-        saveAllPDF(risks, projectId) {
+        async saveAllPDF(risks, projectId) {
             pdfMake.vfs = pdfFonts.pdfMake.vfs
 
             let zip = new JSZip()
             let folder = zip.folder(`Project${projectId}`);
             let this$ = this
+
+            let event = document.createEvent('Event');
+            event.initEvent('zipIsReady', true, true);
+
+            document.addEventListener('zipIsReady', function (e) {
+                zip.generateAsync({type: "blob"})
+                        .then(async function (content) {
+                            await saveAs(content, `Project${projectId}`);
+                        });
+            }, false);
 
             risks.forEach(function (risk, riskIndex) {
                 let pdfBlob = null
@@ -88,12 +98,9 @@ export default {
                     pdfBlob = blob
                     folder.file(`Risk${risk.id}.pdf`, pdfBlob, {binary: true, compression: "DEFLATE"})
                     if (risks.length - 1 === riskIndex) {
-                        zip.generateAsync({type: "blob"})
-                            .then(function (content) {
-                                saveAs(content, `Project${projectId}`);
-                            });
+                        document.dispatchEvent(event);
                     }
-                });
+                })
             })
         }
     }
