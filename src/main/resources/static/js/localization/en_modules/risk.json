@@ -1,5 +1,7 @@
 {
   "fields": {
+    "id": "Risk id",
+    "creationDate": "Creation date",
     "title": "Risk title",
     "description": "Risk description",
     "category": "Risk category",
@@ -8,14 +10,14 @@
     "status": "Risk status",
     "probability": "Probability",
     "impact": "Impact",
-    "rate": "Risk rate",
-    "level": "Risk level",
+    "riskRate": "Risk rate",
+    "riskLevel": "Risk level",
     "responsible": "Responsible people",
     "strategy": "Action strategy",
-    "startDate": "Start date",
-    "endDate": "End date",
-    "additionalInfo": "Additional info",
-    "actualEndDate": "Actual end date",
+    "actionStartDate": "Start date",
+    "actionEndDate": "End date",
+    "strategyInfo": "Additional info",
+    "actualActionEndDate": "Actual end date",
     "hasWorked": "Risk has worked",
     "areNotificationSent": "Send notifications"
   },

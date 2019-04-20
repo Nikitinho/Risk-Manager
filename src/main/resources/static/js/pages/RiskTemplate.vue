@@ -170,7 +170,7 @@
                                     <v-divider></v-divider>
                                 </v-flex>
                                 <v-flex xs4 v-if="readonly">
-                                    <v-subheader>{{$t('risk.fields.rate')}}</v-subheader>
+                                    <v-subheader>{{$t('risk.fields.riskRate')}}</v-subheader>
                                 </v-flex>
                                 <v-flex xs8 v-if="readonly">
                                     <td>{{ newRisk.riskRate }}</td>
@@ -179,7 +179,7 @@
                                     <v-divider></v-divider>
                                 </v-flex>
                                 <v-flex xs4 v-if="readonly">
-                                    <v-subheader>{{$t('risk.fields.level')}}</v-subheader>
+                                    <v-subheader>{{$t('risk.fields.riskLevel')}}</v-subheader>
                                 </v-flex>
                                 <v-flex xs8 v-if="readonly">
                                     <td>{{$t(`risk.levels.${newRisk.riskLevel.toLowerCase()}`)}}</td>
@@ -244,7 +244,7 @@
                                     <v-divider></v-divider>
                                 </v-flex>
                                 <v-flex xs4>
-                                    <v-subheader>{{$t('risk.fields.startDate')}}</v-subheader>
+                                    <v-subheader>{{$t('risk.fields.actionStartDate')}}</v-subheader>
                                 </v-flex>
                                 <v-flex xs8>
                                     <td v-if="readonly">{{ newRisk.actionStartDate }}</td>
@@ -278,7 +278,7 @@
                                     <v-divider></v-divider>
                                 </v-flex>
                                 <v-flex xs4>
-                                    <v-subheader>{{$t('risk.fields.endDate')}}</v-subheader>
+                                    <v-subheader>{{$t('risk.fields.actionEndDate')}}</v-subheader>
                                 </v-flex>
                                 <v-flex xs8>
                                     <td v-if="readonly">{{ newRisk.actionEndDate }}</td>
@@ -312,7 +312,7 @@
                                     <v-divider></v-divider>
                                 </v-flex>
                                 <v-flex xs4>
-                                    <v-subheader>{{$t('risk.fields.additionalInfo')}}</v-subheader>
+                                    <v-subheader>{{$t('risk.fields.strategyInfo')}}</v-subheader>
                                 </v-flex>
                                 <v-flex xs8>
                                     <td v-if="readonly">{{ newRisk.strategyInfo }}</td>
@@ -343,7 +343,7 @@
                                 lazy-validation v-if="!readonly || isMonitoringStage">
                             <v-layout row wrap align-center>
                                 <v-flex xs4>
-                                    <v-subheader>{{$t('risk.fields.endDate')}}</v-subheader>
+                                    <v-subheader>{{$t('risk.fields.actionEndDate')}}</v-subheader>
                                 </v-flex>
                                 <v-flex xs8>
                                     <td>{{ newRisk.actionEndDate }}</td>
@@ -353,7 +353,7 @@
                                         <v-divider></v-divider>
                                     </v-flex>
                                     <v-flex xs4>
-                                        <v-subheader>{{$t('risk.fields.actualEndDate')}}</v-subheader>
+                                        <v-subheader>{{$t('risk.fields.actualActionEndDate')}}</v-subheader>
                                     </v-flex>
                                     <v-flex xs8>
                                         <td v-if="readonly">{{ newRisk.actualActionEndDate }}</td>

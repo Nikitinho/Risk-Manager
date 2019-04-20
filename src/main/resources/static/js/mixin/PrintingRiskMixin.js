@@ -1,17 +1,18 @@
 import pdfMake from 'pdfMake/build/pdfmake.min'
 import pdfFonts from 'pdfmake/build/vfs_fonts'
 import JSZip from 'jszip'
+import {i18n} from 'localization/i18n'
 
 export default {
     methods: {
         convertToPdf(risk) {
             let content = [
                 {
-                    text: `Risk id: ${risk.id}`,
+                    text: `${i18n.tc('risk.fields.id')}: ${risk.id}`,
                     style: 'header'
                 },
                 {
-                    text: `Risk title: ${risk.text}`,
+                    text: `${i18n.tc('risk.fields.title')}: ${risk.text}`,
                     style: 'default'
                 }
             ]
@@ -20,20 +21,23 @@ export default {
             // Property/field 'Responsible users' needs manual parsing
             // Comments section is not included in .pdf file
             // Notifications flag is not included in .pdf file
+            // Stage is not included. This field is only for UI form.
             const keys = Object.keys(risk).filter(key =>
                 (String)(key) !== 'id' &&
                 (String)(key) !== 'text' &&
                 (String)(key) !== 'comments' &&
                 (String)(key) !== 'responsible' &&
-                (String)(key) !== 'areNotificationSent'
+                (String)(key) !== 'areNotificationSent' &&
+                (String)(key) !== 'stage'
             )
 
             keys.forEach(function (key) {
                 if (risk[key] !== null && risk[key] !== undefined && risk[key] !== '') {
                     let text = String(key).replace( /([A-Z])/g, " $1" );
                     let sentenceCaseText = text.charAt(0).toUpperCase() + text.slice(1);
+                    let textLabel = i18n.tc(`risk.fields.${key}`) || sentenceCaseText
                     content.push ({
-                        text: `${sentenceCaseText}: ${risk[key]}`,
+                        text: `${textLabel}: ${risk[key]}`,
                         style: 'default'
                     })
                 }
@@ -45,7 +49,7 @@ export default {
                 let usersEmails = []
                 responsibleUsers.forEach(user => usersEmails.push(user.email))
                 content.push({
-                    text: `Responsible users: ${usersEmails.join(', ')}`,
+                    text: `${i18n.tc('risk.fields.responsible')}: ${usersEmails.join(', ')}`,
                     style: 'default'
                 })
             }

@@ -1,5 +1,7 @@
 {
   "fields": {
+    "id": "Идентификатор риска",
+    "creationDate": "Дата создания",
     "title": "Название риска",
     "description": "Описание риска",
     "category": "Категория риска",
@@ -8,14 +10,14 @@
     "status": "Статус",
     "probability": "Вероятность",
     "impact": "Влияние",
-    "rate": "Показатель риска",
-    "level": "Уровень риска",
+    "riskRate": "Показатель риска",
+    "riskLevel": "Уровень риска",
     "responsible": "Ответственные пользователи",
     "strategy": "Стратегия реагирования",
-    "startDate": "Дата начала",
-    "endDate": "Дата окончания",
-    "additionalInfo": "Дополнительная информация",
-    "actualEndDate": "Реальная дата окончания",
+    "actionStartDate": "Дата начала",
+    "actionEndDate": "Дата окончания",
+    "strategyInfo": "Дополнительная информация",
+    "actualActionEndDate": "Реальная дата окончания",
     "hasWorked": "Риск сработал",
     "areNotificationSent": "Оповестить ответственных"
   },
