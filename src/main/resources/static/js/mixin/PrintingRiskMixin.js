@@ -68,7 +68,7 @@ export default {
 
             pdfMake.createPdf(this.convertToPdf(risk)).download(`Risk${risk.id}`)
         },
-        async saveAllPDF(risks, projectId) {
+        saveAllPDF(risks, projectId) {
             pdfMake.vfs = pdfFonts.pdfMake.vfs
 
             let zip = new JSZip()
