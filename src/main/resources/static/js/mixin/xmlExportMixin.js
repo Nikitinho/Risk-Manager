@@ -4,25 +4,22 @@ import JSZip from 'jszip'
 
 export default {
     methods: {
-        saveXML(risk) {
-
+        convertToXML(risk) {
             let builder = new xml2js.Builder();
             let xml = builder.buildObject(risk);
 
-            let blob = new Blob([xml], {type: "text/xml"});
-            saveAs(blob, `Risk${risk.id}`)
+            return new Blob([xml], {type: "text/xml"});
+        },
+        saveXML(risk) {
+            saveAs(this.convertToXML(risk), `Risk${risk.id}`)
         },
         saveAllXML(risks, projectId) {
             let zip = new JSZip()
             let folder = zip.folder(`Project${projectId}`);
+            let this$ = this
 
             risks.forEach(function (risk) {
-                let builder = new xml2js.Builder();
-                let xml = builder.buildObject(risk);
-
-                let blob = new Blob([xml], {type: "text/xml"});
-                console.log(blob)
-
+                let blob = this$.convertToXML(risk)
                 folder.file(`Risk${risk.id}`, blob)
             })
 
