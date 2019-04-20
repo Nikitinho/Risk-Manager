@@ -8,7 +8,6 @@ import store from 'store/store'
 import { connect } from "./util/ws"
 import 'vuetify/dist/vuetify.min.css'
 import {i18n} from "./localization/i18n";
-// import FlagIcon from 'vue-flag-icon'
 
 if (frontendData.profile) {
     connect()

@@ -259,7 +259,7 @@
                                             <template v-slot:activator="{ on }">
                                                 <v-text-field
                                                         v-model="newRisk.actionStartDate"
-                                                        :placeholder="$t('risk.fields.startDate')"
+                                                        :placeholder="$t('risk.fields.actionStartDate')"
                                                         prepend-icon="event"
                                                         :rules="isPlanningStage ? validation.actionStartDate : []"
                                                         required
@@ -293,7 +293,7 @@
                                             <template v-slot:activator="{ on }">
                                                 <v-text-field
                                                         v-model="newRisk.actionEndDate"
-                                                        :placeholder="$t('risk.fields.endDate')"
+                                                        :placeholder="$t('risk.fields.actionEndDate')"
                                                         prepend-icon="event"
                                                         :rules="isPlanningStage ? validation.actionEndDate : []"
                                                         required
@@ -317,7 +317,7 @@
                                 <v-flex xs8>
                                     <td v-if="readonly">{{ newRisk.strategyInfo }}</td>
                                     <v-textarea v-else
-                                                :placeholder="$t('risk.fields.additionalInfo')"
+                                                :placeholder="$t('risk.fields.strategyInfo')"
                                                 v-model="newRisk.strategyInfo"
                                                 :rules="isPlanningStage ? validation.strategyInfo : []"
                                                 required>
@@ -368,7 +368,7 @@
                                                 <template v-slot:activator="{ on }">
                                                     <v-text-field
                                                             v-model="newRisk.actualActionEndDate"
-                                                            :placeholder="$t('risk.fields.actualEndDate')"
+                                                            :placeholder="$t('risk.fields.actualActionEndDate')"
                                                             prepend-icon="event"
                                                             :rules="isMonitoringStage ? validation.actualActionEndDate : []"
                                                             required
