@@ -51,9 +51,15 @@ public class MainController {
 //            data.put("projects", projectRepo.findAll().stream().filter(project -> project.getResponsible().stream()
 //                    .anyMatch(usr -> usr.getId().equals(user.getId()))).toArray());
             data.put("projecttypes", ProjectType.values());
-            data.put("projects", projectRepo.findAll());
+//            data.put("projects", projectRepo.findAll());
 
-            // Only load risks where the user is one of responsible people
+            data.put("projects", projectRepo.findAll().stream().filter
+                    (project -> project.getAnalytics().stream().anyMatch(usr -> usr.getId().equals(user.getId())) ||
+                    project.getDevelopers().stream().anyMatch(usr -> usr.getId().equals(user.getId())) ||
+                    project.getManagers().stream().anyMatch(usr -> usr.getId().equals(user.getId())) ||
+                    project.getTesters().stream().anyMatch(usr -> usr.getId().equals(user.getId())) ||
+                    project.getOthers().stream().anyMatch(usr -> usr.getId().equals(user.getId()))
+            ).toArray());
 //            Arrays.stream(riskRepo.findAll().stream().filter(risk -> risk.getResponsible().stream().anyMatch(usr ->
 //                    usr.getId().equals(user.getId()))).toArray()).forEach(x->System.out.print(x));
 //            data.put("risks", riskRepo.findAll());
