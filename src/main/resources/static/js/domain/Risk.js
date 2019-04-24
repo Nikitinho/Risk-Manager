@@ -82,12 +82,15 @@ export default class Risk {
     }
 
     static convertRiskRateToColorCustomizable(level, highRiskValue) {
-        let mediumRiskValue = parseFloat((1.00 - highRiskValue)).toFixed(2)
+        let mediumRiskLevel = parseFloat(highRiskValue/2).toFixed(2)
+        console.log("Level: " + level)
+        console.log("mediumRiskLevel: " + mediumRiskLevel)
+        console.log("highRiskValue: " + highRiskValue)
         if (level === 0.0) {
             return 'grey'
         } else if (level >= highRiskValue) {
             return 'red'
-        } else if (level >= mediumRiskValue) {
+        } else if (level < highRiskValue && level >= mediumRiskLevel) {
             return 'yellow'
         } else {
             return 'green'
@@ -95,7 +98,7 @@ export default class Risk {
     }
 
     static convertRiskRateToLevel(rate) {
-        if (rate >= 0.0 && rate < 0.34) {
+        if (rate > 0.0 && rate < 0.34) {
             return 'LOW'
         } else if (rate >= 0.34 && rate < 0.68) {
             return 'MEDIUM'
