@@ -1,21 +1,28 @@
 <template>
     <v-app>
-        <v-navigation-drawer style="width: 100%" v-if="sideNav" v-model="sideNav">
-            <v-list>
-                <v-list-tile :to="{ name: 'Discussion' }">
-                    <v-list-tile-content>{{$t('menu.discussion')}}</v-list-tile-content>
-                </v-list-tile>
-                <v-list-tile :to="{ name: 'ProjectsList' }">
-                    <v-list-tile-content>{{$t('menu.projects')}}</v-list-tile-content>
-                </v-list-tile>
-                <v-list-tile :to="{ name: 'Profile', params: { userId: this.profile.id } }">
-                    <v-list-tile-content>{{ profile.name }}</v-list-tile-content>
-                </v-list-tile>
-            </v-list>
-        </v-navigation-drawer>
+        <slide :isOpen="isSlideOpen"
+               :burgerIcon="false"
+               @closeMenu="() => isSlideOpen = false">
+            <a>
+                <router-link :to="{ name: 'Discussion' }" tag="span" style="cursor: pointer">
+                    {{$t('menu.discussion')}}
+                </router-link>
+            </a>
+            <a id="home">
+                <router-link :to="{ name: 'ProjectsList' }" tag="span" style="cursor: pointer">
+                    {{$t('menu.projects')}}
+                </router-link>
+            </a>
+            <a>
+                <router-link :to="{ name: 'Profile', params: { userId: this.profile.id } }"
+                             tag="span" style="cursor: pointer">
+                    {{ profile.name }}
+                </router-link>
+            </a>
+        </slide>
         <v-toolbar dark color="#455A64">
             <v-toolbar-side-icon
-                    @click.stop="sideNav = !sideNav"
+                    @click.stop="isSlideOpen = !isSlideOpen"
                     class="hidden-md-and-up">
             </v-toolbar-side-icon>
             <v-toolbar-title>
@@ -24,23 +31,26 @@
                 </router-link>
             </v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-toolbar-items class="hidden-sm-and-down">
+            <v-toolbar-items>
                 <v-btn icon @click="() => this.$router.back()">
                     <v-icon dark>chevron_left</v-icon>
                 </v-btn>
                 <v-btn v-if="profile" flat
                        :disabled="$route.name === 'Discussion'"
-                       @click="showDiscussion">
+                       @click="showDiscussion"
+                       class="hidden-sm-and-down">
                     {{$t('menu.discussion')}}
                 </v-btn>
                 <v-btn v-if="profile" flat
                        :disabled="$route.name === 'ProjectsList'"
-                       @click="showProjects">
+                       @click="showProjects"
+                       class="hidden-sm-and-down">
                     {{$t('menu.projects')}}
                 </v-btn>
                 <v-btn v-if="profile" flat
                        :disabled="$route.name === 'Profile'"
-                       @click="showProfile">
+                       @click="showProfile"
+                       class="hidden-sm-and-down">
                     {{profile.name}}
                 </v-btn>
                 <v-btn v-if="profile" icon
@@ -69,9 +79,11 @@
 <script>
     import { mapState, mapMutations, mapActions } from 'vuex'
     import { addHandler } from 'util/ws'
+    import { Slide } from 'vue-burger-menu'
     export default {
         data () {
             return {
+                isSlideOpen: false,
                 showListOptions: true,
                 sideNav: false,
                 icons: {
@@ -103,9 +115,7 @@
                 this.$router.push({ name: 'ProjectCreation' })
             },
             changeLocale() {
-//                console.log('Locale before: ' + this.$i18n.locale)
                 this.$i18n.locale = this.$i18n.locale === 'en' ? 'ru' : 'en'
-//                console.log('Locale after: ' +  this.$i18n.locale)
                 if (localStorage) {
                     localStorage.locale = this.$i18n.locale
                 }
@@ -191,6 +201,9 @@
                 title: 'Profile',
                 link: this.$router.options.routes.find(x=>x.name === 'Profile').path + '/' + this.profile.id
             })
+        },
+        components: {
+            Slide
         }
     }
 </script>
