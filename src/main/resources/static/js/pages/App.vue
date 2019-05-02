@@ -66,8 +66,12 @@
             <router-view :key="$route.fullPath"></router-view>
         </main>
         <v-footer height="auto" style="width: 100%">
+            <cookie-law theme="dark-lime" :buttonText="$t('constants.agree')">
+                <div slot="message">
+                    {{$t('constants.cookies')}}
+                </div>
+            </cookie-law>
             <v-card class="text-xs-center" dark color="#455A64" width="100%">
-
                 <v-card-text>
                     &copy;2019 — <strong>Nikitinho</strong>
                 </v-card-text>
@@ -80,6 +84,7 @@
     import { mapState, mapMutations, mapActions } from 'vuex'
     import { addHandler } from 'util/ws'
     import { Slide } from 'vue-burger-menu'
+    import CookieLaw from 'vue-cookie-law'
     export default {
         data () {
             return {
@@ -203,7 +208,8 @@
             })
         },
         components: {
-            Slide
+            Slide,
+            CookieLaw
         }
     }
 </script>
