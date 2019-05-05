@@ -2,36 +2,50 @@
     <v-container fluid>
         <v-layout align-space-around justify-start wrap>
             <v-flex :xs6="!$vuetify.breakpoint.mdAndDown" class="px-1 py-1">
-        <v-card class="mb-1 py-1 px-1">
-                <v-layout align-center justify-center row wrap>
-                    <v-flex class="px-1" align-self-center>
-                        <v-img class="img-circle elevation-6"
-                               style="max-width: 200px; max-height: 200px"
-                               :src="userProfile.userpic">
-                        </v-img>
-                    </v-flex>
-                    <v-flex justify-start text-xs-center>
-                        <v-layout class="px-1" column>
-                            <v-divider></v-divider>
-                            <v-flex>{{$t('profile.userInfo.name')}}:
-                                {{ userProfile.name || $t('profile.userInfo.emptyField') }}</v-flex>
-                            <v-divider></v-divider>
-                            <v-flex>{{$t('profile.userInfo.locale')}}:
-                                {{ userProfile.locale || $t('profile.userInfo.emptyField') }}</v-flex>
-                            <v-divider></v-divider>
-                            <v-flex>{{$t('profile.userInfo.gender')}}:
-                                {{ userProfile.gender || $t('profile.userInfo.emptyField') }}</v-flex>
-                            <v-divider></v-divider>
-                            <v-flex>{{$t('profile.userInfo.email')}}:
-                                {{ userProfile.email || $t('profile.userInfo.emptyField') }}</v-flex>
-                            <v-divider></v-divider>
-                            <v-flex>{{$t('profile.userInfo.lastAction')}}:
-                                {{ userProfile.lastVisit || $t('profile.userInfo.emptyField') }}</v-flex>
-                            <v-divider></v-divider>
-                        </v-layout>
-                    </v-flex>
-                </v-layout>
-        </v-card>
+                <v-card
+                        tile
+                        max-width="534"
+                        class="mx-auto"
+                >
+                    <v-layout>
+                        <v-flex shrink>
+                            <v-avatar
+                                    class="profile"
+                                    :size="$vuetify.breakpoint.smAndUp ? 164 : 128"
+                                    color="grey"
+                                    tile
+                            >
+                                <v-img class="img-circle elevation-6" :src="userProfile.userpic" >
+                                </v-img>
+                            </v-avatar>
+                        </v-flex>
+                        <v-flex>
+                            <v-img
+                                    height="100%"
+                                    alt="Avatar"
+                            >
+                                <v-layout
+                                        align-end
+                                        fill-height
+                                >
+                                    <v-list-tile
+                                            dark
+                                            color="rgba(0, 0, 0, .4)"
+                                    >
+                                        <v-list-tile-content>
+                                            <v-list-tile-title class="title">
+                                                {{ userProfile.name || $t('profile.userInfo.emptyField') }}
+                                            </v-list-tile-title>
+                                            <v-list-tile-sub-title>
+                                                {{ userProfile.email || $t('profile.userInfo.emptyField') }}
+                                            </v-list-tile-sub-title>
+                                        </v-list-tile-content>
+                                    </v-list-tile>
+                                </v-layout>
+                            </v-img>
+                        </v-flex>
+                    </v-layout>
+                </v-card>
             </v-flex>
             <v-flex :xs6="!$vuetify.breakpoint.mdAndDown" class="px-1 py-1">
         <v-card class="mb-1">
@@ -66,22 +80,6 @@
                     <div class="text-xs-center">
                         <v-chip>{{$t(`project.statuses.${risk.status.toLowerCase()}`)}}</v-chip>
                     </div>
-
-                    <v-divider vertical></v-divider>
-
-                    <v-list-tile-avatar v-if="!risk.responsible || risk.responsible.length === 0">
-                        <span class="cetered-text-span">?</span>
-                    </v-list-tile-avatar>
-
-                    <v-list-tile-avatar v-else v-for="user in getResponsible(risk)">
-                        <v-img class="elevation-6"
-                               :src="user.userpic">
-                        </v-img>
-                    </v-list-tile-avatar>
-
-                    <v-list-tile-avatar v-if="getExtraRiskUsersAmount(risk) > 0">
-                        <span class="cetered-text-span">+{{getExtraRiskUsersAmount(risk)}}</span>
-                    </v-list-tile-avatar>
 
                 </v-list-tile>
             </template>
