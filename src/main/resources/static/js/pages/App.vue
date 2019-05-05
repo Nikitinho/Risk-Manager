@@ -5,9 +5,9 @@
         <!-- v-navigation-drawer example https://codepen.io/kematzy/pen/NzQqOR -->
         <v-navigation-drawer permanent
                              app>
-                <v-layout justify-start column fill-height
-                        class="drawer_title">
-                    <v-list>
+            <v-layout justify-start column fill-height
+                      class="drawer_title">
+                <v-list>
                     <v-list-tile avatar>
                         <!--<v-list-tile-avatar>-->
                         <!--<v-img-->
@@ -23,35 +23,56 @@
                     <!--<v-divider/>-->
                     <!-- Spacing element -->
                     <!--<v-list-tile avatar>-->
-                        <!--<v-list-tile-title/>-->
+                    <!--<v-list-tile-title/>-->
                     <!--</v-list-tile>-->
                     <!-- END -->
-                        <v-text-field
-                                placeholder="Search"
-                                class="elevation-0 mx-2 py-1"
-                                hide-details
-                                v-model="searchField"
-                                single-line solo>
-                        </v-text-field>
-                        <v-list class="drawer">
-                    <v-list-tile v-for="(type, index) in projectTypes"
-                            avatar
+                    <v-text-field
+                            :placeholder="$t('constants.search')"
+                            class="elevation-0 mx-2 py-1"
+                            hide-details
+                            v-model="searchField"
+                            single-line dark box>
+                    </v-text-field>
+                    <v-list>
+                    <v-list-tile
+                            @click="showProjectTypes"
                             class="white--text tile mx-2"
                     >
                         <v-list-tile-action>
-                        <v-checkbox color="white"
-                                    @change="() => chooseProjectType(index)"
-                                hide-details>
-                        </v-checkbox>
+                            <v-icon color="white">aspect_ratio</v-icon>
                         </v-list-tile-action>
                         <v-list-tile-title
-                                v-text="$t(`project.types.${type.value.toLowerCase()}`)"
+                                v-text="$t('menu.projectsTypes')"
                         />
                     </v-list-tile>
-                            </v-list>
+                    <v-list v-if="areProjectTypesShown" class="drawer" dense>
+                        <v-list-tile v-for="(type, index) in projectTypes"
+                                     avatar
+                                     :dark="true"
+                                     hide-details
+                                     class="tile mx-2"
+                        >
+                            <!--<v-list-tile-action>-->
+                                <!--<v-checkbox color="white"-->
+                                            <!--@change="() => chooseProjectType(index)"-->
+                                            <!--hide-details>-->
+                                <!--</v-checkbox>-->
+                            <!--</v-list-tile-action>-->
+                            <!--<v-list-tile-title-->
+                                    <!--v-text="$t(`project.types.${type.value.toLowerCase()}`)"-->
+                            <!--/>-->
+                            <v-list-tile-action>
+                                <v-checkbox :ripple="false"
+                                        @change="() => chooseProjectType(index)"
+                                            color="red"
+                                            :label="$t(`project.types.${type.value.toLowerCase()}`)"
+                                >
+                                </v-checkbox>
+                            </v-list-tile-action>
+                        </v-list-tile>
+                    </v-list>
                     <v-list-tile
                             @click="showDiscussion"
-                            avatar
                             class="white--text tile mx-2"
                     >
                         <v-list-tile-action>
@@ -63,8 +84,7 @@
                     </v-list-tile>
                     <v-list-tile
                             @click="showProjects"
-                            avatar
-                            class="white--text tile"
+                            class="white--text tile mx-2"
                     >
                         <v-list-tile-action>
                             <v-icon color="white">assignment</v-icon>
@@ -74,7 +94,8 @@
                         />
                     </v-list-tile>
                     </v-list>
-                </v-layout>
+                </v-list>
+            </v-layout>
         </v-navigation-drawer>
         <v-toolbar absolute app flat class="toolbar">
             <v-toolbar-side-icon
@@ -82,7 +103,7 @@
                     class="hidden-md-and-up">
             </v-toolbar-side-icon>
             <v-toolbar-title>
-                    ProjectsList
+                ProjectsList
             </v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items>
@@ -124,6 +145,7 @@
             return {
                 searchField: '',
                 projectTypes: [],
+                areProjectTypesShown: false,
                 isSlideOpen: false,
                 showListOptions: true,
                 sideNav: false,
@@ -161,6 +183,9 @@
                 if (localStorage) {
                     localStorage.locale = this.$i18n.locale
                 }
+            },
+            showProjectTypes() {
+                this.areProjectTypesShown = !this.areProjectTypesShown
             },
             chooseProjectType(index) {
                 let type = this.projectTypes[index]
@@ -260,8 +285,8 @@
 
 <style scoped>
     .tile {
-        margin: 5px;
-        border-radius: 100px;
+        margin: 2px;
+        border-radius: 20px;
     }
     .tile:hover {
         background: #5878FF;
