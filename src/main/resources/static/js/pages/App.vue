@@ -36,7 +36,7 @@
                     <v-list>
                     <v-list-tile
                             @click="showProjectTypes"
-                            class="white--text tile mx-2"
+                            class="white--text tile mx-3"
                     >
                         <v-list-tile-action>
                             <v-icon color="white">aspect_ratio</v-icon>
@@ -50,30 +50,21 @@
                                      avatar
                                      :dark="true"
                                      hide-details
-                                     class="tile mx-2"
+                                     class="tile mx-3"
                         >
-                            <!--<v-list-tile-action>-->
-                                <!--<v-checkbox color="white"-->
-                                            <!--@change="() => chooseProjectType(index)"-->
-                                            <!--hide-details>-->
-                                <!--</v-checkbox>-->
-                            <!--</v-list-tile-action>-->
-                            <!--<v-list-tile-title-->
-                                    <!--v-text="$t(`project.types.${type.value.toLowerCase()}`)"-->
-                            <!--/>-->
                             <v-list-tile-action>
                                 <v-checkbox :ripple="false"
-                                        @change="() => chooseProjectType(index)"
+                                            @change="() => chooseProjectType(index)"
                                             color="red"
-                                            :label="$t(`project.types.${type.value.toLowerCase()}`)"
-                                >
+                                            :input-value="type.isShown" value
+                                            :label="$t(`project.types.${type.value.toLowerCase()}`)">
                                 </v-checkbox>
                             </v-list-tile-action>
                         </v-list-tile>
                     </v-list>
                     <v-list-tile
                             @click="showDiscussion"
-                            class="white--text tile mx-2"
+                            class="white--text tile mx-3"
                     >
                         <v-list-tile-action>
                             <v-icon color="white">message</v-icon>
@@ -84,7 +75,7 @@
                     </v-list-tile>
                     <v-list-tile
                             @click="showProjects"
-                            class="white--text tile mx-2"
+                            class="white--text tile mx-3"
                     >
                         <v-list-tile-action>
                             <v-icon color="white">assignment</v-icon>
@@ -286,7 +277,7 @@
 <style scoped>
     .tile {
         margin: 2px;
-        border-radius: 20px;
+        border-radius: 25px;
     }
     .tile:hover {
         background: #5878FF;
