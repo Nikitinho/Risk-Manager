@@ -13,9 +13,17 @@ if (frontendData.profile) {
     connect()
 }
 
-Vue.use(Vuetify)
-// Vue.config.productionTip = false
-// Vue.use(FlagIcon)
+Vue.use(Vuetify, {
+    // theme inspiration https://pp.userapi.com/c854020/v854020741/26519/joJr-WKw1-o.jpg
+    theme: {
+        app: '#E3E7E8',
+        drawer_title: '#19223E',
+        drawer: '#222E49',
+        toolbar: '#FFFFFF'
+    }
+})
+
+Vue.config.productionTip = false
 
 new Vue({
     el: "#app",

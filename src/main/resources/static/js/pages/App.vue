@@ -1,57 +1,99 @@
 <template>
-    <v-app>
-        <slide :isOpen="isSlideOpen"
-               :burgerIcon="false"
-               @closeMenu="() => isSlideOpen = false">
-            <a>
-                <router-link :to="{ name: 'Discussion' }" tag="span" style="cursor: pointer">
-                    {{$t('menu.discussion')}}
-                </router-link>
-            </a>
-            <a id="home">
-                <router-link :to="{ name: 'ProjectsList' }" tag="span" style="cursor: pointer">
-                    {{$t('menu.projects')}}
-                </router-link>
-            </a>
-            <a>
-                <router-link :to="{ name: 'Profile', params: { userId: this.profile.id } }"
-                             tag="span" style="cursor: pointer">
-                    {{ profile.name }}
-                </router-link>
-            </a>
-        </slide>
-        <v-toolbar dark color="#455A64">
+    <!-- components best usage https://demos.creative-tim.com/vuetify-material-dashboard/ -->
+    <!-- https://demos.creative-tim.com/vuetify-material-dashboard/documentation/#getting-started -->
+    <v-app class="app">
+        <!-- v-navigation-drawer example https://codepen.io/kematzy/pen/NzQqOR -->
+        <v-navigation-drawer permanent
+                             app>
+                <v-layout justify-start column fill-height
+                        class="drawer_title">
+                    <v-list>
+                    <v-list-tile avatar>
+                        <!--<v-list-tile-avatar>-->
+                        <!--<v-img-->
+                        <!--src="https://cdn1.imggmi.com/uploads/2019/5/4/58f4211e92e5b66c5d9cb6529e646b38-full.png"-->
+                        <!--aspect-ratio="1"-->
+                        <!--&gt;-->
+                        <!--</v-img>-->
+                        <!--</v-list-tile-avatar>-->
+                        <v-list-tile-title class="white--text title">
+                            Risk Management Tool
+                        </v-list-tile-title>
+                    </v-list-tile>
+                    <!--<v-divider/>-->
+                    <!-- Spacing element -->
+                    <!--<v-list-tile avatar>-->
+                        <!--<v-list-tile-title/>-->
+                    <!--</v-list-tile>-->
+                    <!-- END -->
+                        <v-text-field
+                                placeholder="Search"
+                                class="elevation-0 mx-2 py-1"
+                                hide-details
+                                v-model="searchField"
+                                single-line solo>
+                        </v-text-field>
+                        <v-list class="drawer">
+                    <v-list-tile v-for="(type, index) in projectTypes"
+                            avatar
+                            class="white--text tile mx-2"
+                    >
+                        <v-list-tile-action>
+                        <v-checkbox color="white"
+                                    @change="() => chooseProjectType(index)"
+                                hide-details>
+                        </v-checkbox>
+                        </v-list-tile-action>
+                        <v-list-tile-title
+                                v-text="$t(`project.types.${type.value.toLowerCase()}`)"
+                        />
+                    </v-list-tile>
+                            </v-list>
+                    <v-list-tile
+                            @click="showDiscussion"
+                            avatar
+                            class="white--text tile mx-2"
+                    >
+                        <v-list-tile-action>
+                            <v-icon color="white">message</v-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-title
+                                v-text="$t('menu.discussion')"
+                        />
+                    </v-list-tile>
+                    <v-list-tile
+                            @click="showProjects"
+                            avatar
+                            class="white--text tile"
+                    >
+                        <v-list-tile-action>
+                            <v-icon color="white">assignment</v-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-title
+                                v-text="$t('menu.projects')"
+                        />
+                    </v-list-tile>
+                    </v-list>
+                </v-layout>
+        </v-navigation-drawer>
+        <v-toolbar absolute app flat class="toolbar">
             <v-toolbar-side-icon
                     @click.stop="isSlideOpen = !isSlideOpen"
                     class="hidden-md-and-up">
             </v-toolbar-side-icon>
             <v-toolbar-title>
-                <router-link :to="{ name: 'ProjectsList' }" tag="span" style="cursor: pointer">
-                    Risk Management Tool
-                </router-link>
+                    ProjectsList
             </v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items>
                 <v-btn icon @click="() => this.$router.back()">
                     <v-icon dark>chevron_left</v-icon>
                 </v-btn>
-                <v-btn v-if="profile" flat
-                       :disabled="$route.name === 'Discussion'"
-                       @click="showDiscussion"
-                       class="hidden-sm-and-down">
-                    {{$t('menu.discussion')}}
-                </v-btn>
-                <v-btn v-if="profile" flat
-                       :disabled="$route.name === 'ProjectsList'"
-                       @click="showProjects"
-                       class="hidden-sm-and-down">
-                    {{$t('menu.projects')}}
-                </v-btn>
-                <v-btn v-if="profile" flat
+                <v-btn v-if="profile" icon
                        :disabled="$route.name === 'Profile'"
                        @click="showProfile"
                        class="hidden-sm-and-down">
-                    {{profile.name}}
+                    <v-icon>person</v-icon>
                 </v-btn>
                 <v-btn v-if="profile" icon
                        @click="changeLocale">
@@ -62,32 +104,26 @@
                 </v-btn>
             </v-toolbar-items>
         </v-toolbar>
-        <main style="height: 100%">
-            <router-view :key="$route.fullPath"></router-view>
-        </main>
-        <v-footer height="auto" style="width: 100%">
-            <cookie-law theme="dark-lime" :buttonText="$t('constants.agree')">
-                <div slot="message">
-                    {{$t('constants.cookies')}}
-                </div>
-            </cookie-law>
-            <v-card class="text-xs-center" dark color="#455A64" width="100%">
-                <v-card-text>
-                    &copy;2019 — <strong>Nikitinho</strong>
-                </v-card-text>
-            </v-card>
-        </v-footer>
+        <v-content>
+            <main>
+                <router-view :key="$route.fullPath"
+                             :projectTypes="projectTypes">
+                </router-view>
+            </main>
+        </v-content>
     </v-app>
 </template>
 
 <script>
-    import { mapState, mapMutations, mapActions } from 'vuex'
+    import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
     import { addHandler } from 'util/ws'
     import { Slide } from 'vue-burger-menu'
     import CookieLaw from 'vue-cookie-law'
     export default {
         data () {
             return {
+                searchField: '',
+                projectTypes: [],
                 isSlideOpen: false,
                 showListOptions: true,
                 sideNav: false,
@@ -100,7 +136,8 @@
             }
         },
         computed: {
-            ...mapState(['profile'])
+            ...mapState(['profile']),
+            ...mapGetters(['getProjectTypes'])
         },
         methods: {
             ...mapMutations(['addProjectMutation', 'updateProjectMutation', 'removeProjectMutation']),
@@ -124,6 +161,11 @@
                 if (localStorage) {
                     localStorage.locale = this.$i18n.locale
                 }
+            },
+            chooseProjectType(index) {
+                let type = this.projectTypes[index]
+                type.isShown = !type.isShown
+                this.$set(this.projectTypes, index, type)
             }
         },
         created() {
@@ -189,6 +231,8 @@
                     console.error(`Object type ${data.objectType} is unknown`)
                 }
             })
+            // ProjectTypes
+            this.getProjectTypes.forEach(type => this.projectTypes.push({value: type, isShown: false}))
         },
         mounted() {
             if (localStorage && localStorage.locale) {
@@ -214,5 +258,15 @@
     }
 </script>
 
-<style>
+<style scoped>
+    .tile {
+        margin: 5px;
+        border-radius: 100px;
+    }
+    .tile:hover {
+        background: #5878FF;
+    }
+    .tile:active {
+        background: #5878FF;
+    }
 </style>
