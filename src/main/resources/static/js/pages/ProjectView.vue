@@ -1,7 +1,7 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <v-container fluid>
         <v-layout align-space-around justify-start wrap>
-            <v-flex :xs8="!$vuetify.breakpoint.mdAndDown" class="px-1 py-1">
+            <v-flex :xs6="!$vuetify.breakpoint.mdAndDown" class="px-1 py-1">
             <v-card class="mb-1">
                 <v-card-title>
                     <span class="headline font-weight-light">{{ project.name }}</span>
@@ -188,7 +188,7 @@
                     </v-list>
                 </v-card>
             </v-flex>
-            <v-flex :xs4="!$vuetify.breakpoint.mdAndDown" class="px-1 py-1">
+            <v-flex :xs6="!$vuetify.breakpoint.mdAndDown" class="px-1 py-1">
                 <v-card class="mb-1">
                     <v-card-title>
                         <span class="headline font-weight-light">{{$t('project.projectTeam.title')}}</span>

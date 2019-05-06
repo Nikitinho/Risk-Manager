@@ -2,8 +2,8 @@
     <v-container fluid>
         <v-layout align-space-around justify-start wrap>
             <slot v-for="(board, index) in getBoards">
-            <v-flex :xs4="!$vuetify.breakpoint.mdAndDown" :xs12="$vuetify.breakpoint.mdAndDown">
-                <v-card class="my-1 mx-1 px-2">
+            <v-flex xs12>
+                <v-card flat class="mx-1 px-2">
                     <v-card-title primary class="headline">
                         <span style="display:block; width: 70%; word-wrap:break-word;">{{ board.name }}</span>
                         <v-spacer></v-spacer>

@@ -20,12 +20,6 @@
                             Risk Management Tool
                         </v-list-tile-title>
                     </v-list-tile>
-                    <!--<v-divider/>-->
-                    <!-- Spacing element -->
-                    <!--<v-list-tile avatar>-->
-                    <!--<v-list-tile-title/>-->
-                    <!--</v-list-tile>-->
-                    <!-- END -->
                     <v-text-field
                             :placeholder="$t('constants.search')"
                             class="elevation-0 mx-2 py-1"
@@ -33,6 +27,22 @@
                             v-model="searchField"
                             single-line dark box>
                     </v-text-field>
+                    <v-list v-if="areProjectTypesShown" class="drawer" dense>
+                        <v-list-tile v-for="(type, index) in projectTypes"
+                                     :dark="true"
+                                     hide-details
+                                     class="pt mx-3"
+                        >
+                            <v-list-tile-action>
+                                <v-checkbox :ripple="false"
+                                            @change="() => chooseProjectType(index)"
+                                            color="red"
+                                            :input-value="type.isShown" value
+                                            :label="$t(`project.types.${type.value.toLowerCase()}`)">
+                                </v-checkbox>
+                            </v-list-tile-action>
+                        </v-list-tile>
+                    </v-list>
                     <v-list>
                     <v-list-tile
                             @click="showProjectTypes"
@@ -45,23 +55,6 @@
                                 v-text="$t('menu.projectsTypes')"
                         />
                     </v-list-tile>
-                    <v-list v-if="areProjectTypesShown" class="drawer" dense>
-                        <v-list-tile v-for="(type, index) in projectTypes"
-                                     avatar
-                                     :dark="true"
-                                     hide-details
-                                     class="tile mx-3"
-                        >
-                            <v-list-tile-action>
-                                <v-checkbox :ripple="false"
-                                            @change="() => chooseProjectType(index)"
-                                            color="red"
-                                            :input-value="type.isShown" value
-                                            :label="$t(`project.types.${type.value.toLowerCase()}`)">
-                                </v-checkbox>
-                            </v-list-tile-action>
-                        </v-list-tile>
-                    </v-list>
                     <v-list-tile
                             @click="showDiscussion"
                             class="white--text tile mx-3"
@@ -96,6 +89,11 @@
             <v-toolbar-title>
                 ProjectsList
             </v-toolbar-title>
+            <v-btn v-if="profile" icon
+                   @click="createProject"
+                   class="hidden-sm-and-down">
+                <v-icon>add</v-icon>
+            </v-btn>
             <v-spacer></v-spacer>
             <v-toolbar-items>
                 <v-btn icon @click="() => this.$router.back()">
@@ -177,6 +175,9 @@
             },
             showProjectTypes() {
                 this.areProjectTypesShown = !this.areProjectTypesShown
+            },
+            createProject() {
+                this.$router.push({ name: 'ProjectCreation' })
             },
             chooseProjectType(index) {
                 let type = this.projectTypes[index]
@@ -275,9 +276,19 @@
 </script>
 
 <style scoped>
+    .pt {
+        margin: 5px;
+        border-radius: 10px;
+    }
+    .pt:hover {
+        background: #1E2A42;
+    }
+    .pt:active {
+        background: #1E2A42;
+    }
     .tile {
         margin: 2px;
-        border-radius: 25px;
+        border-radius: 10px;
     }
     .tile:hover {
         background: #5878FF;
