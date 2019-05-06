@@ -8,6 +8,7 @@ import en_profile from './en_modules/profile.json'
 import en_discussion from './en_modules/discussion.json'
 import en_risk from './en_modules/risk.json'
 import en_constants from './en_modules/constants.json'
+import en_routes from './en_modules/routes.json'
 // import ru modules
 import ru_menu from './ru_modules/menu.json'
 import ru_projectsList from './ru_modules/projectsList.json'
@@ -16,6 +17,7 @@ import ru_profile from './ru_modules/profile.json'
 import ru_discussion from './ru_modules/discussion.json'
 import ru_risk from './ru_modules/risk.json'
 import ru_constants from './ru_modules/constants.json'
+import ru_routes from './ru_modules/routes.json'
 
 Vue.use(VueI18n)
 
@@ -31,7 +33,8 @@ export const i18n = new VueI18n({
             project: en_project,
             profile: en_profile,
             discussion: en_discussion,
-            risk: en_risk
+            risk: en_risk,
+            routes: en_routes
         },
         ru: {
             constants: ru_constants,
@@ -40,7 +43,8 @@ export const i18n = new VueI18n({
             project: ru_project,
             profile: ru_profile,
             discussion: ru_discussion,
-            risk: ru_risk
+            risk: ru_risk,
+            routes: ru_routes
         }
     }
 })

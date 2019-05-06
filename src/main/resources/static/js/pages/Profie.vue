@@ -6,7 +6,6 @@
                 <v-card
                         slot-scope="{ hover }"
                         tile
-                        max-width="534"
                         :class="`elevation-${hover ? 12 : 2} mx-auto`"
                 >
                     <v-layout>

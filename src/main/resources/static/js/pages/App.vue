@@ -88,7 +88,7 @@
                     class="hidden-md-and-up">
             </v-toolbar-side-icon>
             <v-toolbar-title>
-                ProjectsList
+                {{ $t(`routes.${$route.name}`) }}
             </v-toolbar-title>
             <v-btn v-if="profile" icon
                    @click="createProject"
