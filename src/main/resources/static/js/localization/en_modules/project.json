@@ -1,6 +1,7 @@
 {
   "fields": {
     "name": "Project name",
+    "creationDate": "Creation date",
     "description": "Project description",
     "type": "Project type",
     "managers": "Managers",
