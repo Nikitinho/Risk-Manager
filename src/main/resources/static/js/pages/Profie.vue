@@ -2,10 +2,12 @@
     <v-container fluid>
         <v-layout align-space-around justify-start wrap>
             <v-flex :xs6="!$vuetify.breakpoint.mdAndDown" class="px-1 py-1">
+                <v-hover>
                 <v-card
+                        slot-scope="{ hover }"
                         tile
                         max-width="534"
-                        class="mx-auto"
+                        :class="`elevation-${hover ? 12 : 2} mx-auto`"
                 >
                     <v-layout>
                         <v-flex shrink>
@@ -46,14 +48,18 @@
                         </v-flex>
                     </v-layout>
                 </v-card>
+                </v-hover>
+
             </v-flex>
             <v-flex :xs6="!$vuetify.breakpoint.mdAndDown" class="px-1 py-1">
-        <v-card class="mb-1">
+                <v-hover>
+        <v-card slot-scope="{ hover }"
+                :class="`elevation-${hover ? 12 : 2} mb-1`">
             <v-card-title>
                 <span class="headline font-weight-light">{{$t('project.top10Risks.title')}}</span>
                 <v-spacer></v-spacer>
                 <v-btn color="success"
-                       @click="() => { this.isTopShown = !this.isTopShown }">
+                       @click="showTop">
                     {{ isTopShown
                     ? $t('project.top10Risks.hideBtn')
                     : $t('project.top10Risks.showBtn') }}
@@ -86,6 +92,7 @@
             </v-list>
             </slot>
         </v-card>
+                </v-hover>
             </v-flex>
         </v-layout>
     </v-container>
@@ -112,6 +119,9 @@
             ...mapActions(['fetchUserRisks']),
             getColor(riskRate) {
                 return Risk.convertRiskRateToColor(riskRate)
+            },
+            showTop() {
+                this.isTopShown = !this.isTopShown
             },
             getResponsible(risk) {
                 if (risk.responsible) {

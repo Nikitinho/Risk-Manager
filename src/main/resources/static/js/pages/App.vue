@@ -31,6 +31,7 @@
                         <v-list-tile v-for="(type, index) in projectTypes"
                                      :dark="true"
                                      hide-details
+                                     avatar
                                      class="pt mx-3"
                         >
                             <v-list-tile-action>
